@@ -78,7 +78,7 @@
       </environments>
     </other>
     <general>
-      <activedir>src</activedir>
+      <activedir>trunk/src</activedir>
     </general>
   </kdevcustomproject>
   <kdevfilecreate>
@@ -168,8 +168,6 @@
       <group pattern="*.h;*.hxx" name="Header" />
       <group pattern="*.cpp;*.c;*.C;*.cxx" name="Sources" />
       <group pattern="*.ui" name="Qt Designer files" />
-      <hidenonprojectfiles>true</hidenonprojectfiles>
-      <hidenonlocation>false</hidenonlocation>
     </groups>
     <tree>
       <hidepatterns>*.o,*.lo,CVS,*~,cmake*</hidepatterns>
@@ -202,4 +200,9 @@
       <usermanualurl></usermanualurl>
     </projectdoc>
   </kdevdocumentation>
+  <ctagspart>
+    <customArguments></customArguments>
+    <customTagfilePath>/home/lawrence/Projects/kzen/trunk/tags</customTagfilePath>
+    <activeTagsFiles/>
+  </ctagspart>
 </kdevelop>

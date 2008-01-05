@@ -1,0 +1,1 @@
+INSTALL( FILES zen.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/apps/kzen/images )

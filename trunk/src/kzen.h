@@ -38,6 +38,7 @@ class KZen : public KMainWindow
     private:
         KZenWidget *m_widget;
         void setupActions();
+        bool checkDevices();
 };
 
 #endif

@@ -3,7 +3,7 @@
   <!ENTITY Lawrence.C.Lee "<personname><firstname>Lawrence</firstname><othername>C.</othername><surname>Lee</surname></personname>">
   <!ENTITY Lawrence.C.Lee.email "<email>valheru@facticius.net</email>">
   <!ENTITY homepage "<ulink>http://kzen.googlecode.com</ulink>">
-  <!ENTITY kzen "<application>KPar2</application>">
+  <!ENTITY kzen "<application>KZen</application>">
   <!ENTITY kappname "&kzen;">
   <!ENTITY package "kde-module">
   <!ENTITY % addindex "IGNORE">
@@ -46,10 +46,8 @@ using parity *.par2 and *.PAR2 files.
 <keywordset>
 <keyword>KDE</keyword>
 <keyword>kdeutils</keyword>
-<keyword>KPar2</keyword>
-<keyword>par2</keyword>
-<keyword>newsgroup</keyword>
-<keyword>recovery</keyword>
+<keyword>KZen</keyword>
+<keyword>MTP</keyword>
 </keywordset>
 
 </bookinfo>
@@ -59,8 +57,7 @@ using parity *.par2 and *.PAR2 files.
 <title>Introduction</title>
 
 <para>
-&kzen; is an application for the verification and repair of source files
-using parity files. Please report any problems or feature requests as an issue on &homepage;
+&kzen; is an applicationfor managing portable media players that use the MTP protocol. Please report any problems or feature requests as an issue on &homepage;
 </para>
 
 </chapter>
@@ -84,8 +81,8 @@ using parity files. Please report any problems or feature requests as an issue o
 </para>
 
 <para>
-You can double click on any *.par2 or *.PAR2 file that you wish to load into KPar2.
-KPar2 will automatically open and proceed to load the recovery files.
+You can double click on any *.par2 or *.PAR2 file that you wish to load into KZen.
+KZen will automatically open and proceed to load the recovery files.
 Alternatively, you can open any PAR file via
 
 <variablelist>
@@ -112,9 +109,9 @@ Alternatively, you can open any PAR file via
 </para>
 
 <para>
-Once loaded, KPar2 will proceed to verify and if neccessary repair any files that need repairing
+Once loaded, KZen will proceed to verify and if neccessary repair any files that need repairing
 if the "Automatically check" and "Automatically repair" options are enabled.
-If they are not enabled, then the user will have to command KPar2 to carry out these steps
+If they are not enabled, then the user will have to command KZen to carry out these steps
 using the buttons in the main window.
 </para>
 
@@ -244,9 +241,9 @@ to either redownload the damaged and missing files, or download more parity file
 <keycombo action="simul">&Ctrl;<keycap>C</keycap></keycombo>
 </shortcut>
 <guimenu>Settings</guimenu>
-<guimenuitem>Configure KPar2</guimenuitem>
+<guimenuitem>Configure KZen</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Opens the configuration dialog for KPar2</action></para></listitem>
+<listitem><para><action>Opens the configuration dialog for KZen</action></para></listitem>
 </varlistentry>
 </variablelist>
 </para>
@@ -312,15 +309,11 @@ Documentation Copyright &copy; 2007 &Lawrence.C.Lee; &Lawrence.C.Lee.email;
 <title>Requirements</title>
 
 <para>
-In order to successfully use &kzen; you need &kde; 3.5, libpar2 and sigc++-v2.
+In order to successfully use &kzen; you need &kde; 3.5 and libmtp.
 </para>
 
 <para>
-Libpar2 can be obained from <ulink url="http://parchive.sourceforge.net">the libpar2 homepage</ulink>.
-</para>
-
-<para>
-Sigc++-v2 can be obtained from <ulink url="http://libsigc.sourceforge.net/">the sigc++ homepage</ulink>.
+Libmtp can be obained from <ulink url="http://libmtp.sourceforge.net">the libmtp homepage</ulink>.
 </para>
 
 </sect1>
@@ -330,7 +323,7 @@ Sigc++-v2 can be obtained from <ulink url="http://libsigc.sourceforge.net/">the 
 <title>Compilation and Installation</title>
 
 <para>
-In order to compile and install KPar2 on your system, type the following in the base directory of the KPar2 source:
+In order to compile and install KZen on your system, type the following in the base directory of the KZen source:
 </para>
 
 <screen>
