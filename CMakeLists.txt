@@ -4,7 +4,7 @@ PROJECT(kzen)
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
 #So that cmake can find local cmake files
-# SET( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
+SET( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
 
 FIND_PACKAGE( KDE3 REQUIRED )
 
