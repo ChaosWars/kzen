@@ -1,0 +1,7 @@
+# KDevelop Custom Project File List
+CMakeLists.txt
+src
+src/CMakeLists.txt
+src/kzen.cpp
+src/kzen.h
+src/main.cpp
