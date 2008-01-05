@@ -1,5 +1,5 @@
 FIND_PATH( LIBMTP_INCLUDE_DIR libmtp.h /usr/include/libmtp/ /usr/local/include/libmtp )
-FIND_LIBRARY( LIBMTP_LIBRARY NAMES libmtp PATHS /usr/lib /usr/lib64 /usr/local/lib /usr/local/lib64 )
+FIND_LIBRARY( LIBMTP_LIBRARY NAMES mtp PATHS /usr/lib /usr/lib64 /usr/local/lib /usr/local/lib64 )
 
 IF( LIBMTP_INCLUDE_DIR AND LIBMTP_LIBRARY )
    SET( LIBMTP_FOUND TRUE )
