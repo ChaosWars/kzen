@@ -17,31 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZEN_H
-#define KZEN_H
+#ifndef KZENWIDGET_H
+#define KZENWIDGET_H
 
-#include <kmainwindow.h>
-#include <libmtp.h>
-
-class KZenSplash;
+#include <qwidget.h>
+#include <kmultitabbar.h>
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZen : public KMainWindow
+class KZenWidget : public QWidget
 {
     Q_OBJECT
 
     public:
-        KZen( KZenSplash *splash );
-        ~KZen();
+        KZenWidget(QWidget *parent = 0, const char *name = 0);
+        ~KZenWidget();
 
     private:
-        KZenWidget *m_widget;
-        void setupActions();
-        bool checkDevices( KZenSplash *splash );
-        LIBMTP_mtpdevice_t *devices;
-        QList<LIBMTP_mtpdevice_t> device_list;
+        KMultiTabBar *navpanel;
+
 };
 
 #endif
