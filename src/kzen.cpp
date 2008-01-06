@@ -26,7 +26,7 @@
 #include "kzensplash.h"
 
 KZen::KZen( KZenSplash *splash )
- : KMainWindow(), m_widget( new KZenWidget( this ) )
+ : KMainWindow( 0, "KZen" ), m_widget( new KZenWidget( this ) )
 {
     setCentralWidget( m_widget );
     setupActions();
