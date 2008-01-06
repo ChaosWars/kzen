@@ -9,40 +9,356 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>600</width>
-            <height>480</height>
+            <width>337</width>
+            <height>161</height>
         </rect>
     </property>
     <property name="caption">
-        <string>Form1</string>
+        <string>KZen</string>
     </property>
-    <grid>
+    <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QListView" row="0" column="0">
-            <column>
-                <property name="text">
-                    <string>Devices</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
+        <widget class="QButtonGroup">
             <property name="name">
-                <cstring>m_deviceListView</cstring>
+                <cstring>mediaButtonGroup</cstring>
             </property>
+            <property name="title">
+                <string>Media</string>
+            </property>
+            <property name="flat">
+                <bool>false</bool>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer row="0" column="1">
+                    <property name="name">
+                        <cstring>spacer1</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <spacer row="1" column="1">
+                    <property name="name">
+                        <cstring>spacer2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <spacer row="2" column="1">
+                    <property name="name">
+                        <cstring>spacer3</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QLayoutWidget" row="0" column="0" rowspan="3" colspan="1">
+                    <property name="name">
+                        <cstring>layout17</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout11</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>browseMediaLabel</cstring>
+                                    </property>
+                                    <property name="scaledContents">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>browseMedia</cstring>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>130</width>
+                                            <height>26</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>130</width>
+                                            <height>26</height>
+                                        </size>
+                                    </property>
+                                    <property name="autoMask">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string>Browse Media</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout12</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>addMediaLabel</cstring>
+                                    </property>
+                                    <property name="scaledContents">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>addMedia</cstring>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>130</width>
+                                            <height>26</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>130</width>
+                                            <height>26</height>
+                                        </size>
+                                    </property>
+                                    <property name="text">
+                                        <string>Add Media</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout13</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>createPlaylistsLabel</cstring>
+                                    </property>
+                                    <property name="scaledContents">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>createPlaylists</cstring>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>130</width>
+                                            <height>26</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>130</width>
+                                            <height>26</height>
+                                        </size>
+                                    </property>
+                                    <property name="text">
+                                        <string>Create Playlists</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget" row="0" column="2">
+                    <property name="name">
+                        <cstring>layout14</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>managePlaylistsLAbel</cstring>
+                            </property>
+                            <property name="scaledContents">
+                                <bool>true</bool>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>managePlaylists</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>130</width>
+                                    <height>26</height>
+                                </size>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>130</width>
+                                    <height>26</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string>Manage Playlists</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="2" column="2">
+                    <property name="name">
+                        <cstring>layout16</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>convertVideoLabel</cstring>
+                            </property>
+                            <property name="scaledContents">
+                                <bool>true</bool>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>convertVideo</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>130</width>
+                                    <height>26</height>
+                                </size>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>130</width>
+                                    <height>26</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string>Convert Video</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="1" column="2">
+                    <property name="name">
+                        <cstring>layout20</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>createAudioCDsLabel</cstring>
+                            </property>
+                            <property name="scaledContents">
+                                <bool>true</bool>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>createAudioCDs</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>130</width>
+                                    <height>26</height>
+                                </size>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>130</width>
+                                    <height>26</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string>Create Audio CD's</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </grid>
         </widget>
-    </grid>
+        <spacer>
+            <property name="name">
+                <cstring>spacer10</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>40</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <includes>
     <include location="local" impldecl="in implementation">kzenwidget.ui.h</include>
 </includes>
-<functions>
-    <function returnType="QListView *">deviceListView()</function>
-</functions>
 <layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
 </UI>

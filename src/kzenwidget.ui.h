@@ -10,7 +10,3 @@
 ** destructor.
 *****************************************************************************/
 
-QListView* KZenWidget::deviceListView()
-{
-	return m_deviceListView;
-}
