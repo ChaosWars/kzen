@@ -23,6 +23,7 @@
 #include <kmainwindow.h>
 #include <libmtp.h>
 
+class KZenWidget;
 class KZenSplash;
 
 /**

@@ -34,4 +34,4 @@ KZenWidget::~KZenWidget()
 {
 }
 
-
+#include "kzenwidget.moc"
