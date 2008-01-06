@@ -46,12 +46,12 @@ int main(int argc, char **argv)
     KUniqueApplication::addCmdLineOptions();
 
     if ( !KUniqueApplication::start() ){
-        fprintf(stderr, "myAppName is already running!\n");
+        fprintf(stderr, "KZen is already running!\n");
         exit( 0 );
     }
 
     KUniqueApplication app;
-    KSplashScreen *splash = new KSplashScreen( UserIcon( "zen" ) );
+    KSplashScreen *splash = new KSplashScreen( UserIcon( "kzen_splash" ) );
     splash->show();
     KZen *widget = new KZen();
     widget->show();
