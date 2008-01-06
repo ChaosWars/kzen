@@ -16,6 +16,33 @@
     <property name="caption">
         <string>Form1</string>
     </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QListView" row="0" column="0">
+            <column>
+                <property name="text">
+                    <string>Devices</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>m_deviceListView</cstring>
+            </property>
+        </widget>
+    </grid>
 </widget>
+<includes>
+    <include location="local" impldecl="in implementation">kzenwidget.ui.h</include>
+</includes>
+<functions>
+    <function returnType="QListView *">deviceListView()</function>
+</functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

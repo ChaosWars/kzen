@@ -15,6 +15,7 @@ src/kzen.cpp
 src/kzen.h
 src/kzensplash.cpp
 src/kzensplash.h
+src/kzenwidget.ui.h
 src/main.cpp
 src/pics
 src/pics/CMakeLists.txt

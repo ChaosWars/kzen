@@ -53,7 +53,7 @@ bool KZen::checkDevices()
 {
     LIBMTP_Init();
     kdDebug( "libmtp version: " LIBMTP_VERSION_STRING );
-    LIBMTP_mtpdevice_t *devices, *iter;
+    LIBMTP_mtpdevice_t *iter;
     char *friendlyname;
     uint32_t numdevices;
 
@@ -83,16 +83,7 @@ bool KZen::checkDevices()
     }
 
     for( iter = devices; iter != NULL; iter = iter->next ){
-
-        kdDebug() << "MTP-specific device properties:" << endl;
-        friendlyname = LIBMTP_Get_Friendlyname( iter );
-
-        if (friendlyname == NULL) {
-            kdDebug() << "   Friendly name: (NULL)" << endl;
-        } else {
-            kdDebug() << "   Friendly name: " << friendlyname << endl;
-            free( friendlyname );
-        }
+        device_list.append( iter );
 
     }
 
