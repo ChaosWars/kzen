@@ -1,5 +1,5 @@
 [Desktop Entry]
-Categories=Qt;KDE;Application;Multimedia;X-KDE-Multimedia-File
+Categories=Qt;KDE;Application;AudioVideo;Player
 Comment=A program for managing portable media players that use the MTP protocol
 DocPath=kzen/index.html
 Encoding=UTF-8

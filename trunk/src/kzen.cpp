@@ -21,7 +21,6 @@
 #include <kstdaction.h>
 #include <kdebug.h>
 #include <libmtp.h>
-#include <qlistview.h>
 #include "kzen.h"
 #include "kzenwidget.h"
 #include "kzensplash.h"
@@ -83,7 +82,6 @@ bool KZen::checkDevices()
     }
 
     for( iter = devices; iter != NULL; iter = iter->next ){
-        new QListViewItem( m_widget->deviceListView(), LIBMTP_Get_Friendlyname( iter ) );
         device_list.append( iter );
     }
 
