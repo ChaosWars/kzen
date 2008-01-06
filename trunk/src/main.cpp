@@ -22,6 +22,7 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <ksplashscreen.h>
+#include <kiconloader.h>
 #include "kzen.h"
 
 static const char description[] =
@@ -50,8 +51,7 @@ int main(int argc, char **argv)
     }
 
     KUniqueApplication app;
-    QPixmap pixmap( "images/zen.png" );
-    KSplashScreen *splash = new KSplashScreen( pixmap );
+    KSplashScreen *splash = new KSplashScreen( UserIcon( "zen" ) );
     splash->show();
     KZen *widget = new KZen();
     widget->show();
