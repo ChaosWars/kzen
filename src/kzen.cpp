@@ -78,13 +78,13 @@ bool KZen::checkDevices()
             /* Successfully connected at least one device, so continue */
         case LIBMTP_ERROR_NONE:
             numdevices = LIBMTP_Number_Devices_In_List( devices );
-            kdDebug() << "Detect: Successfully connected " << numdevices << " devices.\n" << endl;
+            kdDebug() << "Detect: Successfully connected " << numdevices << " devices." << endl;
             splash->message( QString( "Successfully connected %1 %2" ).arg( numdevices ).arg( numdevices > 1 ? "devices" : "device" ) );
     }
 
     for( iter = devices; iter != NULL; iter = iter->next ){
 
-        kdDebug() << "MTP-specific device properties:";
+        kdDebug() << "MTP-specific device properties:" << endl;
         friendlyname = LIBMTP_Get_Friendlyname( iter );
 
         if (friendlyname == NULL) {
