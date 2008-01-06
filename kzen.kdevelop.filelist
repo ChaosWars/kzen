@@ -1,7 +1,5 @@
 # KDevelop Custom Project File List
 .
-./kzensplash.cpp
-./kzensplash.h
 CMakeLists.txt
 cmake
 cmake/Finddocbook.cmake
@@ -11,10 +9,13 @@ doc/CMakeLists.txt
 src
 src/CMakeLists.txt
 src/icons
+src/icons/CMakeLists.txt
 src/kzen.cpp
 src/kzen.h
 src/kzensplash.cpp
 src/kzensplash.h
+src/kzenwidget.cpp
+src/kzenwidget.h
 src/kzenwidget.ui.h
 src/main.cpp
 src/pics
