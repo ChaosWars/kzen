@@ -25,17 +25,15 @@
 #include "kzenwidget.h"
 #include "kzensplash.h"
 
-extern KZenSplash *splash;
-
-KZen::KZen( QWidget *parent, const char *name )
- : KMainWindow(parent, name), m_widget( new KZenWidget( this ) )
+KZen::KZen( KZenSplash *splash )
+ : KMainWindow(), m_widget( new KZenWidget( this ) )
 {
     setCentralWidget( m_widget );
     setupActions();
     statusBar()->show();
     setupGUI();
 
-    if( !checkDevices() ){
+    if( !checkDevices( splash ) ){
         m_widget->setEnabled( false );
     }
 }
@@ -49,7 +47,7 @@ void KZen::setupActions()
     KStdAction::quit( this, SLOT( close() ), actionCollection() );
 }
 
-bool KZen::checkDevices()
+bool KZen::checkDevices( KZenSplash *splash )
 {
     LIBMTP_Init();
     kdDebug( "libmtp version: " LIBMTP_VERSION_STRING );

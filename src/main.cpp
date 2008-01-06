@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     splash = new KZenSplash( UserIcon( "kzen_splash" ) );
     splash->show();
     splash->message( "Searching for MTP devices" );
-    KZen *widget = new KZen();
+    KZen *widget = new KZen( splash );
     widget->show();
     splash->finish( widget );
     delete splash;
