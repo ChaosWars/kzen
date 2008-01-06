@@ -21,9 +21,10 @@
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
-#include <ksplashscreen.h>
 #include <kiconloader.h>
+#include <kdebug.h>
 #include "kzen.h"
+#include "kzensplash.h"
 
 static const char description[] =
     I18N_NOOP( "A program for managing portable media players that use the MTP protocol" );
@@ -36,6 +37,8 @@ static KCmdLineOptions options[] =
                            KCmdLineLastOption
 };
 
+KZenSplash *splash;
+
 int main(int argc, char **argv)
 {
     KAboutData about( "kzen", I18N_NOOP("KZen"), version, description,
@@ -46,13 +49,14 @@ int main(int argc, char **argv)
     KUniqueApplication::addCmdLineOptions();
 
     if ( !KUniqueApplication::start() ){
-        fprintf(stderr, "KZen is already running!\n");
+        kdDebug() << "KZen is already running!" << endl;
         exit( 0 );
     }
 
     KUniqueApplication app;
-    KSplashScreen *splash = new KSplashScreen( UserIcon( "kzen_splash" ) );
+    splash = new KZenSplash( UserIcon( "kzen_splash" ) );
     splash->show();
+    splash->message( "Searching for MTP devices" );
     KZen *widget = new KZen();
     widget->show();
     splash->finish( widget );
