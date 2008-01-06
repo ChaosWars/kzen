@@ -17,12 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <qsplitter.h>
 #include "kzenwidget.h"
 
 KZenWidget::KZenWidget(QWidget *parent, const char *name)
  : QWidget(parent, name)
 {
-    navpanel = new KMultiTabBar( KMultiTabBar::Vertical );
+    QSplitter *splitter = new QSplitter( this );
+    navpanel = new KMultiTabBar( KMultiTabBar::Vertical, splitter, "NavPanel" );
+    navpanel->setStyle( KMultiTabBar::VSNET );
+    navpanel->appendButton( QPixmap( "multimedia" ) );
 }
 
 
