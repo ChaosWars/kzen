@@ -60,25 +60,25 @@ bool KZen::checkDevices()
     switch(LIBMTP_Get_Connected_Devices( &devices ) )
     {
         case LIBMTP_ERROR_NO_DEVICE_ATTACHED:
-            kdDebug() << "Detect: No Devices have been found." << endl;
+            kdDebug() << "No Devices have been found." << endl;
             return false;
         case LIBMTP_ERROR_CONNECTING:
-            kdDebug() << "Detect: There has been an error connecting. Exiting" << endl;
+            kdDebug() << "There has been an error connecting. Exiting" << endl;
             return false;
         case LIBMTP_ERROR_MEMORY_ALLOCATION:
-            kdDebug() << "Detect: Encountered a Memory Allocation Error. Exiting" << endl;
+            kdDebug() << "Encountered a Memory Allocation Error. Exiting" << endl;
             return false;
 
             /* Unknown general errors - This should never execute */
         case LIBMTP_ERROR_GENERAL:
         default:
-            kdDebug() << "Detect: There has been an unknown error, please report this to the libmtp developers." << endl;
+            kdDebug() << "There has been an unknown error, please report this to the libmtp developers." << endl;
             return false;
 
             /* Successfully connected at least one device, so continue */
         case LIBMTP_ERROR_NONE:
             numdevices = LIBMTP_Number_Devices_In_List( devices );
-            kdDebug() << "Detect: Successfully connected " << numdevices << " devices." << endl;
+            kdDebug() << "Successfully connected " << numdevices << " devices." << endl;
             splash->message( QString( "Successfully connected %1 %2" ).arg( numdevices ).arg( numdevices > 1 ? "devices" : "device" ) );
     }
 
