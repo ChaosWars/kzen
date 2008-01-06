@@ -21,6 +21,7 @@
 #define KZEN_H
 
 #include <kmainwindow.h>
+#include <libmtp.h>
 
 class KZenWidget;
 
@@ -39,6 +40,8 @@ class KZen : public KMainWindow
         KZenWidget *m_widget;
         void setupActions();
         bool checkDevices();
+        LIBMTP_mtpdevice_t *devices;
+        QList<LIBMTP_mtpdevice_t> device_list;
 };
 
 #endif
