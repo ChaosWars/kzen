@@ -21,6 +21,7 @@
 #include <kstdaction.h>
 #include <kdebug.h>
 #include <libmtp.h>
+#include <qlistview.h>
 #include "kzen.h"
 #include "kzenwidget.h"
 #include "kzensplash.h"
@@ -54,7 +55,6 @@ bool KZen::checkDevices()
     LIBMTP_Init();
     kdDebug( "libmtp version: " LIBMTP_VERSION_STRING );
     LIBMTP_mtpdevice_t *iter;
-    char *friendlyname;
     uint32_t numdevices;
 
     switch(LIBMTP_Get_Connected_Devices( &devices ) )
@@ -83,8 +83,8 @@ bool KZen::checkDevices()
     }
 
     for( iter = devices; iter != NULL; iter = iter->next ){
+        new QListViewItem( m_widget->deviceListView(), LIBMTP_Get_Friendlyname( iter ) );
         device_list.append( iter );
-
     }
 
     LIBMTP_Release_Device_List( devices );
