@@ -6,7 +6,7 @@ INCLUDE_DIRECTORIES(${KDE3_INCLUDE_DIRS}
                     ${CMAKE_CURRENT_BINARY_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR} )
 
-SET( SRC main.cpp kzen.cpp )
+SET( SRC main.cpp kzen.cpp kzensplash.cpp )
 KDE3_ADD_UI_FILES( UI_SRC kzenwidget.ui )
 ADD_DEFINITIONS( ${QT_DEFINITIONS} ${KDE3_DEFINITIONS} )
 LINK_DIRECTORIES( ${KDE3_LIB_DIR} )

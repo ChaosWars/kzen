@@ -19,9 +19,13 @@
  ***************************************************************************/
 #include <kstatusbar.h>
 #include <kstdaction.h>
+#include <kdebug.h>
 #include <libmtp.h>
 #include "kzen.h"
 #include "kzenwidget.h"
+#include "kzensplash.h"
+
+extern KZenSplash *splash;
 
 KZen::KZen( QWidget *parent, const char *name )
  : KMainWindow(parent, name), m_widget( new KZenWidget( this ) )
@@ -36,7 +40,6 @@ KZen::KZen( QWidget *parent, const char *name )
     }
 }
 
-
 KZen::~KZen()
 {
 }
@@ -49,7 +52,7 @@ void KZen::setupActions()
 bool KZen::checkDevices()
 {
     LIBMTP_Init();
-    qDebug( "libmtp version: " LIBMTP_VERSION_STRING );
+    kdDebug( "libmtp version: " LIBMTP_VERSION_STRING );
     LIBMTP_mtpdevice_t *devices, *iter;
     char *friendlyname;
     uint32_t numdevices;
@@ -57,36 +60,37 @@ bool KZen::checkDevices()
     switch(LIBMTP_Get_Connected_Devices( &devices ) )
     {
         case LIBMTP_ERROR_NO_DEVICE_ATTACHED:
-            qDebug( "Detect: No Devices have been found." );
+            kdDebug() << "Detect: No Devices have been found." << endl;
             return false;
         case LIBMTP_ERROR_CONNECTING:
-            qDebug( "Detect: There has been an error connecting. Exiting" );
+            kdDebug() << "Detect: There has been an error connecting. Exiting" << endl;
             return false;
         case LIBMTP_ERROR_MEMORY_ALLOCATION:
-            qDebug( "Detect: Encountered a Memory Allocation Error. Exiting" );
+            kdDebug() << "Detect: Encountered a Memory Allocation Error. Exiting" << endl;
             return false;
 
             /* Unknown general errors - This should never execute */
         case LIBMTP_ERROR_GENERAL:
         default:
-            qDebug( "Detect: There has been an unknown error, please report this to the libmtp developers.");
+            kdDebug() << "Detect: There has been an unknown error, please report this to the libmtp developers." << endl;
             return false;
 
             /* Successfully connected at least one device, so continue */
         case LIBMTP_ERROR_NONE:
             numdevices = LIBMTP_Number_Devices_In_List( devices );
-            qDebug( "Detect: Successfully connected %u devices\n", numdevices );
+            kdDebug() << "Detect: Successfully connected " << numdevices << " devices.\n" << endl;
+            splash->message( QString( "Successfully connected %1 %2" ).arg( numdevices ).arg( numdevices > 1 ? "devices" : "device" ) );
     }
 
     for( iter = devices; iter != NULL; iter = iter->next ){
 
-        qDebug( "MTP-specific device properties:" );
+        kdDebug() << "MTP-specific device properties:";
         friendlyname = LIBMTP_Get_Friendlyname( iter );
 
         if (friendlyname == NULL) {
-            qDebug( "   Friendly name: (NULL)" );
+            kdDebug() << "   Friendly name: (NULL)" << endl;
         } else {
-            qDebug( "   Friendly name: %s", friendlyname );
+            kdDebug() << "   Friendly name: " << friendlyname << endl;
             free( friendlyname );
         }
 
