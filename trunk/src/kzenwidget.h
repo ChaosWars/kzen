@@ -23,6 +23,10 @@
 #include <qwidget.h>
 #include <kmultitabbar.h>
 
+class KMultiTabBar;
+class KMultiTabBarTab;
+class KListView;
+
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
@@ -36,6 +40,11 @@ class KZenWidget : public QWidget
 
     private:
         KMultiTabBar *navpanel;
+        KMultiTabBarTab *albumTab;
+        KListView *view, *albums;
+
+    private slots:
+        void albumTabClicked();
 
 };
 

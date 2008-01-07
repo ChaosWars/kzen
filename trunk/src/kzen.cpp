@@ -34,7 +34,7 @@ KZen::KZen( KZenSplash *splash )
     setupGUI();
 
     if( !checkDevices( splash ) ){
-        m_widget->setEnabled( false );
+//         m_widget->setEnabled( false );
     }
 }
 
