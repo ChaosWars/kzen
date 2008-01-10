@@ -17,39 +17,63 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <qlayout.h>
-#include <qsplitter.h>
-#include <klistview.h>
-#include <qpixmap.h>
-#include <kiconloader.h>
+#include <QLayout>
+#include <QSplitter>
+#include <QPixmap>
+#include <KDE/KMultiTabBar>
+#include <KDE/KIconLoader>
+#include <KDE/KComboBox>
+#include <KDE/KDebug>
 #include "kzenwidget.h"
+#include "kzennavview.h"
+#include "kzenalbumviewmodel.h"
+#include "kzendevice.h"
+#include "kzendevicethread.h"
+#include "kzenalbum.h"
 
-KZenWidget::KZenWidget(QWidget *parent, const char *name)
- : QWidget(parent, name)
+KZenWidget::KZenWidget( QWidget *parent, QList<KZenDevice*> *devices ) : QWidget( parent )
 {
+    //Setup MTP devices conenctions
+    mtp_devices = devices;
+    qRegisterMetaType< QList<KZenAlbum*> >( "QList<KZenAlbum*>" );
+
+    for( int i = 0; i < mtp_devices->size(); i++ ){
+        connect( mtp_devices->at( i )->deviceThread(), SIGNAL( albums( const QList<KZenAlbum*>& ) ), this, SLOT( listAlbums( const QList<KZenAlbum*>& ) ) );
+    }
+
     //Main layout
-    QHBoxLayout *mainLayout = new QHBoxLayout( this );
-    QHBox *n = new QHBox( this );
+    QVBoxLayout *mainVLayout = new QVBoxLayout( this );
+    QHBoxLayout *mainHLayout = new QHBoxLayout();
+
+    //Device combo box
+    m_devices = new KComboBox( mainVLayout );
+
+    for( int i = 0; i < mtp_devices->size(); i++ ){
+        m_devices->insertItem( i, mtp_devices->at( i )->name() );
+    }
 
     //Navigation panel
-    navpanel = new KMultiTabBar( KMultiTabBar::Vertical, n, "NavPanel" );
+    navpanel = new KMultiTabBar( KMultiTabBar::Left, this );
     navpanel->setStyle( KMultiTabBar::VSNET );
-    navpanel->setPosition( KMultiTabBar::Left );
-    mainLayout->addWidget( navpanel );
 
     //Album tab
-    QPixmap albumPixmap( KGlobal::iconLoader()->loadIcon( "multimedia.png" , KIcon::Toolbar ) );
-    navpanel->appendTab( albumPixmap, 0, "Albums" );
-    albumTab = navpanel->tab( 0 );
-    connect( albumTab, SIGNAL( clicked( int ) ), this, SLOT( albumTabClicked() ) );
+    QPixmap albumPixmap( KIconLoader::global()->loadIcon( "multimedia", KIconLoader::NoGroup ) );
+    navpanel->appendTab( albumPixmap, KZenWidget::AlbumTab, "Albums" );
+    albumTab = navpanel->tab( KZenWidget::AlbumTab );
+    connect( albumTab, SIGNAL( toggled( bool ) ), this, SLOT( albumTabToggled( bool ) ) );
 
     //Main splitter
-    QSplitter *splitter = new QSplitter( n );
-    albums = new KListView( splitter );
-    view = new KListView( splitter );
+    QSplitter *splitter = new QSplitter( this );
+    navView = new KZenNavView( splitter );
+    navView->hide();
+    mainView = new KZenNavView( splitter );
 
-    //Add layouts
-    mainLayout->addWidget( n );
+    //Set the layout
+    mainHLayout->addWidget( navpanel );
+    mainHLayout->addWidget( splitter );
+    mainVLayout->addWidget( m_devices );
+    mainVLayout->addLayout( mainHLayout );
+    setLayout( mainVLayout );
 }
 
 
@@ -57,13 +81,36 @@ KZenWidget::~KZenWidget()
 {
 }
 
-void KZenWidget::albumTabClicked()
+void KZenWidget::albumTabToggled( bool on )
 {
-    if( albums->isVisible() ){
-        albums->hide();
+    if( on ){
+        navView->show();
+        mtp_devices->at( m_devices->currentIndex() )->getAlbums();
     }else{
-        albums->show();
+        navView->hide();
     }
+}
+
+void KZenWidget::listAlbums( const QList<KZenAlbum*> &a )
+{
+//     QList<QTreeWidgetItem*> items;
+
+//     for( int i = 0; i < a.size(); i++ ){
+//         uint32_t nrTracks = a.at( i )->numTracks();
+//         QTreeWidgetItem *album = new QTreeWidgetItem( navView, QStringList() << QString( a.at( i )->name() )
+//                                                                              << QString( a.at( i )->artist() )
+//                                                                              << QString( a.at( i )->genre() )
+//                                                                              << QString::number( nrTracks ) );
+
+//         for( uint j = 0; j < nrTracks; j++ ){
+//             QTreeWidgetItem *track = new QTreeWidgetItem( album );
+//             album->addChild( track );
+//         }
+
+//         items.append( album );
+//     }
+
+//     navView->insertTopLevelItems( 0, items );
 }
 
 #include "kzenwidget.moc"

@@ -20,9 +20,12 @@
 #ifndef KZEN_H
 #define KZEN_H
 
-#include <kmainwindow.h>
+#include <KDE/KMainWindow>
 #include <libmtp.h>
+#include "kzendevice.h"
 
+class KMenu;
+class KAction;
 class KZenWidget;
 class KZenSplash;
 
@@ -39,10 +42,12 @@ class KZen : public KMainWindow
 
     private:
         KZenWidget *m_widget;
-        void setupActions();
-        bool checkDevices( KZenSplash *splash );
+        KMenu *actionMenu;
+        KAction *quit;
         LIBMTP_mtpdevice_t *devices;
-        QList<LIBMTP_mtpdevice_t> device_list;
+        void setupActions();
+        void setupMenus();
+        LIBMTP_error_number_t checkDevices( KZenSplash *splash, QList<KZenDevice*> *device_list );
 };
 
 #endif

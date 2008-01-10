@@ -135,18 +135,21 @@
       <includePaths>.;</includePaths>
     </codecompletion>
     <references>
-      <pcs>KDE3</pcs>
-      <pcs>Qt3</pcs>
+      <pcs>Qt4</pcs>
+      <pcs>KDE4</pcs>
+      <pcs>Common</pcs>
     </references>
     <qt>
       <used>true</used>
-      <version>3</version>
-      <includestyle>3</includestyle>
+      <version>4</version>
+      <includestyle>4</includestyle>
       <root>/opt/qt</root>
       <designerintegration>ExternalDesigner</designerintegration>
       <qmake>/opt/qt/bin/qmake</qmake>
       <designer>/opt/qt/bin/designer</designer>
-      <designerpluginpaths/>
+      <designerpluginpaths>
+        <path>/opt/kde4/lib/kde4/plugins</path>
+      </designerpluginpaths>
     </qt>
     <creategettersetter>
       <prefixGet/>

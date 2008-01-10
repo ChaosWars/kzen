@@ -17,49 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <kuniqueapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kdebug.h>
+#include <KDE/KUniqueApplication>
+#include <KDE/KAboutData>
+#include <KDE/KCmdLineArgs>
+#include <KDE/KLocale>
+#include <KDE/KIconLoader>
+#include <KDE/KDebug>
 #include "kzen.h"
 #include "kzensplash.h"
 
-static const char description[] =
-    I18N_NOOP( "A program for managing portable media players that use the MTP protocol" );
+static const char description[] = "A program for managing portable media players that use the MTP protocol";
 
 static const char version[] = "0.1";
-
-static KCmdLineOptions options[] =
-{
-    { "+[URL]", I18N_NOOP( "Document to open" ), 0 },
-                           KCmdLineLastOption
-};
 
 KZenSplash *splash;
 
 int main(int argc, char **argv)
 {
-    KAboutData about( "kzen", I18N_NOOP("KZen"), version, description,
-                      KAboutData::License_GPL, "(C) 2007 Lawrence Lee", 0, "http://kzen.googlecode.com" );
-    about.addAuthor( "Lawrence Lee", 0, "valheru@facticius.net" );
+    KCmdLineOptions options;
+    options.add( "+someoption", ki18n( "Some option" ) );
+    KAboutData about( "KZen", QByteArray(), ki18n( "KZen" ), version, ki18n( description ),
+                        KAboutData::License_GPL, ki18n( "(C) 2007 Lawrence Lee" ), ki18n(""),
+                        "http://kzen.googlecode.com", "valheru@facticius.net" );
+    about.addAuthor( ki18n( "Lawrence Lee" ), ki18n( "Lead programmer" ), "valheru@facticius.net", "www.facticius.net" );
     KCmdLineArgs::init( argc, argv, &about );
     KCmdLineArgs::addCmdLineOptions( options );
     KUniqueApplication::addCmdLineOptions();
 
     if ( !KUniqueApplication::start() ){
-        kdDebug() << "KZen is already running!" << endl;
+        kDebug() << i18n( "KZen is already running!" ) << endl;
         exit( 0 );
     }
 
     KUniqueApplication app;
-    splash = new KZenSplash( UserIcon( "kzen_splash" ) );
+    splash = new KZenSplash( QPixmap( ":/pics/kzen_splash.png" ) );
     splash->show();
-    splash->message( "Searching for MTP devices" );
-    KZen *widget = new KZen( splash );
-    widget->show();
-    splash->finish( widget );
+    splash->showMessage( i18n( "Searching for MTP devices" ) );
+    KZen *kzenmw = new KZen( splash );
+    kzenmw->setObjectName( "KZenMainWindow" );
+    kzenmw->show();
+    splash->finish( kzenmw );
     delete splash;
     return app.exec();
 }

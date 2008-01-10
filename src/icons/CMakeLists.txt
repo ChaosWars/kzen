@@ -1,1 +1,1 @@
-INSTALL( FILES kzen.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/crystalsvg/48x48/apps/ )
+INSTALL( FILES kzen.png kzen_large.png DESTINATION ${ICON_INSTALL_DIR}/oxygen )

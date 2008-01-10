@@ -20,7 +20,7 @@
 #ifndef KZENSPLASH_H
 #define KZENSPLASH_H
 
-#include <ksplashscreen.h>
+#include <KDE/KSplashScreen>
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -34,7 +34,7 @@ class KZenSplash : public KSplashScreen
         ~KZenSplash();
 
     public slots:
-        void message( const QString& message );
+        void showMessage( const QString& showMessage, int alignment = Qt::AlignLeft | Qt::AlignBottom );
 };
 
 #endif

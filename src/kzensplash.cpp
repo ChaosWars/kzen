@@ -17,7 +17,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <kiconloader.h>
 #include "kzensplash.h"
 
 KZenSplash::KZenSplash( const QPixmap &pixmap )
@@ -30,9 +29,9 @@ KZenSplash::~KZenSplash()
 {
 }
 
-void KZenSplash::message( const QString &message )
+void KZenSplash::showMessage( const QString &showMessage, int alignment )
 {
-    KSplashScreen::message( message, Qt::AlignLeft | Qt::AlignBottom );
+    KSplashScreen::showMessage( showMessage, alignment );
 }
 
 #include "kzensplash.moc"
