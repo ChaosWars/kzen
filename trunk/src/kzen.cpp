@@ -79,7 +79,7 @@ LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash, QList<KZenDevice*>
             kDebug() << i18n( "No Devices have been found." );
             return LIBMTP_ERROR_NO_DEVICE_ATTACHED;
         case LIBMTP_ERROR_CONNECTING:
-            kDebug() << i18n( "There has been an error connecting." );
+            kDebug() << i18n( "There has been an error connecting to the device(s)." );
             return LIBMTP_ERROR_CONNECTING;
         case LIBMTP_ERROR_MEMORY_ALLOCATION:
             kDebug() << i18n( "Encountered a Memory Allocation Error." );
