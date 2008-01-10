@@ -49,15 +49,17 @@ void KZenDeviceThread::run()
 
 void KZenDeviceThread::getAlbums()
 {
-    LIBMTP_album_t *albumList = LIBMTP_Get_Album_List( m_device );
-    LIBMTP_album_t *iter;
-    QList<KZenAlbum*> a;
+    if( m_device ){
+        LIBMTP_album_t *albumList = LIBMTP_Get_Album_List( m_device );
+        LIBMTP_album_t *iter;
+        QList<KZenAlbum*> a;
 
-    for( iter = albumList; iter != NULL; iter = iter->next ){
-        a.append( new KZenAlbum( iter ) );
+        for( iter = albumList; iter != NULL; iter = iter->next ){
+            a.append( new KZenAlbum( iter ) );
+        }
+
+        emit albums( a );
     }
-
-    emit albums( a );
 }
 
 void KZenDeviceThread::action( Status status )

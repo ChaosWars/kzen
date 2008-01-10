@@ -20,7 +20,6 @@
 #ifndef KZENALBUM_H
 #define KZENALBUM_H
 
-// #include <linux/types.h>
 #include <QObject>
 #include <libmtp.h>
 

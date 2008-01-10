@@ -14,7 +14,8 @@ SET( SRC main.cpp
         kzendevicethread.cpp
         kzenalbum.cpp
         kzennavview.cpp
-        kzenalbumviewmodel.cpp )
+        kzenalbumviewmodel.cpp
+        kzenalbummodelitem.cpp )
 QT4_ADD_RESOURCES( SRC kzen.qrc )
 ADD_DEFINITIONS( ${QT_DEFINITIONS} ${KDE4_DEFINITIONS} )
 LINK_DIRECTORIES( ${KDE4_LIB_DIR} )

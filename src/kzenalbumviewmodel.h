@@ -21,6 +21,10 @@
 #define KZENALBUMVIEWMODEL_H
 
 #include <QAbstractItemModel>
+#include <QStringList>
+
+class KZenAlbum;
+class KZenAlbumModelItem;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -30,9 +34,21 @@ class KZenAlbumViewModel : public QAbstractItemModel
     Q_OBJECT
 
     public:
-        KZenAlbumViewModel( QObject *parent = 0 );
+        KZenAlbumViewModel( QObject *parent = 0, const QList<KZenAlbum*> &albums = QList<KZenAlbum*>() );
         ~KZenAlbumViewModel();
+        int columnCount( const QModelIndex &parent = QModelIndex() ) const;
+        QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
+        Qt::ItemFlags flags( const QModelIndex &index ) const;
+        QVariant headerData( int section, Qt::Orientation orientation,
+                             int role = Qt::DisplayRole ) const;
+        QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const;
+        QModelIndex parent( const QModelIndex &index ) const;
+        int rowCount( const QModelIndex &parent = QModelIndex() ) const;
 
+    private:
+        void setupModelData( const QList<KZenAlbum*> &albums );
+        QStringList rootItem;
+        QList<KZenAlbumModelItem*> children;
 };
 
 #endif

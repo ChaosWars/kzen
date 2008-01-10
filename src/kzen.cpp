@@ -35,21 +35,19 @@ KZen::KZen( KZenSplash *splash )
 
     if( error  != LIBMTP_ERROR_NONE ){
 
-        if( error != LIBMTP_ERROR_CONNECTING ){
-            m_widget->setEnabled( false );
-        }else{
-
-            while( error == LIBMTP_ERROR_CONNECTING ){
-                sleep( 1 );
-                error = checkDevices( splash, device_list );
-            }
-
+        while( error == LIBMTP_ERROR_CONNECTING ){
+            sleep( 1 );
+            error = checkDevices( splash, device_list );
         }
 
     }
 
     setupActions();
     m_widget = new KZenWidget( this, device_list );
+
+//     if( error != LIBMTP_ERROR_NONE )
+//         m_widget->setEnabled( false );
+
     setCentralWidget( m_widget );
 }
 

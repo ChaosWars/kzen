@@ -17,21 +17,69 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENNAVVIEW_H
-#define KZENNAVVIEW_H
+#include "kzenalbummodelitem.h"
 
-#include <QTreeView>
-
-/**
-	@author Lawrence Lee <valheru@facticius.net>
-*/
-class KZenNavView : public QTreeView
+KZenAlbumModelItem::KZenAlbumModelItem( KZenAlbum *data, KZenAlbumModelItem *parent )
+    : itemData( data )
 {
-    Q_OBJECT
+    parentItem = parent;
+}
 
-    public:
-        KZenNavView( QWidget *parent = 0 );
-        ~KZenNavView();
-};
 
-#endif
+KZenAlbumModelItem::~KZenAlbumModelItem()
+{
+    delete itemData;
+}
+
+void KZenAlbumModelItem::appendChild( const QString &item )
+{
+    childItems.append( item );
+}
+
+QString KZenAlbumModelItem::child( int row )
+{
+    return childItems.value( row );
+}
+
+int KZenAlbumModelItem::childCount() const
+{
+    return childItems.count();
+}
+
+int KZenAlbumModelItem::row() const
+{
+    return 0;
+}
+
+int KZenAlbumModelItem::columnCount() const
+{
+    return 4;
+}
+
+QVariant KZenAlbumModelItem::data( int column ) const
+{
+    switch( column ){
+        case 0:
+            return itemData->name();
+            break;
+        case 1:
+            return itemData->artist();
+            break;
+        case 2:
+            return itemData->genre();
+            break;
+        case 3:
+            return itemData->numTracks();
+            break;
+        default:
+            return QVariant();
+            break;
+    }
+}
+
+KZenAlbumModelItem* KZenAlbumModelItem::parent()
+{
+    return parentItem;
+}
+
+

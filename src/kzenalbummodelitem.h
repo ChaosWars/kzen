@@ -17,21 +17,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENNAVVIEW_H
-#define KZENNAVVIEW_H
+#ifndef KZENALBUMMODELITEM_H
+#define KZENALBUMMODELITEM_H
 
-#include <QTreeView>
+#include <QList>
+#include <QStringList>
+#include <QVariant>
+#include "kzenalbum.h"
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenNavView : public QTreeView
-{
-    Q_OBJECT
-
+class KZenAlbumModelItem{
     public:
-        KZenNavView( QWidget *parent = 0 );
-        ~KZenNavView();
+        KZenAlbumModelItem( KZenAlbum *data, KZenAlbumModelItem *parent = 0 );
+        ~KZenAlbumModelItem();
+        void appendChild( const QString &item );
+        QString child( int row );
+        int childCount() const;
+        int columnCount() const;
+        QVariant data( int column ) const;
+        int row() const;
+        KZenAlbumModelItem* parent();
+
+    private:
+        QStringList childItems;
+        KZenAlbum *itemData;
+        KZenAlbumModelItem *parentItem;
+
 };
 
 #endif
