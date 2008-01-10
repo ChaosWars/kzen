@@ -20,12 +20,14 @@
 #ifndef KZENWIDGET_H
 #define KZENWIDGET_H
 
-#include <qwidget.h>
-#include <kmultitabbar.h>
+#include <QWidget>
 
+class KComboBox;
 class KMultiTabBar;
 class KMultiTabBarTab;
-class KListView;
+class KZenNavView;
+class KZenAlbum;
+class KZenDevice;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -35,16 +37,27 @@ class KZenWidget : public QWidget
     Q_OBJECT
 
     public:
-        KZenWidget(QWidget *parent = 0, const char *name = 0);
+        KZenWidget( QWidget *parent = 0, QList<KZenDevice*> *devices = new QList<KZenDevice*>() );
         ~KZenWidget();
+
+        enum{
+            AlbumTab = 0,
+            ArtistTab,
+            PlaylistTab
+        };
+
+    public Q_SLOTS:
+        void listAlbums( const QList<KZenAlbum*> &a );
 
     private:
         KMultiTabBar *navpanel;
         KMultiTabBarTab *albumTab;
-        KListView *view, *albums;
+        KZenNavView *mainView, *navView;
+        KComboBox *m_devices;
+        QList<KZenDevice*> *mtp_devices;
 
     private slots:
-        void albumTabClicked();
+        void albumTabToggled( bool on );
 
 };
 

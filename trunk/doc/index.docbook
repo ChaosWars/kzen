@@ -2,9 +2,9 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY Lawrence.C.Lee "<personname><firstname>Lawrence</firstname><othername>C.</othername><surname>Lee</surname></personname>">
   <!ENTITY Lawrence.C.Lee.email "<email>valheru@facticius.net</email>">
-  <!ENTITY homepage "<ulink>http://kzen.googlecode.com</ulink>">
-  <!ENTITY kzen "<application>KZen</application>">
-  <!ENTITY kappname "&kzen;">
+  <!ENTITY homepage "<ulink url='http://knfoviewer.googlecode.com'>http://knfoviewer.googlecode.com</ulink>">
+  <!ENTITY knfoviewer "<application>KNfoViewer</application>">
+  <!ENTITY kappname "&knfoviewer;">
   <!ENTITY package "kde-module">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
@@ -14,18 +14,15 @@
 
 <bookinfo>
 
-<title>The &kzen; Handbook</title>
+<title>The &knfoviewer; Handbook</title>
 
 <authorgroup>
-<author>
-&Lawrence.C.Lee;
-&Lawrence.C.Lee.email;
-</author>
+<author>&Lawrence.C.Lee; &Lawrence.C.Lee.email;</author>
 </authorgroup>
 
 <copyright>
 <year>2007</year>
-<holder>Lawrence C. Lee</holder>
+<holder>&Lawrence.C.Lee;</holder>
 </copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
@@ -37,8 +34,7 @@
 <abstract>
 
 <para>
-&kzen; is an application for the verification and repair of source files
-using parity *.par2 and *.PAR2 files.
+&knfoviewer; is an application for viewing NFO files.
 </para>
 
 </abstract>
@@ -46,8 +42,8 @@ using parity *.par2 and *.PAR2 files.
 <keywordset>
 <keyword>KDE</keyword>
 <keyword>kdeutils</keyword>
-<keyword>KZen</keyword>
-<keyword>MTP</keyword>
+<keyword>KNfoViewer</keyword>
+<keyword>nfo</keyword>
 </keywordset>
 
 </bookinfo>
@@ -57,21 +53,23 @@ using parity *.par2 and *.PAR2 files.
 <title>Introduction</title>
 
 <para>
-&kzen; is an applicationfor managing portable media players that use the MTP protocol. Please report any problems or feature requests as an issue on &homepage;
+&knfoviewer; is an application for viewing NFO files.
+Please report any problems or feature requests as an issue on &homepage;
 </para>
 
 </chapter>
 
-<chapter id="using-kzen">
+<chapter id="using-knfoviewer">
 
-<title>Using &kzen;</title>
+<title>Using &knfoviewer;</title>
 
 <para>
+
 <screenshot>
-<screeninfo>Here's a screenshot of &kzen;</screeninfo>
+<screeninfo>Here's a screenshot of &knfoviewer;</screeninfo>
 	<mediaobject>
 	  <imageobject>
-	    <imagedata fileref="kzen.png" format="PNG"/>
+	    <imagedata fileref="knfoviewer.png" format="PNG"/>
 	  </imageobject>
 	  <textobject>
 	    <phrase>Screenshot</phrase>
@@ -81,111 +79,42 @@ using parity *.par2 and *.PAR2 files.
 </para>
 
 <para>
-You can double click on any *.par2 or *.PAR2 file that you wish to load into KZen.
-KZen will automatically open and proceed to load the recovery files.
-Alternatively, you can open any PAR file via
+You can double click on any NFO file and it will open in &knfoviewer;.
+Alternatively, you can open any NFO file via
 
 <variablelist>
-<varlistentry>
-<term><menuchoice>
-<guimenu>File</guimenu>
-<guimenuitem>Open PAR2 File</guimenuitem>
-</menuchoice></term>
-</varlistentry>
+  <varlistentry>
+    <term>
+      <menuchoice>
+        <guimenu>File</guimenu>
+        <guimenuitem>Open</guimenuitem>
+      </menuchoice>
+    </term>
+    <listitem>
+    <para><action>Open a PAR2 file</action></para>
+    </listitem>
+  </varlistentry>
 </variablelist>
 
+</para>
+
+<para>
+Once loaded, the file is displayed using CP437/IBM437 decoding.
+This enables the viewing of ASCII graphics.
+</para>
+
 <para>
 <screenshot>
-<screeninfo>&kzen; after loading PAR2 files</screeninfo>
+<screeninfo>&knfoviewer; displaying a CP437 encoded file</screeninfo>
 	<mediaobject>
 	  <imageobject>
-	    <imagedata fileref="kzen_loaded.png" format="PNG"/>
+	    <imagedata fileref="knfoviewer_file_loaded.png" format="PNG"/>
 	  </imageobject>
 	  <textobject>
 	    <phrase>Screenshot</phrase>
 	  </textobject>
 	</mediaobject>
 </screenshot>
-</para>
-
-<para>
-Once loaded, KZen will proceed to verify and if neccessary repair any files that need repairing
-if the "Automatically check" and "Automatically repair" options are enabled.
-If they are not enabled, then the user will have to command KZen to carry out these steps
-using the buttons in the main window.
-</para>
-
-<para>
-<screenshot>
-<screeninfo>&kzen; verifying source files</screeninfo>
-	<mediaobject>
-	  <imageobject>
-	    <imagedata fileref="kzen_checking.png" format="PNG"/>
-	  </imageobject>
-	  <textobject>
-	    <phrase>Screenshot</phrase>
-	  </textobject>
-	</mediaobject>
-</screenshot>
-</para>
-
-<para>
-If all source files pass verification &kzen; will report that all source files are correct.
-</para>
-
-<para>
-<screenshot>
-<screeninfo>&kzen; has verified the source files</screeninfo>
-	<mediaobject>
-	  <imageobject>
-	    <imagedata fileref="kzen_all_correct.png" format="PNG"/>
-	  </imageobject>
-	  <textobject>
-	    <phrase>Screenshot</phrase>
-	  </textobject>
-	</mediaobject>
-</screenshot>
-</para>
-
-<para>
-However, if there are damaged or missing source files then &kzen; can repair them if possible.
-</para>
-
-<para>
-<screenshot>
-<screeninfo>&kzen; after repairing damaged and missing source files</screeninfo>
-	<mediaobject>
-	  <imageobject>
-	    <imagedata fileref="kzen_repaired.png" format="PNG"/>
-	  </imageobject>
-	  <textobject>
-	    <phrase>Screenshot</phrase>
-	  </textobject>
-	</mediaobject>
-</screenshot>
-</para>
-
-<para>
-However, it is possible that there are either too many damaged and/or missing source files,
-or not enough parity files to carry out a repair. In this case, &kzen; will report that it
-is unable to carry out a repair of the source files. Your only recourse in this case will be
-to either redownload the damaged and missing files, or download more parity files.
-</para>
-
-<para>
-<screenshot>
-<screeninfo>&kzen; is unable to repair the source files</screeninfo>
-	<mediaobject>
-	  <imageobject>
-	    <imagedata fileref="kzen_repair_not_possible.png" format="PNG"/>
-	  </imageobject>
-	  <textobject>
-	    <phrase>Screenshot</phrase>
-	  </textobject>
-	</mediaobject>
-</screenshot>
-</para>
-
 </para>
 
 </chapter>
@@ -194,9 +123,9 @@ to either redownload the damaged and missing files, or download more parity file
 
 <title>Command Reference</title>
 
-<sect1 id="kzen-mainwindow">
+<sect1 id="knfoviewer-mainwindow">
 
-<title>The main &kzen; window</title>
+<title>The main &knfoviewer; window</title>
 
 <sect2>
 
@@ -204,16 +133,26 @@ to either redownload the damaged and missing files, or download more parity file
 
 <para>
 <variablelist>
+
 <varlistentry>
 <term><menuchoice>
 <shortcut>
 <keycombo action="simul">&Ctrl;<keycap>O</keycap></keycombo>
 </shortcut>
 <guimenu>File</guimenu>
-<guimenuitem>Open PAR2 File</guimenuitem>
+<guimenuitem>Open</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Loads a *.par2 or *.PAR2 recovery file</action></para></listitem>
+<listitem><para><action>Opens a NFO file</action></para></listitem>
 </varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Open Recent</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Displays a list of recently opened NFO files</action></para></listitem>
+</varlistentry>
+
 <varlistentry>
 <term><menuchoice>
 <shortcut>
@@ -222,8 +161,9 @@ to either redownload the damaged and missing files, or download more parity file
 <guimenu>File</guimenu>
 <guimenuitem>Quit</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Quits</action> &kzen;</para></listitem>
+<listitem><para><action>Quits</action> &knfoviewer;</para></listitem>
 </varlistentry>
+
 </variablelist>
 </para>
 
@@ -241,9 +181,9 @@ to either redownload the damaged and missing files, or download more parity file
 <keycombo action="simul">&Ctrl;<keycap>C</keycap></keycombo>
 </shortcut>
 <guimenu>Settings</guimenu>
-<guimenuitem>Configure KZen</guimenuitem>
+<guimenuitem>Configure KNfoViewer</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Opens the configuration dialog for KZen</action></para></listitem>
+<listitem><para><action>Opens the configuration dialog for KNfoViewer</action></para></listitem>
 </varlistentry>
 </variablelist>
 </para>
@@ -266,7 +206,7 @@ to either redownload the damaged and missing files, or download more parity file
 
 <title>Questions and Answers</title>
 
-&reporting.bugs;
+<para>&reporting.bugs;</para>
 
 </chapter>
 
@@ -275,8 +215,9 @@ to either redownload the damaged and missing files, or download more parity file
 <title>Credits and License</title>
 
 <para>
-&kzen;
+&knfoviewer;
 </para>
+
 <para>
 Program copyright 2007 &Lawrence.C.Lee; &Lawrence.C.Lee.email;
 </para>
@@ -294,12 +235,12 @@ Documentation Copyright &copy; 2007 &Lawrence.C.Lee; &Lawrence.C.Lee.email;
 
 <title>Installation</title>
 
-<sect1 id="getting-kzen">
+<sect1 id="getting-knfoviewer">
 
-<title>How to obtain &kzen;</title>
+<title>How to obtain &knfoviewer;</title>
 
 <para>
-&kzen; can be found on <ulink url="http://kzen.googlecode.com">the &kzen; home page</ulink>.
+&knfoviewer; can be found on <ulink url="http://knfoviewer.googlecode.com">the &knfoviewer; home page</ulink>.
 </para>
 
 </sect1>
@@ -309,11 +250,7 @@ Documentation Copyright &copy; 2007 &Lawrence.C.Lee; &Lawrence.C.Lee.email;
 <title>Requirements</title>
 
 <para>
-In order to successfully use &kzen; you need &kde; 3.5 and libmtp.
-</para>
-
-<para>
-Libmtp can be obained from <ulink url="http://libmtp.sourceforge.net">the libmtp homepage</ulink>.
+In order to successfully use &knfoviewer; you need &kde; 3.5.
 </para>
 
 </sect1>
@@ -323,7 +260,7 @@ Libmtp can be obained from <ulink url="http://libmtp.sourceforge.net">the libmtp
 <title>Compilation and Installation</title>
 
 <para>
-In order to compile and install KZen on your system, type the following in the base directory of the KZen source:
+In order to compile and install KNfoViewer on your system, type the following in the base directory of the KNfoViewer source:
 </para>
 
 <screen>
@@ -338,12 +275,16 @@ In order to compile and install KZen on your system, type the following in the b
 
 <title>Configuration</title>
 
+<para>&knfoviewer; allows users to configure the font used in the application
+and the colors the application uses to display the NFO files.
+</para>
+
 <para>
 <screenshot>
-<screeninfo>Here's a screenshot of &kzen;'s settings dialog</screeninfo>
+<screeninfo>Here's a screenshot of &knfoviewer;'s settings dialog option Configure Fonts</screeninfo>
 	<mediaobject>
 	  <imageobject>
-	    <imagedata fileref="kzen_settings.png" format="PNG"/>
+	    <imagedata fileref="configure_font.png" format="PNG"/>
 	  </imageobject>
 	  <textobject>
 	    <phrase>Screenshot</phrase>
@@ -352,8 +293,68 @@ In order to compile and install KZen on your system, type the following in the b
 </screenshot>
 </para>
 
-<para>&kzen; allows the user to configure it to automatically verify the source files once the parity files are loaded.
-Additionally, &kzen; can be configured to automatically repair any damaged source files if possible.
+<para>
+You can configure the font that &knfoviewer; uses to render the NFO's. Only fixed type fonts are shown.
+</para>
+
+<para>
+<screenshot>
+<screeninfo>Here's a screenshot of &knfoviewer;'s settings dialog option Configure Colors</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="configure_colors.png" format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Screenshot</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para>
+You can configure the colors that &knfoviewer; uses to render the NFO's.
+You can configure the colors used for:
+
+<itemizedlist>
+
+<listitem>
+
+<para>
+Background color.
+</para>
+
+<para>
+The color used to render the background of the NFO.
+</para>
+
+</listitem>
+
+<listitem>
+
+<para>
+Text color.
+</para>
+
+<para>
+The color used to render the text of the NFO.
+</para>
+
+</listitem>
+
+<listitem>
+
+<para>
+Link color.
+</para>
+
+<para>
+The color used to render url's in the NFO.
+</para>
+
+</listitem>
+
+</itemizedlist>
+
 </para>
 
 </sect1>
@@ -361,7 +362,6 @@ Additionally, &kzen; can be configured to automatically repair any damaged sourc
 </appendix>
 
 &documentation.index;
-
 </book>
 
 <!--
