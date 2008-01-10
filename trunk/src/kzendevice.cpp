@@ -29,12 +29,15 @@ KZenDevice::KZenDevice( LIBMTP_mtpdevice_t *device )
 KZenDevice::~KZenDevice()
 {
     delete device_thread;
-    LIBMTP_Release_Device( m_device );
+
+    if( m_device )
+        LIBMTP_Release_Device( m_device );
 }
 
 void KZenDevice::getAlbums()
 {
-    device_thread->action( KZenDeviceThread::GET_ALBUMS );
+    if( m_device )
+        device_thread->action( KZenDeviceThread::GET_ALBUMS );
 }
 
 #include "kzendevice.moc"

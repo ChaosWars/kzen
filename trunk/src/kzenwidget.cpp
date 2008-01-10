@@ -65,6 +65,7 @@ KZenWidget::KZenWidget( QWidget *parent, QList<KZenDevice*> *devices ) : QWidget
     //Main splitter
     QSplitter *splitter = new QSplitter( this );
     navView = new KZenNavView( splitter );
+    navView->setModel( new KZenAlbumViewModel() );
     navView->hide();
     mainView = new KZenNavView( splitter );
 
@@ -85,7 +86,15 @@ void KZenWidget::albumTabToggled( bool on )
 {
     if( on ){
         navView->show();
-        mtp_devices->at( m_devices->currentIndex() )->getAlbums();
+
+        if( mtp_devices->size() > 0 ){
+            int device = m_devices->currentIndex();
+
+            if( device >= 0 )
+                mtp_devices->value( device )->getAlbums();
+
+        }
+
     }else{
         navView->hide();
     }

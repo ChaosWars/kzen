@@ -29,4 +29,4 @@ KZenAlbum::~KZenAlbum()
     LIBMTP_destroy_album_t( m_album );
 }
 
-
+#include "kzenalbum.moc"

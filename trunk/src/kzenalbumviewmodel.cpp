@@ -18,14 +18,94 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "kzenalbumviewmodel.h"
+#include "kzenalbummodelitem.h"
+#include "kzenalbum.h"
 
-KZenAlbumViewModel::KZenAlbumViewModel( QObject *parent )
+KZenAlbumViewModel::KZenAlbumViewModel( QObject *parent, const QList<KZenAlbum*> &albums )
  : QAbstractItemModel( parent )
+{
+    rootItem << "Album" << "Artist" << "Genre" << "Nr. of Tracks";
+}
+
+KZenAlbumViewModel::~KZenAlbumViewModel()
 {
 }
 
+int KZenAlbumViewModel::columnCount( const QModelIndex &parent ) const
+{
+    return 4;
+}
 
-KZenAlbumViewModel::~KZenAlbumViewModel()
+QVariant KZenAlbumViewModel::data( const QModelIndex &index, int role ) const
+{
+    if ( !index.isValid() )
+        return QVariant();
+
+    if ( role != Qt::DisplayRole )
+        return QVariant();
+
+    KZenAlbumModelItem *item = static_cast<KZenAlbumModelItem*>( index.internalPointer() );
+    return item->data( index.column() );
+}
+
+Qt::ItemFlags KZenAlbumViewModel::flags( const QModelIndex &index ) const
+{
+    if ( !index.isValid() )
+        return Qt::ItemIsEnabled;
+
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+}
+
+QVariant KZenAlbumViewModel::headerData( int section, Qt::Orientation orientation, int role ) const
+{
+    if ( orientation == Qt::Horizontal && role == Qt::DisplayRole )
+        return rootItem.value( section );
+
+    return QVariant();
+}
+
+QModelIndex KZenAlbumViewModel::index( int row, int column, const QModelIndex &parent ) const
+{
+    KZenAlbumModelItem *parentItem;
+
+    if ( parent.isValid() )
+        parentItem = static_cast<KZenAlbumModelItem*>( parent.internalPointer() );
+
+    KZenAlbumModelItem *childItem = children.value( row );
+
+    if ( childItem )
+        return createIndex( row, column, childItem );
+    else
+        return QModelIndex();
+}
+
+QModelIndex KZenAlbumViewModel::parent( const QModelIndex &index ) const
+{
+    if ( !index.isValid() )
+        return QModelIndex();
+
+    KZenAlbumModelItem *childItem = static_cast<KZenAlbumModelItem*>( index.internalPointer() );
+    KZenAlbumModelItem *parentItem = childItem->parent();
+
+    if ( !parentItem )
+        return QModelIndex();
+
+    return createIndex( parentItem->row(), 0, parentItem );
+}
+
+int KZenAlbumViewModel::rowCount( const QModelIndex &parent ) const
+{
+    KZenAlbumModelItem * parentItem;
+
+    if ( parent.isValid() )
+        parentItem = static_cast<KZenAlbumModelItem*>( parent.internalPointer() );
+    else
+        return children.count();
+
+    return parentItem->childCount();
+}
+
+void KZenAlbumViewModel::setupModelData( const QList<KZenAlbum*> &albums )
 {
 }
 
