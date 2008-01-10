@@ -17,35 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENALBUM_H
-#define KZENALBUM_H
+#include "kzentrack.h"
 
-#include <QObject>
-#include <libmtp.h>
-
-class KZenTrack;
-
-/**
-	@author Lawrence Lee <valheru@facticius.net>
-*/
-class KZenAlbum : public QObject
+KZenTrack::KZenTrack( LIBMTP_track_t *track, QObject *parent )
+ : QObject( parent ), m_track( track )
 {
-    Q_OBJECT
+}
 
-    public:
-        KZenAlbum( LIBMTP_album_t *album, QObject *parent = 0 );
-        ~KZenAlbum();
-        const uint32_t albumId(){ return m_album->album_id; }
-        const char *name(){ return m_album->name; }
-        const char *artist(){ return m_album->artist; }
-        const char *genre(){ return m_album->genre; }
-        const uint32_t* tracks(){ return m_album->tracks; }
-        const uint32_t numTracks(){ return m_album->no_tracks; }
-        QList<KZenTrack*> albumTracks(){ return m_tracks; }
+KZenTrack::~KZenTrack()
+{
+    LIBMTP_destroy_track_t( m_track );
+}
 
-    private:
-        LIBMTP_album_t *m_album;
-        QList<KZenTrack*> m_tracks;
-};
-
-#endif
+#include "kzentrack.moc"
