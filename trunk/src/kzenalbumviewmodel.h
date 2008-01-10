@@ -48,7 +48,7 @@ class KZenAlbumViewModel : public QAbstractItemModel
     private:
         void setupModelData( const QList<KZenAlbum*> &albums );
         QStringList rootItem;
-        QList<KZenAlbumModelItem*> children;
+        QList<KZenAlbum*> m_albums;
 };
 
 #endif

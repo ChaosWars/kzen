@@ -36,6 +36,7 @@ KZen::KZen( KZenSplash *splash )
     if( error  != LIBMTP_ERROR_NONE ){
 
         while( error == LIBMTP_ERROR_CONNECTING ){
+            splash->showMessage( "Error connecting to device, retrying" );
             sleep( 1 );
             error = checkDevices( splash, device_list );
         }
@@ -45,10 +46,12 @@ KZen::KZen( KZenSplash *splash )
     setupActions();
     m_widget = new KZenWidget( this, device_list );
 
-//     if( error != LIBMTP_ERROR_NONE )
+    if( error != LIBMTP_ERROR_NONE ){
 //         m_widget->setEnabled( false );
+    }
 
     setCentralWidget( m_widget );
+    setAutoSaveSettings();
 }
 
 KZen::~KZen()
@@ -63,6 +66,7 @@ void KZen::setupActions()
     connect(  quit, SIGNAL( triggered() ), this, SLOT( close() ) );
     actionMenu->addAction( quit );
     menuBar()->addMenu( actionMenu );
+    menuBar()->addMenu( helpMenu() );
 }
 
 LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash, QList<KZenDevice*> *device_list )
@@ -72,26 +76,26 @@ LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash, QList<KZenDevice*>
 
     switch( LIBMTP_Get_Connected_Devices( &devices ) ){
         case LIBMTP_ERROR_NO_DEVICE_ATTACHED:
-            kDebug() << i18n( "No Devices have been found." ) << endl;
+            kDebug() << i18n( "No Devices have been found." );
             return LIBMTP_ERROR_NO_DEVICE_ATTACHED;
         case LIBMTP_ERROR_CONNECTING:
-            kDebug() << i18n( "There has been an error connecting. Exiting" ) << endl;
+            kDebug() << i18n( "There has been an error connecting." );
             return LIBMTP_ERROR_CONNECTING;
         case LIBMTP_ERROR_MEMORY_ALLOCATION:
-            kDebug() << i18n( "Encountered a Memory Allocation Error. Exiting" ) << endl;
+            kDebug() << i18n( "Encountered a Memory Allocation Error." );
             return LIBMTP_ERROR_MEMORY_ALLOCATION;
 
-            /* Unknown general errors - This should never execute */
+        /* Unknown general errors - This should never execute */
         case LIBMTP_ERROR_GENERAL:
         default:
             kDebug() << i18n( "There has been an unknown error, please report this to the libmtp developers." ) << endl;
             return LIBMTP_ERROR_GENERAL;
 
-            /* Successfully connected at least one device, so continue */
+        /* Successfully connected at least one device, so continue */
         case LIBMTP_ERROR_NONE:
             numdevices = LIBMTP_Number_Devices_In_List( devices );
-            kDebug() << i18n( "Successfully connected %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) ) << endl;
             splash->showMessage( i18n( "Successfully connected %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) ) );
+            kDebug() << i18n( "Successfully connected %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) );
     }
 
     LIBMTP_mtpdevice_t *iter;

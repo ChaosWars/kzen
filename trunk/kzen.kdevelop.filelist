@@ -21,12 +21,12 @@ src/kzendevice.cpp
 src/kzendevice.h
 src/kzendevicethread.cpp
 src/kzendevicethread.h
-src/kzenmodelitem.cpp
-src/kzenmodelitem.h
 src/kzennavview.cpp
 src/kzennavview.h
 src/kzensplash.cpp
 src/kzensplash.h
+src/kzentrack.cpp
+src/kzentrack.h
 src/kzenwidget.cpp
 src/kzenwidget.h
 src/main.cpp
