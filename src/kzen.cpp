@@ -17,18 +17,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <KDE/KUniqueApplication>
 #include <KDE/KMenuBar>
 #include <KDE/KMenu>
 #include <KDE/KAction>
 #include <KDE/KLocale>
 #include <KDE/KDebug>
+#include <KDE/KSystemTrayIcon>
 #include <libmtp.h>
 #include "kzen.h"
 #include "kzenwidget.h"
 #include "kzensplash.h"
 
 KZen::KZen( KZenSplash *splash )
+    : ok_to_close( false )
 {
+    trayIcon = new KSystemTrayIcon( "kzen", this );
+    trayIcon->show();
     LIBMTP_Init();
     QList<KZenDevice*> *device_list = new QList<KZenDevice*>();
     LIBMTP_error_number_t error = checkDevices( splash, device_list ) ;
@@ -47,7 +52,7 @@ KZen::KZen( KZenSplash *splash )
     m_widget = new KZenWidget( this, device_list );
 
     if( error != LIBMTP_ERROR_NONE ){
-//         m_widget->setEnabled( false );
+        m_widget->setEnabled( false );
     }
 
     setCentralWidget( m_widget );
@@ -56,17 +61,31 @@ KZen::KZen( KZenSplash *splash )
 
 KZen::~KZen()
 {
-    LIBMTP_Release_Device_List( devices );
 }
 
 void KZen::setupActions()
 {
     actionMenu = new KMenu( i18n( "&Action" ) );
     quit = new KAction( KIcon( "application-exit" ), i18n( "&Quit" ), actionMenu );
-    connect(  quit, SIGNAL( triggered() ), this, SLOT( close() ) );
+    connect(  quit, SIGNAL( triggered() ), this, SLOT( exit() ) );
     actionMenu->addAction( quit );
     menuBar()->addMenu( actionMenu );
     menuBar()->addMenu( helpMenu() );
+}
+
+bool KZen::queryClose()
+{
+    if( !ok_to_close ){
+        hide();
+    }
+
+    return ok_to_close;
+}
+
+bool KZen::queryExit()
+{
+    LIBMTP_Release_Device_List( devices );
+    return true;
 }
 
 LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash, QList<KZenDevice*> *device_list )
@@ -104,6 +123,12 @@ LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash, QList<KZenDevice*>
     }
 
     return LIBMTP_ERROR_NONE;
+}
+
+void KZen::exit()
+{
+    ok_to_close = true;
+    close();
 }
 
 #include "kzen.moc"

@@ -50,6 +50,7 @@ int main(int argc, char **argv)
     }
 
     KUniqueApplication app;
+    app.setQuitOnLastWindowClosed( false );
     splash = new KZenSplash( QPixmap( ":/pics/kzen_splash.png" ) );
     splash->show();
     splash->showMessage( i18n( "Searching for MTP devices" ) );

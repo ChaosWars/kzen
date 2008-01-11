@@ -65,7 +65,7 @@ KZenWidget::KZenWidget( QWidget *parent, QList<KZenDevice*> *devices ) : QWidget
     //Main splitter
     QSplitter *splitter = new QSplitter( this );
     navView = new KZenNavView( splitter );
-    navView->setModel( new KZenAlbumViewModel() );
+    navView->setModel( new KZenAlbumViewModel( navView ) );
     navView->hide();
     mainView = new KZenNavView( splitter );
 
@@ -102,24 +102,9 @@ void KZenWidget::albumTabToggled( bool on )
 
 void KZenWidget::listAlbums( const QList<KZenAlbum*> &a )
 {
-//     QList<QTreeWidgetItem*> items;
-
-//     for( int i = 0; i < a.size(); i++ ){
-//         uint32_t nrTracks = a.at( i )->numTracks();
-//         QTreeWidgetItem *album = new QTreeWidgetItem( navView, QStringList() << QString( a.at( i )->name() )
-//                                                                              << QString( a.at( i )->artist() )
-//                                                                              << QString( a.at( i )->genre() )
-//                                                                              << QString::number( nrTracks ) );
-
-//         for( uint j = 0; j < nrTracks; j++ ){
-//             QTreeWidgetItem *track = new QTreeWidgetItem( album );
-//             album->addChild( track );
-//         }
-
-//         items.append( album );
-//     }
-
-//     navView->insertTopLevelItems( 0, items );
+    KZenAlbumViewModel *model = static_cast<KZenAlbumViewModel*>( navView->model() );
+    navView->setModel( new KZenAlbumViewModel( navView, a ) );
+    delete model;
 }
 
 #include "kzenwidget.moc"
