@@ -21,30 +21,29 @@
 #define KZENALBUMMODELITEM_H
 
 #include <QList>
-#include <QStringList>
 #include <QVariant>
 #include "kzenalbum.h"
+#include "kzentrackmodelitem.h"
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
 class KZenAlbumModelItem{
     public:
-        KZenAlbumModelItem( KZenAlbum *data, KZenAlbumModelItem *parent = 0 );
+        KZenAlbumModelItem( KZenAlbum *album, QStringList *parent );
         ~KZenAlbumModelItem();
-        void appendChild( const QString &item );
-        QString child( int row );
-        int childCount() const;
-        int columnCount() const;
+        void appendChild( KZenTrackModelItem *track ){ tracks.append( track ); };
+        KZenTrackModelItem* child( int row ){ return tracks.value( row ); };
+        int childCount() const{ return tracks.count(); };
+        int columnCount() const{ return 4; };
         QVariant data( int column ) const;
         int row() const;
-        KZenAlbumModelItem* parent();
+        QStringList* parent(){ return 0; };
 
     private:
-        QStringList childItems;
-        KZenAlbum *itemData;
-        KZenAlbumModelItem *parentItem;
-
+        QStringList *m_parent;
+        KZenAlbum *m_album;
+        QList<KZenTrackModelItem*> tracks;
 };
 
 #endif

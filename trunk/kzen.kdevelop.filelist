@@ -27,6 +27,8 @@ src/kzensplash.cpp
 src/kzensplash.h
 src/kzentrack.cpp
 src/kzentrack.h
+src/kzentrackmodelitem.cpp
+src/kzentrackmodelitem.h
 src/kzenwidget.cpp
 src/kzenwidget.h
 src/main.cpp

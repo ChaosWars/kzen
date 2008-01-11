@@ -16,7 +16,8 @@ SET( SRC main.cpp
         kzentrack.cpp
         kzennavview.cpp
         kzenalbumviewmodel.cpp
-        kzenalbummodelitem.cpp )
+        kzenalbummodelitem.cpp
+        kzentrackmodelitem.cpp )
 QT4_ADD_RESOURCES( SRC kzen.qrc )
 ADD_DEFINITIONS( ${QT_DEFINITIONS} ${KDE4_DEFINITIONS} )
 LINK_DIRECTORIES( ${KDE4_LIB_DIR} )

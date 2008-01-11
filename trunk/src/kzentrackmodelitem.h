@@ -17,36 +17,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "kzenalbummodelitem.h"
+#ifndef KZENTRACKMODELITEM_H
+#define KZENTRACKMODELITEM_H
 
-KZenAlbumModelItem::KZenAlbumModelItem( KZenAlbum *data, QStringList *parent )
-    : m_parent( parent ), m_album( data )
-{
-}
+class KZenAlbumModelItem;
 
-KZenAlbumModelItem::~KZenAlbumModelItem()
-{
-}
+/**
+	@author Lawrence Lee <valheru@facticius.net>
+*/
+class KZenTrackModelItem{
+    public:
+        KZenTrackModelItem( KZenAlbumModelItem *parent );
+        ~KZenTrackModelItem();
+        int childCount() const{ return 0; };
+        int columnCount() const{ return 4; };
+        QVariant data( int column ) const;
+        int row() const;
+        KZenAlbumModelItem* parent(){ return m_parent; };
 
-QVariant KZenAlbumModelItem::data( int column ) const
-{
-    switch( column ){
-        case 0:
-            return m_album->name();
-            break;
-        case 1:
-            return m_album->artist();
-            break;
-        case 2:
-            return m_album->genre();
-            break;
-        case 3:
-            return m_album->numTracks();
-            break;
-        default:
-            return QVariant();
-            break;
-    }
-}
+    private:
+        KZenAlbumModelItem *m_parent;
+        KZenTrack *track;
 
+};
 
+#endif
