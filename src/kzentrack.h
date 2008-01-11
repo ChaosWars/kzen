@@ -23,6 +23,8 @@
 #include <QObject>
 #include <libmtp.h>
 
+class KZenAlbum;
+
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
@@ -31,7 +33,7 @@ class KZenTrack : public QObject
     Q_OBJECT
 
     public:
-        KZenTrack( LIBMTP_track_t *track, QObject *parent = 0 );
+        KZenTrack( KZenAlbum *parent, LIBMTP_track_t *track = 0 );
         ~KZenTrack();
         const uint32_t trackId(){ return m_track->item_id; }
         const uint32_t parentId(){ return m_track->parent_id; }
@@ -52,8 +54,10 @@ class KZenTrack : public QObject
         uint32_t usecount(){ return m_track->usecount; }
         uint64_t filesize(){ return m_track->filesize; }
         LIBMTP_filetype_t filetype(){ return m_track->filetype; }
+        KZenAlbum *parent(){ return m_parent; }
 
     private:
+        KZenAlbum *m_parent;
         LIBMTP_track_t *m_track;
 
 };
