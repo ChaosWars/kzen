@@ -46,9 +46,8 @@ class KZenAlbumViewModel : public QAbstractItemModel
         int rowCount( const QModelIndex &parent = QModelIndex() ) const;
 
     private:
-        void setupModelData( const QList<KZenAlbum*> &albums );
         QStringList rootItem;
-        QList<KZenAlbumModelItem*> albumsItems;
+        QList<KZenAlbum*> albumItems;
 };
 
 #endif

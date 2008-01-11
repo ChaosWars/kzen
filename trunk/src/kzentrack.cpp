@@ -17,11 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <KDE/KDebug>
 #include "kzentrack.h"
+#include "kzenalbum.h"
 
-KZenTrack::KZenTrack( LIBMTP_track_t *track, QObject *parent )
- : QObject( parent ), m_track( track )
+KZenTrack::KZenTrack( KZenAlbum *parent, LIBMTP_track_t *track )
+ : QObject( parent ), m_parent( parent ), m_track( track )
 {
+    setObjectName( "KZenTrack" );
 }
 
 KZenTrack::~KZenTrack()

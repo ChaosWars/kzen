@@ -15,13 +15,11 @@ SET( SRC main.cpp
         kzenalbum.cpp
         kzentrack.cpp
         kzennavview.cpp
-        kzenalbumviewmodel.cpp
-        kzenalbummodelitem.cpp
-        kzentrackmodelitem.cpp )
+        kzenalbumviewmodel.cpp )
 QT4_ADD_RESOURCES( SRC kzen.qrc )
-ADD_DEFINITIONS( ${QT_DEFINITIONS} ${KDE4_DEFINITIONS} )
 LINK_DIRECTORIES( ${KDE4_LIB_DIR} )
 KDE4_ADD_EXECUTABLE( kzen ${SRC} )
+ADD_DEFINITIONS( ${KDE4_DEFINITIONS} ${QT_DEFINITIONS} )
 TARGET_LINK_LIBRARIES( kzen ${KDE4_KDECORE_LIBS}
                             ${KDE4_KDEUI_LIBS}
                             ${KDE4_UTIL_LIBS}

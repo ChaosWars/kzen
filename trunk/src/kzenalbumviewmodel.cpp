@@ -21,41 +21,80 @@
 #include "kzenalbumviewmodel.h"
 #include "kzenalbummodelitem.h"
 #include "kzenalbum.h"
+#include "kzentrack.h"
 
 KZenAlbumViewModel::KZenAlbumViewModel( QObject *parent, const QList<KZenAlbum*> &albums )
- : QAbstractItemModel( parent )
+ : QAbstractItemModel( parent ), albumItems( albums )
 {
     rootItem << "Album" << "Artist" << "Genre" << "Nr. of Tracks";
-    setupModelData( albums );
 }
 
 KZenAlbumViewModel::~KZenAlbumViewModel()
 {
-    qDeleteAll( albumsItems );
+    qDeleteAll( albumItems );
 }
 
 int KZenAlbumViewModel::columnCount( const QModelIndex &parent ) const
 {
-    kDebug() << parent;
     return 4;
 }
 
 QVariant KZenAlbumViewModel::data( const QModelIndex &index, int role ) const
 {
-    kDebug() << index;
     if( !index.isValid() )
         return QVariant();
 
     if( role != Qt::DisplayRole )
         return QVariant();
 
-    KZenAlbumModelItem *item = static_cast<KZenAlbumModelItem*>( index.internalPointer() );
-    return item->data( index.column() );
+    if( !index.parent().isValid() ){ //Album
+        KZenAlbum *album = static_cast<KZenAlbum*>( index.internalPointer() );
+
+        switch( index.column() ){
+            case 0:
+                return album->name();
+                break;
+            case 1:
+                return album->artist();
+                break;
+            case 2:
+                return album->genre();
+                break;
+            case 3:
+                return album->numTracks();
+                break;
+            default:
+                return QVariant();
+                break;
+        }
+    }else{ //Track
+        //FIXME Return proper track data
+        KZenTrack *track = static_cast<KZenTrack*>( index.internalPointer() );
+        switch( index.column() ){
+            case 0:
+                return /*track->title()*/QString( "Tile" );
+                break;
+            case 1:
+                return /*track->artist()*/QString( "Artist" );
+                break;
+            case 2:
+                return /*track->genre()*/QString( "Genre" );
+                break;
+            case 3:
+                return /*track->tracknumber()*/index.row();
+                break;
+            default:
+                return QVariant();
+                break;
+        }
+    }
+
+    //We should never return from here
+    return QVariant();
 }
 
 Qt::ItemFlags KZenAlbumViewModel::flags( const QModelIndex &index ) const
 {
-    kDebug() << index;
     if( !index.isValid() )
         return 0;
 
@@ -64,7 +103,6 @@ Qt::ItemFlags KZenAlbumViewModel::flags( const QModelIndex &index ) const
 
 QVariant KZenAlbumViewModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
-    kDebug() << section;
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         return rootItem.value( section );
     }
@@ -74,19 +112,17 @@ QVariant KZenAlbumViewModel::headerData( int section, Qt::Orientation orientatio
 
 QModelIndex KZenAlbumViewModel::index( int row, int column, const QModelIndex &parent ) const
 {
-    kDebug() << QString( "%1, %2" ).arg( row ).arg( column ) << parent;
-
     if( !hasIndex( row, column, parent ) ){
         return QModelIndex();
     }
 
     if( !parent.isValid() ){ // This is an album, and therefor a top-level item
-        kDebug() << "Album";
-        KZenAlbumModelItem *album = const_cast<KZenAlbumModelItem*>( albumsItems.at( row ) );
+        KZenAlbum *album = const_cast<KZenAlbum*>( albumItems.at( row ) );
         return createIndex( row, column, album );
     }else{ //This is a track, and has an album as a parent
-        kDebug() << "Track";
-        //KZenAlbum *parentItem = static_cast<KZenAlbum*>( index.internalPointer() );
+        KZenAlbum *album = static_cast<KZenAlbum*>( parent.internalPointer() );
+        KZenTrack *track = album->albumTracks().value( row );
+        return createIndex( row, column, track );
     }
 
     //We should never return from here
@@ -95,32 +131,53 @@ QModelIndex KZenAlbumViewModel::index( int row, int column, const QModelIndex &p
 
 QModelIndex KZenAlbumViewModel::parent( const QModelIndex &index ) const
 {
-    kDebug() << index;
-
-    if( !index.isValid() )
+    if( !index.isValid() ){
         return QModelIndex();
+    }
 
-//     if( parent )
-//         return createIndex( index.row(), 0, parent );
-//     else
+    QObject *item = static_cast<QObject*>( index.internalPointer() );
+    KZenAlbum *album = qobject_cast<KZenAlbum*>( item );
+
+    if( album ){
         return QModelIndex();
+    }else{ //Track
+        KZenTrack *track = qobject_cast<KZenTrack*>( item );
+        KZenAlbum *album = track->parent();
+        return createIndex( albumItems.indexOf( album ), 0, album );
+    }
+
+    //We should never return from here
+    return QModelIndex();
 }
 
 int KZenAlbumViewModel::rowCount( const QModelIndex &parent ) const
 {
-    kDebug() << parent;
-    if( parent.column() > 0 ){
+    if( parent.column() > 0 )
+        //Out of model bounds
         return 0;
-    }else{
-        return albumsItems.size();
-    }
-}
 
-void KZenAlbumViewModel::setupModelData( const QList<KZenAlbum*> &albums )
-{
-    for( int i = 0; i < albums.size(); i++ ){
-        albumsItems.append( new KZenAlbumModelItem( albums.at( i ), &rootItem ) );
+    if( !parent.isValid() )
+        //We are in the root of the model
+        return albumItems.size();
+
+    //Check to see if this is a track
+    QObject *item = static_cast<QObject*>( parent.internalPointer() );
+    KZenTrack *track = qobject_cast<KZenTrack*>( item );
+
+    if( track ){ //It's a track
+        return 0;
+    }else{ //It's an album
+        KZenAlbum *album = qobject_cast<KZenAlbum*>( item );
+
+        if( album )
+            return album->numTracks();
+        else
+            return 0;
     }
+
+    //We should never reach this
+    return 0;
+
 }
 
 #include "kzenalbumviewmodel.moc"
