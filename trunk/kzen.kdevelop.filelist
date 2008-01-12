@@ -19,6 +19,8 @@ src/kzendevice.cpp
 src/kzendevice.h
 src/kzendevicethread.cpp
 src/kzendevicethread.h
+src/kzenmusicwidget.cpp
+src/kzenmusicwidget.h
 src/kzennavview.cpp
 src/kzennavview.h
 src/kzensplash.cpp

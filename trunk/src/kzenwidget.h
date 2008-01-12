@@ -25,8 +25,8 @@
 class KComboBox;
 class KMultiTabBar;
 class KMultiTabBarTab;
+class KZenMusicWidget;
 class QTreeView;
-class KZenNavView;
 class KZenAlbum;
 class KZenDevice;
 
@@ -55,7 +55,7 @@ class KZenWidget : public QWidget
         bool albumsDirty;
         KMultiTabBar *navpanel;
         KMultiTabBarTab *musicTab, *videoTab, *photoTab;
-        KZenAlbumView *albumView;
+        KZenMusicWidget *musicWidget;
         QTreeView *mainView;
         KComboBox *m_devices;
 

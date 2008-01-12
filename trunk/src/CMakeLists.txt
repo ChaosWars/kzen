@@ -10,12 +10,14 @@ SET( SRC main.cpp
         kzen.cpp
         kzensplash.cpp
         kzenwidget.cpp
+        kzenmusicwidget.cpp
         kzendevice.cpp
         kzendevicethread.cpp
         kzenalbum.cpp
         kzentrack.cpp
-        kzennavview.cpp
+        kzenalbumview.cpp
         kzenalbumviewmodel.cpp )
+
 QT4_ADD_RESOURCES( SRC kzen.qrc )
 LINK_DIRECTORIES( ${KDE4_LIB_DIR} )
 KDE4_ADD_EXECUTABLE( kzen ${SRC} )
