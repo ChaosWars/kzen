@@ -79,7 +79,7 @@ KZenWidget::KZenWidget( QWidget *parent, QList<KZenDevice*> *devices )
     //Main splitter
     QSplitter *splitter = new QSplitter( this );
     musicWidget = new KZenMusicWidget( splitter );
-//     musicWidget->hide();
+    musicWidget->hide();
     mainView = new QTreeView( splitter );
 
     //Set the layout
@@ -98,8 +98,8 @@ KZenWidget::~KZenWidget()
 void KZenWidget::musicTabToggled( bool on )
 {
     if( on ){
-        photoTabToggled( false );
-        videoTabToggled( false );
+        navpanel->tab( KZenWidget::PhotoTab )->setState( false );
+        navpanel->tab( KZenWidget::VideoTab )->setState( false );
         musicWidget->show();
 
         if( mtp_devices->size() > 0 ){
@@ -118,8 +118,8 @@ void KZenWidget::musicTabToggled( bool on )
 void KZenWidget::videoTabToggled( bool on )
 {
     if( on ){
-        musicTabToggled( false );
-        photoTabToggled( false );
+        navpanel->tab( KZenWidget::MusicTab )->setState( false );
+        navpanel->tab( KZenWidget::PhotoTab )->setState( false );
     }else{
     }
 }
@@ -127,8 +127,8 @@ void KZenWidget::videoTabToggled( bool on )
 void KZenWidget::photoTabToggled( bool on )
 {
     if( on ){
-        musicTabToggled( false );
-        videoTabToggled( false );
+        navpanel->tab( KZenWidget::MusicTab )->setState( false );
+        navpanel->tab( KZenWidget::VideoTab )->setState( false );
     }else{
     }
 }
