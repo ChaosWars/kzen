@@ -28,4 +28,4 @@ KZenAlbumView::~KZenAlbumView()
 {
 }
 
-#include "kzennavview.moc"
+#include "kzenalbumview.moc"
