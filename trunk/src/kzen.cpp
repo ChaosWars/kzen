@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <KDE/KUniqueApplication>
 #include <KDE/KMenuBar>
+#include <KDE/KStatusBar>
 #include <KDE/KMenu>
 #include <KDE/KAction>
 #include <KDE/KLocale>
@@ -32,24 +33,22 @@
 KZen::KZen( KZenSplash *splash )
     : ok_to_close( false )
 {
-    trayIcon = new KSystemTrayIcon( "kzen", this );
-    trayIcon->show();
+    m_splash = splash;
     LIBMTP_Init();
-    QList<KZenDevice*> *device_list = new QList<KZenDevice*>();
-    LIBMTP_error_number_t error = checkDevices( splash, device_list ) ;
+    LIBMTP_error_number_t error = checkDevices( splash ) ;
 
     if( error  != LIBMTP_ERROR_NONE ){
 
         while( error == LIBMTP_ERROR_CONNECTING ){
             splash->showMessage( "Error connecting to device, retrying" );
             sleep( 1 );
-            error = checkDevices( splash, device_list );
+            error = checkDevices( splash );
         }
 
     }
 
     setupActions();
-    m_widget = new KZenWidget( this, device_list );
+    m_widget = new KZenWidget( deviceList, this );
 
     if( error != LIBMTP_ERROR_NONE ){
         m_widget->setEnabled( false );
@@ -57,6 +56,8 @@ KZen::KZen( KZenSplash *splash )
 
     setCentralWidget( m_widget );
     setAutoSaveSettings();
+    trayIcon = new KSystemTrayIcon( "KZen", this );
+    trayIcon->show();
 }
 
 KZen::~KZen()
@@ -71,6 +72,7 @@ void KZen::setupActions()
     actionMenu->addAction( quit );
     menuBar()->addMenu( actionMenu );
     menuBar()->addMenu( helpMenu() );
+    statusBar();
 }
 
 bool KZen::queryClose()
@@ -88,7 +90,7 @@ bool KZen::queryExit()
     return true;
 }
 
-LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash, QList<KZenDevice*> *device_list )
+LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash )
 {
     kDebug() << i18n( "libmtp version: " LIBMTP_VERSION_STRING );
     uint32_t numdevices;
@@ -117,13 +119,26 @@ LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash, QList<KZenDevice*>
             kDebug() << i18n( "Successfully connected %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) );
     }
 
-    LIBMTP_mtpdevice_t *iter;
-    for( iter = devices; iter != NULL; iter = iter->next ){
-        device_list->append( new KZenDevice( iter ) );
+    LIBMTP_mtpdevice_t *device;
+    for( device = devices; device != NULL; device = device->next ){
+        deviceList.append( new KZenDevice( device, this ) );
     }
 
     return LIBMTP_ERROR_NONE;
 }
+
+/**
+ *
+ * @param message
+ */
+void KZen::message( const QString& m )
+{
+    if( m_splash )
+        m_splash->showMessage( m );
+    else
+        statusBar()->showMessage( m );
+}
+
 
 void KZen::exit()
 {

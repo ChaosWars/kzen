@@ -17,53 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENWIDGET_H
-#define KZENWIDGET_H
+#include <QLayout>
+#include "kzenmusicwidget.h"
+#include "kzenalbumview.h"
 
-#include <QWidget>
-
-class KComboBox;
-class KMultiTabBar;
-class KMultiTabBarTab;
-class KZenMusicWidget;
-class QTreeView;
-class KZenAlbum;
-class KZenDevice;
-
-/**
-	@author Lawrence Lee <valheru@facticius.net>
-*/
-class KZenWidget : public QWidget
+KZenMusicWidget::KZenMusicWidget( QWidget *parent )
+ : QToolBox( parent )
 {
-    Q_OBJECT
+    m_albumView = new KZenAlbumView( this );
+    addItem( m_albumView, "Albums" );
+}
 
-    public:
-        KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent = 0 );
-        ~KZenWidget();
+KZenMusicWidget::~KZenMusicWidget()
+{
+}
 
-        enum{
-            MusicTab = 0,
-            VideoTab,
-            PhotoTab
-        };
-
-    public Q_SLOTS:
-        void listAlbums( const QList<KZenAlbum*> &a );
-
-    private:
-        QList<KZenDevice*> mtp_devices;
-        bool albumsDirty;
-        KMultiTabBar *navpanel;
-        KMultiTabBarTab *musicTab, *videoTab, *photoTab;
-        KZenMusicWidget *musicWidget;
-        QTreeView *mainView;
-        KComboBox *m_devices;
-
-    private slots:
-        void musicTabToggled( bool on );
-        void videoTabToggled( bool on );
-        void photoTabToggled( bool on );
-
-};
-
-#endif
+#include "kzenmusicwidget.moc"
