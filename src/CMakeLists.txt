@@ -15,6 +15,7 @@ SET( SRC main.cpp
         kzendevicethread.cpp
         kzenalbum.cpp
         kzentrack.cpp
+        kzenfile.cpp
         kzenalbumview.cpp
         kzenalbumviewmodel.cpp )
 

@@ -34,13 +34,13 @@
 #include "kzendevicethread.h"
 #include "kzenalbum.h"
 
-KZenWidget::KZenWidget( QWidget *parent, QList<KZenDevice*> *devices )
+KZenWidget::KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent )
     : QWidget( parent ), mtp_devices( devices ), albumsDirty( false )
 {
     qRegisterMetaType< QList<KZenAlbum*> >( "QList<KZenAlbum*>" );
 
-    for( int i = 0; i < mtp_devices->size(); i++ ){
-        connect( mtp_devices->at( i )->deviceThread(), SIGNAL( albums( const QList<KZenAlbum*>& ) ), this, SLOT( listAlbums( const QList<KZenAlbum*>& ) ) );
+    for( int i = 0; i < mtp_devices.size(); i++ ){
+        connect( mtp_devices.at( i ), SIGNAL( albumList( const QList<KZenAlbum*>& ) ), this, SLOT( listAlbums( const QList<KZenAlbum*>& ) ) );
     }
 
     //Main layout
@@ -50,8 +50,8 @@ KZenWidget::KZenWidget( QWidget *parent, QList<KZenDevice*> *devices )
     //Device combo box
     m_devices = new KComboBox( mainVLayout );
 
-    for( int i = 0; i < mtp_devices->size(); i++ ){
-        m_devices->insertItem( i, mtp_devices->at( i )->name() );
+    for( int i = 0; i < mtp_devices.size(); i++ ){
+        m_devices->insertItem( i, mtp_devices.at( i )->name() );
     }
 
     //Navigation panel
@@ -102,11 +102,11 @@ void KZenWidget::musicTabToggled( bool on )
         navpanel->tab( KZenWidget::VideoTab )->setState( false );
         musicWidget->show();
 
-        if( mtp_devices->size() > 0 ){
+        if( mtp_devices.size() > 0 ){
             int device = m_devices->currentIndex();
 
             if( device >= 0 )
-                mtp_devices->value( device )->getAlbums();
+                mtp_devices.value( device )->albums();
 
         }
 

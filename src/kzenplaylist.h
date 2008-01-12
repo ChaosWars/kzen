@@ -17,49 +17,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENTRACK_H
-#define KZENTRACK_H
+#ifndef KZENPLAYLIST_H
+#define KZENPLAYLIST_H
 
 #include <QObject>
-#include <libmtp.h>
-
-class KZenAlbum;
+#include "libmtp.h"
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenTrack : public QObject
+class KZenPlaylist : public QObject
 {
     Q_OBJECT
 
     public:
-        KZenTrack( QObject *parent, LIBMTP_track_t *track = 0 );
-        ~KZenTrack();
-        const uint32_t trackId(){ return m_track->item_id; }
-        const uint32_t parentId(){ return m_track->parent_id; }
-        const char* title(){ return m_track->title; }
-        const char* artist(){ return m_track->artist; }
-        const char* genre(){ return m_track->genre; }
-        const char* album(){ return m_track->album; }
-        const char* date(){ return m_track->date; }
-        const char* filename(){ return m_track->filename; }
-        uint16_t tracknumber(){ return m_track->tracknumber; }
-        uint32_t duration(){ return m_track->duration; }
-        uint32_t samplerate(){ return m_track->samplerate; }
-        uint16_t numchannels(){ return m_track->nochannels; }
-        uint32_t wavecodec(){ return m_track->wavecodec; }
-        uint32_t bitrate(){ return m_track->bitrate; }
-        uint16_t bitratetype(){ return m_track->bitratetype; }
-        uint16_t rating(){ return m_track->rating; }
-        uint32_t usecount(){ return m_track->usecount; }
-        uint64_t filesize(){ return m_track->filesize; }
-        LIBMTP_filetype_t filetype(){ return m_track->filetype; }
-        KZenAlbum *parent(){ return m_parent; }
+        KZenPlaylist( LIBMTP_playlist_t *playlist, QObject *parent = 0 );
+        ~KZenPlaylist();
+        uint32_t playlistId(){ return m_playlist->playlist_id; }
+        char* name(){ return m_playlist->name; };
+        uint32_t* tracks(){ return m_playlist->tracks; };
+        uint32_t nrTracks(){ return m_playlist->no_tracks; };
 
     private:
-        KZenAlbum *m_parent;
-        LIBMTP_track_t *m_track;
-
+        LIBMTP_playlist_t *m_playlist;
 };
 
 #endif

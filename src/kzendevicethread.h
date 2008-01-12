@@ -24,7 +24,10 @@
 #include <QList>
 #include <libmtp.h>
 
+class KZenDevice;
 class KZenAlbum;
+class KZenFile;
+class KZenPlaylist;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -37,21 +40,27 @@ class KZenDeviceThread : public QThread
     public:
         KZenDeviceThread( QObject *parent = 0, LIBMTP_mtpdevice_t *device = 0 );
         ~KZenDeviceThread();
-        enum Status{ IDLE, GET_ALBUMS };
+        enum Status{ IDLE, GET_ALBUM_LIST, GET_FILE_LIST, GET_PLAYLIST_LIST };
         void setStatus( Status status ){ m_status = status; };
         Status status() const{ return m_status; };
-        void getAlbums();
         void action( Status status );
+        void getAlbumList();
+        void getPlaylistList();
+        void getFileList();
 
     protected:
         void run();
 
     private:
+        KZenDevice *m_parent;
         Status m_status;
         LIBMTP_mtpdevice_t *m_device;
 
     Q_SIGNALS:
-        void albums( const QList<KZenAlbum*> &a );
+        void message( const QString &message );
+        void albumList( const QList<KZenAlbum*> &list );
+        void fileList( const QList<KZenFile*> &list );
+        void playlistList( const QList<KZenPlaylist*> &list );
 };
 
 #endif

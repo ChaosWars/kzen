@@ -24,6 +24,9 @@
 #include <libmtp.h>
 
 class KZenDeviceThread;
+class KZenAlbum;
+class KZenFile;
+class KZenPlaylist;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -33,21 +36,34 @@ class KZenDevice : public QObject{
     Q_OBJECT
 
     public:
-        KZenDevice( LIBMTP_mtpdevice_t *device );
+        KZenDevice( LIBMTP_mtpdevice_t *device, QObject *parent = 0 );
         ~KZenDevice();
-        KZenDeviceThread* deviceThread(){ return device_thread; }
-        const char* name(){ return LIBMTP_Get_Friendlyname( m_device ); }
-
-        const int batteryLevel( uint8_t *maximum_level, uint8_t *current_level ){
-            return LIBMTP_Get_Batterylevel( m_device, maximum_level, current_level );
-        }
-
+        const char* name(){ return friendlyName; }
+        QList<KZenAlbum*> albums(){ return m_albums; };
+        QList<KZenFile*> files(){ return m_files; };
+        QList<KZenPlaylist*> playlists(){ return m_playlists; }
         void getAlbums();
+        void getFiles();
+        void getPlaylists();
 
     private:
         KZenDeviceThread *device_thread;
         LIBMTP_mtpdevice_t *m_device;
+        QList<KZenAlbum*> m_albums;
+        QList<KZenFile*> m_files;
+        QList<KZenPlaylist*> m_playlists;
+        const char* friendlyName;
 
+    private Q_SLOTS:
+        void albumListSlot( const QList<KZenAlbum*> &albums );
+        void fileListSlot( const QList<KZenFile*> &files );
+        void playlistListSlot( const QList<KZenPlaylist*> &playlists );
+
+    Q_SIGNALS:
+        void message( const QString &message );
+        void albumList( const QList<KZenAlbum*> &albums );
+        void fileList( const QList<KZenFile*> &files );
+        void playlistList( const QList<KZenPlaylist*> &playlists );
 };
 
 #endif

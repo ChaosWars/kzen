@@ -26,9 +26,10 @@
 
 class KMenu;
 class KAction;
+class KSystemTrayIcon;
+class KZenDevice;
 class KZenWidget;
 class KZenSplash;
-class KSystemTrayIcon;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -47,16 +48,19 @@ class KZen : public KMainWindow
 
     private:
         bool ok_to_close;
+        KZenSplash *m_splash;
         KZenWidget *m_widget;
         KMenu *actionMenu;
         KAction *quit;
         LIBMTP_mtpdevice_t *devices;
         KSystemTrayIcon *trayIcon;
+        QList<KZenDevice*> deviceList;
         void setupActions();
         void setupMenus();
-        LIBMTP_error_number_t checkDevices( KZenSplash *splash, QList<KZenDevice*> *device_list );
+        LIBMTP_error_number_t checkDevices( KZenSplash *splash );
 
     private Q_SLOTS:
+        void message( const QString& );
         void exit();
 };
 

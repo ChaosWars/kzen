@@ -18,12 +18,14 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <KDE/KDebug>
+#include "kzendevice.h"
 #include "kzendevicethread.h"
 #include "kzenalbum.h"
 
 KZenDeviceThread::KZenDeviceThread( QObject *parent, LIBMTP_mtpdevice_t *device )
  : QThread( parent ), m_device( device )
 {
+    m_parent = qobject_cast<KZenDevice*>( parent );
     m_status = KZenDeviceThread::IDLE;
 }
 
@@ -37,8 +39,14 @@ void KZenDeviceThread::run()
     switch( m_status ){
         case KZenDeviceThread::IDLE:
             break;
-        case KZenDeviceThread::GET_ALBUMS:
-            getAlbums();
+        case KZenDeviceThread::GET_ALBUM_LIST:
+            getAlbumList();
+            break;
+        case KZenDeviceThread::GET_FILE_LIST:
+            getAlbumList();
+            break;
+        case KZenDeviceThread::GET_PLAYLIST_LIST:
+            getPlaylistList();
             break;
         default:
             break;
@@ -47,27 +55,42 @@ void KZenDeviceThread::run()
     m_status = KZenDeviceThread::IDLE;
 }
 
-void KZenDeviceThread::getAlbums()
+void KZenDeviceThread::getAlbumList()
 {
     if( m_device ){
-        LIBMTP_album_t *albumList = LIBMTP_Get_Album_List( m_device );
-        LIBMTP_album_t *iter;
-        QList<KZenAlbum*> a;
+        emit message( QString( "Getting album list from %1" ).arg( m_parent->name() ) );
+        LIBMTP_album_t *album_list = LIBMTP_Get_Album_List( m_device );
+        LIBMTP_album_t *album;
+        QList<KZenAlbum*> albums;
 
-        for( iter = albumList; iter != NULL; iter = iter->next ){
-            a.append( new KZenAlbum( iter ) );
+        for( album = album_list; album != NULL; album = album->next ){
+            albums.append( new KZenAlbum( album ) );
         }
 
-        emit albums( a );
+        emit albumList( albums );
+    }
+}
+
+void KZenDeviceThread::getFileList()
+{
+    if( m_device ){
+        emit message( QString( "Getting file list from %1" ).arg( m_parent->name() ) );
+    }
+}
+
+void KZenDeviceThread::getPlaylistList()
+{
+    if( m_device ){
+        emit message( QString( "Getting playlist list from %1" ).arg( m_parent->name() ) );
     }
 }
 
 void KZenDeviceThread::action( Status status )
 {
-    m_status = status;
-
-    if( !isRunning() )
+    if( !isRunning() ){
+        m_status = status;
         start();
+    }
 }
 
 #include "kzendevicethread.moc"
