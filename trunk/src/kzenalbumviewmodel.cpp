@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include <KDE/KDebug>
 #include "kzenalbumviewmodel.h"
-#include "kzenalbummodelitem.h"
 #include "kzenalbum.h"
 #include "kzentrack.h"
 

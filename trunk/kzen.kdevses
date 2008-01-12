@@ -1,19 +1,13 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="4" >
-  <Doc0 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenalbumviewmodel.cpp" >
-   <View0 Encoding="" line="96" Type="Source" />
+ <DocsAndViews NumberOfDocuments="2" >
+  <Doc0 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenwidget.cpp" >
+   <View0 Encoding="" line="34" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenalbumviewmodel.h" >
-   <View0 Encoding="" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenwidget.h" >
+   <View0 Encoding="" line="52" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenalbummodelitem.cpp" >
-   <View0 Encoding="" Type="Source" />
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenwidget.cpp" >
-   <View0 Encoding="" line="0" Type="Source" />
-  </Doc3>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>

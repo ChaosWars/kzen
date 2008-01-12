@@ -41,23 +41,26 @@ class KZenWidget : public QWidget
         ~KZenWidget();
 
         enum{
-            AlbumTab = 0,
-            ArtistTab,
-            PlaylistTab
+            MusicTab = 0,
+            VideoTab,
+            PhotoTab
         };
 
     public Q_SLOTS:
         void listAlbums( const QList<KZenAlbum*> &a );
 
     private:
+        QList<KZenDevice*> *mtp_devices;
+        bool albumsDirty;
         KMultiTabBar *navpanel;
-        KMultiTabBarTab *albumTab;
+        KMultiTabBarTab *musicTab, *videoTab, *photoTab;
         KZenNavView *mainView, *navView;
         KComboBox *m_devices;
-        QList<KZenDevice*> *mtp_devices;
 
     private slots:
-        void albumTabToggled( bool on );
+        void musicTabToggled( bool on );
+        void videoTabToggled( bool on );
+        void photoTabToggled( bool on );
 
 };
 
