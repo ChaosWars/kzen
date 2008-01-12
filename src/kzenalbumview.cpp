@@ -17,14 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "kzennavview.h"
+#include "kzenalbumview.h"
 
-KZenNavView::KZenNavView( QWidget *parent )
+KZenAlbumView::KZenAlbumView( QWidget *parent )
  : QTreeView( parent )
 {
 }
 
-KZenNavView::~KZenNavView()
+KZenAlbumView::~KZenAlbumView()
 {
 }
 

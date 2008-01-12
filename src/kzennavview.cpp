@@ -17,21 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENALBUMVIEW_H
-#define KZENALBUMVIEW_H
+#include "kzennavview.h"
 
-#include <QTreeView>
-
-/**
-	@author Lawrence Lee <valheru@facticius.net>
-*/
-class KZenAlbumView : public QTreeView
+KZenNavView::KZenNavView( QWidget *parent )
+ : QTreeView( parent )
 {
-    Q_OBJECT
+}
 
-    public:
-        KZenAlbumView( QWidget *parent = 0 );
-        ~KZenAlbumView();
-};
+KZenNavView::~KZenNavView()
+{
+}
 
-#endif
+#include "kzennavview.moc"
