@@ -31,10 +31,9 @@
 #include "kzendevicethread.h"
 #include "kzenalbum.h"
 
-KZenWidget::KZenWidget( QWidget *parent, QList<KZenDevice*> *devices ) : QWidget( parent )
+KZenWidget::KZenWidget( QWidget *parent, QList<KZenDevice*> *devices )
+    : QWidget( parent ), mtp_devices( devices ), albumsDirty( false )
 {
-    //Setup MTP devices conenctions
-    mtp_devices = devices;
     qRegisterMetaType< QList<KZenAlbum*> >( "QList<KZenAlbum*>" );
 
     for( int i = 0; i < mtp_devices->size(); i++ ){
@@ -56,16 +55,27 @@ KZenWidget::KZenWidget( QWidget *parent, QList<KZenDevice*> *devices ) : QWidget
     navpanel = new KMultiTabBar( KMultiTabBar::Left, this );
     navpanel->setStyle( KMultiTabBar::VSNET );
 
-    //Album tab
-    QPixmap albumPixmap( KIconLoader::global()->loadIcon( "multimedia", KIconLoader::NoGroup ) );
+    //Music tab
+    QPixmap musicPixmap( KIconLoader::global()->loadIcon( "multimedia", KIconLoader::NoGroup ) );
     navpanel->appendTab( albumPixmap, KZenWidget::AlbumTab, "Albums" );
     albumTab = navpanel->tab( KZenWidget::AlbumTab );
     connect( albumTab, SIGNAL( toggled( bool ) ), this, SLOT( albumTabToggled( bool ) ) );
 
+    //Video tab
+    QPixmap playlistPixmap( KIconLoader::global()->loadIcon( "multimedia", KIconLoader::NoGroup ) );
+    navpanel->appendTab( playlistPixmap, KZenWidget::PlaylistTab, "Playlists" );
+    playlistTab = navpanel->tab( KZenWidget::PlaylistTab );
+    connect( playlistTab, SIGNAL( toggled( bool ) ), this, SLOT( playlistTabToggled( bool ) ) );
+
+    //Photo tab
+    QPixmap videoPixmap( KIconLoader::global()->loadIcon( "multimedia", KIconLoader::NoGroup ) );
+    navpanel->appendTab( videoPixmap, KZenWidget::VideoTab, "Videos" );
+    videoTab = navpanel->tab( KZenWidget::VideoTab );
+    connect( videoTab, SIGNAL( toggled( bool ) ), this, SLOT( videoTabToggled( bool ) ) );
+
     //Main splitter
     QSplitter *splitter = new QSplitter( this );
     navView = new KZenNavView( splitter );
-    navView->setModel( new KZenAlbumViewModel( navView ) );
     navView->hide();
     mainView = new KZenNavView( splitter );
 
@@ -82,7 +92,7 @@ KZenWidget::~KZenWidget()
 {
 }
 
-void KZenWidget::albumTabToggled( bool on )
+void KZenWidget::musicTabToggled( bool on )
 {
     if( on ){
         navView->show();
@@ -100,11 +110,21 @@ void KZenWidget::albumTabToggled( bool on )
     }
 }
 
+void KZenWidget::videoTabToggled( bool on )
+{
+}
+
+void KZenWidget::photoTabToggled( bool on )
+{
+}
+
 void KZenWidget::listAlbums( const QList<KZenAlbum*> &a )
 {
-    KZenAlbumViewModel *model = static_cast<KZenAlbumViewModel*>( navView->model() );
-    navView->setModel( new KZenAlbumViewModel( navView, a ) );
-    delete model;
+    if( !navView->model() || albumsDirty ){
+        KZenAlbumViewModel *model = static_cast<KZenAlbumViewModel*>( navView->model() );
+        navView->setModel( new KZenAlbumViewModel( navView, a ) );
+        delete model;
+    }
 }
 
 #include "kzenwidget.moc"
