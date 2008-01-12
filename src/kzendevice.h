@@ -39,9 +39,9 @@ class KZenDevice : public QObject{
         KZenDevice( LIBMTP_mtpdevice_t *device, QObject *parent = 0 );
         ~KZenDevice();
         const char* name(){ return friendlyName; }
-        QList<KZenAlbum*> albums(){ return m_albums; };
-        QList<KZenFile*> files(){ return m_files; };
-        QList<KZenPlaylist*> playlists(){ return m_playlists; }
+        const QList<KZenAlbum*>& albums(){ return m_albums; };
+        const QList<KZenFile*>& files(){ return m_files; };
+        const QList<KZenPlaylist*>& playlists(){ return m_playlists; }
         void getAlbums();
         void getFiles();
         void getPlaylists();
