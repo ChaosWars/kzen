@@ -38,7 +38,17 @@ class KZenWidget : public QWidget
     Q_OBJECT
 
     public:
+
+        /**
+         *
+         * @param devices
+         * @param parent
+         */
         KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent = 0 );
+
+        /**
+         *
+         */
         ~KZenWidget();
 
         enum{
@@ -48,6 +58,11 @@ class KZenWidget : public QWidget
         };
 
     public Q_SLOTS:
+
+        /**
+         *
+         * @param a
+         */
         void listAlbums( const QList<KZenAlbum*> &a );
 
     private:

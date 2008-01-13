@@ -34,8 +34,22 @@ class KZenMusicWidget : public QToolBox
     Q_OBJECT
 
     public:
+
+        /**
+         *
+         * @param parent
+         */
         KZenMusicWidget( QWidget *parent = 0 );
+
+        /**
+         *
+         */
         ~KZenMusicWidget();
+
+        /**
+         *
+         * @return
+         */
         KZenAlbumView* albumView(){ return m_albumView; };
 
     private:

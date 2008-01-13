@@ -33,27 +33,137 @@ class KZenTrack : public QObject
     Q_OBJECT
 
     public:
-        KZenTrack( QObject *parent, LIBMTP_track_t *track = 0 );
+
+        /**
+         *
+         * @param parent
+         * @param track
+         */
+        KZenTrack( QObject *parent, LIBMTP_track_t *track );
+
+        /**
+         *
+         */
         ~KZenTrack();
+
+        /**
+         *
+         * @return
+         */
         const uint32_t trackId(){ return m_track->item_id; }
+
+        /**
+         *
+         * @return
+         */
         const uint32_t parentId(){ return m_track->parent_id; }
+
+        /**
+         *
+         * @return
+         */
         const char* title(){ return m_track->title; }
+
+        /**
+         *
+         * @return
+         */
         const char* artist(){ return m_track->artist; }
+
+        /**
+         *
+         * @return
+         */
         const char* genre(){ return m_track->genre; }
+
+        /**
+         *
+         * @return
+         */
         const char* album(){ return m_track->album; }
+
+        /**
+         *
+         * @return
+         */
         const char* date(){ return m_track->date; }
+
+        /**
+         *
+         * @return
+         */
         const char* filename(){ return m_track->filename; }
+
+        /**
+         *
+         * @return
+         */
         uint16_t tracknumber(){ return m_track->tracknumber; }
+
+        /**
+         *
+         * @return
+         */
         uint32_t duration(){ return m_track->duration; }
+
+        /**
+         *
+         * @return
+         */
         uint32_t samplerate(){ return m_track->samplerate; }
+
+        /**
+         *
+         * @return
+         */
         uint16_t numchannels(){ return m_track->nochannels; }
+
+        /**
+         *
+         * @return
+         */
         uint32_t wavecodec(){ return m_track->wavecodec; }
+
+        /**
+         *
+         * @return
+         */
         uint32_t bitrate(){ return m_track->bitrate; }
+
+        /**
+         *
+         * @return
+         */
         uint16_t bitratetype(){ return m_track->bitratetype; }
+
+        /**
+         *
+         * @return
+         */
         uint16_t rating(){ return m_track->rating; }
+
+        /**
+         *
+         * @return
+         */
         uint32_t usecount(){ return m_track->usecount; }
+
+        /**
+         *
+         * @return
+         */
         uint64_t filesize(){ return m_track->filesize; }
+
+        /**
+         *
+         * @return
+         */
         LIBMTP_filetype_t filetype(){ return m_track->filetype; }
+
+        /**
+         *
+         * @return
+         */
         KZenAlbum *parent(){ return m_parent; }
 
     private:

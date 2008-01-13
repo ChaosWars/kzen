@@ -65,9 +65,25 @@ class KZenDevice : public QObject{
          * @return
          */
         const QList<KZenFile*>& files(){ return m_files; };
+
+        /**
+         *
+         */
         const QList<KZenPlaylist*>& playlists(){ return m_playlists; }
+
+        /**
+         *
+         */
         void getAlbums();
+
+        /**
+         *
+         */
         void getFiles();
+
+        /**
+         *
+         */
         void getPlaylists();
 
     private:
@@ -84,9 +100,29 @@ class KZenDevice : public QObject{
         void playlistListSlot( const QList<KZenPlaylist*> &playlists );
 
     Q_SIGNALS:
+
+        /**
+         *
+         * @param albums
+         */
         void message( const QString &message );
+
+        /**
+         *
+         * @param files
+         */
         void albumList( const QList<KZenAlbum*> &albums );
+
+        /**
+         *
+         * @param playlists
+         */
         void fileList( const QList<KZenFile*> &files );
+
+        /**
+         *
+         * @param playlists
+         */
         void playlistList( const QList<KZenPlaylist*> &playlists );
 };
 

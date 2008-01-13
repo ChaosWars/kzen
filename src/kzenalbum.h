@@ -33,14 +33,58 @@ class KZenAlbum : public QObject
     Q_OBJECT
 
     public:
-        KZenAlbum( LIBMTP_album_t *album, QObject *parent = 0 );
+
+        /**
+         *
+         */
+        KZenAlbum( LIBMTP_album_t *album, const QList<KZenTrack*> &tracks, QObject *parent = 0 );
+
+        /**
+         *
+         * @return
+         */
         ~KZenAlbum();
+
+        /**
+         *
+         * @return
+         */
         const uint32_t albumId(){ return m_album->album_id; }
+
+        /**
+         *
+         * @return
+         */
         const char *name(){ return m_album->name; }
+
+        /**
+         *
+         * @return
+         */
         const char *artist(){ return m_album->artist; }
+
+        /**
+         *
+         * @return
+         */
         const char *genre(){ return m_album->genre; }
+
+        /**
+         *
+         * @return
+         */
         const uint32_t* tracks(){ return m_album->tracks; }
+
+        /**
+         *
+         * @return
+         */
         const uint32_t numTracks(){ return m_album->no_tracks; }
+
+        /**
+         *
+         * @return
+         */
         QList<KZenTrack*> albumTracks(){ return m_tracks; }
 
     private:

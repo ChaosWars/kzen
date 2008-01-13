@@ -35,12 +35,13 @@ KZen::KZen( KZenSplash *splash )
 {
     m_splash = splash;
     LIBMTP_Init();
+    kDebug() << i18n( "libmtp version: " LIBMTP_VERSION_STRING );
     LIBMTP_error_number_t error = checkDevices( splash ) ;
 
     if( error  != LIBMTP_ERROR_NONE ){
 
         while( error == LIBMTP_ERROR_CONNECTING ){
-            splash->showMessage( "Error connecting to device, retrying" );
+            splash->showMessage( i18n( "Error connecting to device, retrying" ) );
             sleep( 1 );
             error = checkDevices( splash );
         }
@@ -92,7 +93,6 @@ bool KZen::queryExit()
 
 LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash )
 {
-    kDebug() << i18n( "libmtp version: " LIBMTP_VERSION_STRING );
     uint32_t numdevices;
 
     switch( LIBMTP_Get_Connected_Devices( &devices ) ){

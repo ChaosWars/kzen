@@ -30,10 +30,25 @@ class KZenSplash : public KSplashScreen
     Q_OBJECT
 
     public:
+
+        /**
+         *
+         * @param pixmap
+         */
         KZenSplash( const QPixmap &pixmap );
+
+        /**
+         *
+         */
         ~KZenSplash();
 
     public slots:
+
+        /**
+         *
+         * @param showMessage
+         * @param alignment
+         */
         void showMessage( const QString& showMessage, int alignment = Qt::AlignLeft | Qt::AlignBottom );
 };
 

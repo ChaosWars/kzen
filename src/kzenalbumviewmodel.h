@@ -34,15 +34,74 @@ class KZenAlbumViewModel : public QAbstractItemModel
     Q_OBJECT
 
     public:
+
+        /**
+         *
+         * @param parent
+         * @param albums
+         */
         KZenAlbumViewModel( QObject *parent = 0, const QList<KZenAlbum*> &albums = QList<KZenAlbum*>() );
+
+        /**
+         *
+         */
         ~KZenAlbumViewModel();
+
+        /**
+         *
+         * @param index
+         * @param role
+         * @return
+         */
         int columnCount( const QModelIndex &parent = QModelIndex() ) const;
+
+        /**
+         *
+         * @param index
+         * @return
+         */
         QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
+
+        /**
+         *
+         * @param section
+         * @param orientation
+         * @param role
+         * @return
+         */
         Qt::ItemFlags flags( const QModelIndex &index ) const;
+
+        /**
+         *
+         * @param section
+         * @param orientation
+         * @param role
+         * @return
+         */
         QVariant headerData( int section, Qt::Orientation orientation,
                              int role = Qt::DisplayRole ) const;
+
+        /**
+         *
+         * @param row
+         * @param column
+         * @param parent
+         * @return
+         */
         QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const;
+
+        /**
+         *
+         * @param index
+         * @return
+         */
         QModelIndex parent( const QModelIndex &index ) const;
+
+        /**
+         *
+         * @param parent
+         * @return
+         */
         int rowCount( const QModelIndex &parent = QModelIndex() ) const;
 
     private:
