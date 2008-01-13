@@ -30,10 +30,9 @@ static const char description[] = "A program for managing portable media players
 
 static const char version[] = "0.1";
 
-KZenSplash *splash;
-
 int main(int argc, char **argv)
 {
+	Q_INIT_RESOURCE( kzen );
     KCmdLineOptions options;
     options.add( "+someoption", ki18n( "Some option" ) );
     KAboutData about( "KZen", QByteArray(), ki18n( "KZen" ), version, ki18n( description ),
@@ -51,7 +50,7 @@ int main(int argc, char **argv)
 
     KUniqueApplication app;
     app.setQuitOnLastWindowClosed( false );
-    splash = new KZenSplash( QPixmap( ":/pics/kzen_splash.png" ) );
+    KZenSplash *splash = new KZenSplash( QPixmap( ":/pics/kzen_splash.png" ) );
     splash->show();
     splash->showMessage( i18n( "Searching for MTP devices" ) );
     KZen *kzenmw = new KZen( splash );

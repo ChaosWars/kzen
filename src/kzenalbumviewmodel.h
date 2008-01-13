@@ -106,7 +106,7 @@ class KZenAlbumViewModel : public QAbstractItemModel
 
     private:
         QStringList rootItem;
-        QList<KZenAlbum*> albumItems;
+        QList<KZenAlbum*> m_albums;
 };
 
 #endif

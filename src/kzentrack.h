@@ -160,14 +160,7 @@ class KZenTrack : public QObject
          */
         LIBMTP_filetype_t filetype(){ return m_track->filetype; }
 
-        /**
-         *
-         * @return
-         */
-        KZenAlbum *parent(){ return m_parent; }
-
     private:
-        KZenAlbum *m_parent;
         LIBMTP_track_t *m_track;
 
 };

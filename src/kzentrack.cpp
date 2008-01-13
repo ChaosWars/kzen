@@ -24,8 +24,6 @@
 KZenTrack::KZenTrack( LIBMTP_track_t *track, QObject *parent )
  : QObject( parent ), m_track( track )
 {
-    setObjectName( "KZenTrack" );
-    m_parent = qobject_cast<KZenAlbum*>( parent );
 }
 
 KZenTrack::~KZenTrack()

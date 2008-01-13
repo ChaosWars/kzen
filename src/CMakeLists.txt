@@ -17,7 +17,8 @@ SET( SRC main.cpp
         kzentrack.cpp
         kzenfile.cpp
         kzenalbumview.cpp
-        kzenalbumviewmodel.cpp )
+        kzenalbumviewmodel.cpp
+        modeltest.cpp )
 
 QT4_ADD_RESOURCES( SRC kzen.qrc )
 LINK_DIRECTORIES( ${KDE4_LIB_DIR} )

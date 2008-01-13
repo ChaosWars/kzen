@@ -33,6 +33,7 @@
 #include "kzendevice.h"
 #include "kzendevicethread.h"
 #include "kzenalbum.h"
+#include "modeltest.h"
 
 KZenWidget::KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent )
     : QWidget( parent ), mtp_devices( devices ), albumsDirty( false )
@@ -107,7 +108,12 @@ void KZenWidget::musicTabToggled( bool on )
 
             if( device >= 0 ){
                 KZenAlbumView *albumView = musicWidget->albumView();
-                albumView->setModel( new KZenAlbumViewModel( albumView, mtp_devices.value( device )->albums() ) );
+
+                if( !albumView->model() ){
+                    KZenAlbumViewModel *model = new KZenAlbumViewModel( albumView, mtp_devices.value( device )->albums() );
+//                     new ModelTest( model, this );
+                    albumView->setModel( model );
+                }
             }
 
         }
