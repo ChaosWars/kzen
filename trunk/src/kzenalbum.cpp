@@ -24,8 +24,6 @@
 KZenAlbum::KZenAlbum( LIBMTP_album_t *album, const QList<KZenTrack*> &tracks, QObject *parent )
  : QObject( parent ), m_album( album ), m_tracks( tracks )
 {
-    setObjectName( "KZenAlbum" );
-
     for( int i = 0; i < m_tracks.size(); i++ ){
         m_tracks.at( i )->setParent( this );
     }
