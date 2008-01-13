@@ -33,7 +33,7 @@ KZenAlbumViewModel::~KZenAlbumViewModel()
     qDeleteAll( albumItems );
 }
 
-int KZenAlbumViewModel::columnCount( const QModelIndex &parent ) const
+int KZenAlbumViewModel::columnCount( const QModelIndex& /*parent*/ ) const
 {
     return 4;
 }

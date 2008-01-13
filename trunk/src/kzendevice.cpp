@@ -46,6 +46,9 @@ KZenDevice::KZenDevice( LIBMTP_mtpdevice_t *device, QObject *parent )
 KZenDevice::~KZenDevice()
 {
     delete device_thread;
+    m_albums.clear();
+    m_files.clear();
+    m_playlists.clear();
 
 //     if( m_device )
 //         LIBMTP_Release_Device( m_device );
@@ -71,19 +74,19 @@ void KZenDevice::getPlaylists()
 
 void KZenDevice::albumListSlot( const QList<KZenAlbum*> &albums )
 {
-    qDeleteAll( m_albums );
+    m_albums.clear();
     m_albums = albums;
 }
 
 void KZenDevice::fileListSlot( const QList<KZenFile*> &files )
 {
-    qDeleteAll( m_files );
+    m_files.clear();
     m_files = files;
 }
 
 void KZenDevice::playlistListSlot( const QList<KZenPlaylist*> &playlists )
 {
-    qDeleteAll( m_playlists );
+    m_playlists.clear();
     m_playlists = playlists;
 }
 
