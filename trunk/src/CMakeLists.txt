@@ -30,6 +30,7 @@ ADD_DEFINITIONS( ${KDE4_DEFINITIONS} ${QT_DEFINITIONS} )
 TARGET_LINK_LIBRARIES( kzen ${KDE4_KDECORE_LIBS}
                             ${KDE4_KDEUI_LIBS}
                             ${KDE4_UTIL_LIBS}
+                            ${KDE4_KIO_LIBS}
                             ${QT_QTCORE_LIBS}
                             ${LIBMTP_LIBRARY} )
 INSTALL(TARGETS kzen

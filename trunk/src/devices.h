@@ -31,7 +31,7 @@ class Devices
     public:
         Devices();
         ~Devices();
-        static const QList<KZenDevice*> devices(){ return m_devices; }
+        static const QList<KZenDevice*>& devices(){ return m_devices; }
         static void addDevice( KZenDevice *device ){ m_devices.append( device ); }
 
     private:
