@@ -29,6 +29,7 @@
 #include "kzen.h"
 #include "kzenwidget.h"
 #include "kzensplash.h"
+#include "devices.h"
 
 KZen::KZen( KZenSplash *splash )
     : ok_to_close( false )
@@ -49,7 +50,7 @@ KZen::KZen( KZenSplash *splash )
     }
 
     setupActions();
-    m_widget = new KZenWidget( deviceList, this );
+    m_widget = new KZenWidget( this );
 
     if( error != LIBMTP_ERROR_NONE ){
         m_widget->setEnabled( false );
@@ -121,7 +122,7 @@ LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash )
 
     LIBMTP_mtpdevice_t *device;
     for( device = devices; device != NULL; device = device->next ){
-        deviceList.append( new KZenDevice( device, this ) );
+        Devices::addDevice( new KZenDevice( device ) );
     }
 
     return LIBMTP_ERROR_NONE;

@@ -7,6 +7,7 @@ doc
 doc/CMakeLists.txt
 src
 src/CMakeLists.txt
+src/devices.cpp
 src/devices.h
 src/icons
 src/icons/CMakeLists.txt

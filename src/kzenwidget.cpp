@@ -36,9 +36,10 @@
 #include "kzendevicethread.h"
 #include "kzenalbum.h"
 #include "kzentrack.h"
+#include "devices.h"
 
-KZenWidget::KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent )
-    : QWidget( parent ), mtp_devices( devices )
+KZenWidget::KZenWidget( QWidget *parent )
+    : QWidget( parent )
 {
     //Main layout
     QVBoxLayout *mainVLayout = new QVBoxLayout( this );
@@ -47,8 +48,8 @@ KZenWidget::KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent )
     //Device combo box
     m_devices = new KComboBox( mainVLayout );
 
-    for( int i = 0; i < mtp_devices.size(); i++ ){
-        m_devices->insertItem( i, mtp_devices.at( i )->name() );
+    for( int i = 0; i < Devices::devices().size(); i++ ){
+        m_devices->insertItem( i, Devices::devices().at( i )->name() );
     }
 
     //Navigation panel
@@ -85,14 +86,6 @@ KZenWidget::KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent )
     mainVLayout->addWidget( m_devices );
     mainVLayout->addLayout( mainHLayout );
     setLayout( mainVLayout );
-
-    //Setup the connections
-    for( int i = 0; i < mtp_devices.size(); i++ ){
-        KZenDevice *device = mtp_devices.at( i );
-        connect( device, SIGNAL( albumList( const QList<KZenAlbum*>& ) ), musicWidget->albumView(), SLOT( listAlbums( const QList<KZenAlbum*>& ) ) );
-
-        connect( device, SIGNAL( trackList( const QList<KZenTrack*>& ) ), musicWidget->trackView(), SLOT( listTracks( const QList<KZenTrack*>& ) ) );
-    }
 }
 
 
@@ -106,28 +99,6 @@ void KZenWidget::musicTabToggled( bool on )
         navpanel->tab( KZenWidget::PhotoTab )->setState( false );
         navpanel->tab( KZenWidget::VideoTab )->setState( false );
         musicWidget->show();
-
-        if( mtp_devices.size() > 0 ){
-            int device = m_devices->currentIndex();
-
-            if( device >= 0 ){
-//                 KZenAlbumView *albumView = musicWidget->albumView();
-//
-//                 if( !albumView->model() ){
-//                     KZenAlbumViewModel *model = new KZenAlbumViewModel( albumView, mtp_devices.value( device )->albums() );
-//                     albumView->setModel( model );
-//                 }
-//
-//                 KZenTrackView *trackView = musicWidget->trackView();
-//
-//                 if( !trackView->model() ){
-//                     KZenTrackViewModel *model = new KZenTrackViewModel( trackView );
-//                     trackView->setModel( model );
-//                 }
-            }
-
-        }
-
     }else{
         musicWidget->hide();
     }

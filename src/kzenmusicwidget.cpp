@@ -21,6 +21,10 @@
 #include "kzenmusicwidget.h"
 #include "kzenalbumview.h"
 #include "kzentrackview.h"
+#include "kzenalbum.h"
+#include "kzentrack.h"
+#include "kzendevice.h"
+#include "devices.h"
 
 KZenMusicWidget::KZenMusicWidget( QWidget *parent )
  : QToolBox( parent )
@@ -31,6 +35,14 @@ KZenMusicWidget::KZenMusicWidget( QWidget *parent )
     addItem( new QWidget( this ), "Artists" );
     addItem( new QWidget( this ), "Genres" );
     addItem( m_trackView, "All Tracks" );
+
+    //Setup the connections
+    for( int i = 0; i < Devices::devices().size(); i++ ){
+        KZenDevice *device = Devices::devices().at( i );
+        connect( device, SIGNAL( albumList( const QList<KZenAlbum*>& ) ), m_albumView, SLOT( listAlbums( const QList<KZenAlbum*>& ) ) );
+
+        connect( device, SIGNAL( trackList( const QList<KZenTrack*>& ) ), m_trackView, SLOT( listTracks( const QList<KZenTrack*>& ) ) );
+    }
 }
 
 KZenMusicWidget::~KZenMusicWidget()

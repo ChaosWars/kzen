@@ -20,12 +20,17 @@
 #include "kzenalbumview.h"
 #include "kzenalbumviewmodel.h"
 #include "kzenalbum.h"
+#include "devices.h"
 
 KZenAlbumView::KZenAlbumView( QWidget *parent )
     : QTreeView( parent ), albumsDirty( false )
 {
     qRegisterMetaType< QList<KZenAlbum*> >( "QList<KZenAlbum*>" );
-    setModel( new KZenAlbumViewModel( this ) );
+
+    if( Devices::devices().size() > 0 )
+        setModel( new KZenAlbumViewModel( this, Devices::devices().first()->albums() ) );
+    else
+        setModel( new KZenAlbumViewModel( this ) );
 }
 
 KZenAlbumView::~KZenAlbumView()

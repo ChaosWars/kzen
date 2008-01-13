@@ -20,19 +20,23 @@
 #ifndef DEVICES_H
 #define DEVICES_H
 
+#include <QList>
 #include "kzendevice.h"
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
-*/
-class Devices{
+ */
+class Devices
+{
     public:
         Devices();
         ~Devices();
-        static QList<KZenDevice*> devices(){ return m_devices; }
+        static const QList<KZenDevice*> devices(){ return m_devices; }
+        static void addDevice( KZenDevice *device ){ m_devices.append( device ); }
 
     private:
         static QList<KZenDevice*> m_devices;
+
 };
 
 #endif
