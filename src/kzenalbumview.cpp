@@ -18,14 +18,25 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "kzenalbumview.h"
+#include "kzenalbumviewmodel.h"
+#include "kzenalbum.h"
 
 KZenAlbumView::KZenAlbumView( QWidget *parent )
- : QTreeView( parent )
+    : QTreeView( parent ), albumsDirty( false )
 {
+    qRegisterMetaType< QList<KZenAlbum*> >( "QList<KZenAlbum*>" );
+    setModel( new KZenAlbumViewModel( this ) );
 }
 
 KZenAlbumView::~KZenAlbumView()
 {
+}
+
+void KZenAlbumView::listAlbums( const QList<KZenAlbum*> &albums )
+{
+    KZenAlbumViewModel *oldmodel = static_cast<KZenAlbumViewModel*>( model() );
+    setModel( new KZenAlbumViewModel( this, albums ) );
+    delete oldmodel;
 }
 
 #include "kzenalbumview.moc"

@@ -17,59 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENWIDGET_H
-#define KZENWIDGET_H
+#include "kzentrackview.h"
+#include "kzentrackviewmodel.h"
+#include "kzentrack.h"
 
-#include <QWidget>
-
-class KComboBox;
-class KMultiTabBar;
-class KMultiTabBarTab;
-class KZenMusicWidget;
-class QTreeView;
-class KZenAlbum;
-class KZenDevice;
-
-/**
-	@author Lawrence Lee <valheru@facticius.net>
-*/
-class KZenWidget : public QWidget
+KZenTrackView::KZenTrackView( QWidget *parent )
+    : QListView( parent ), tracksDirty( false )
 {
-    Q_OBJECT
+    qRegisterMetaType< QList<KZenTrack*> >( "QList<KZenTrack*>" );
+    setModel( new KZenTrackViewModel( this ) );
+}
 
-    public:
+KZenTrackView::~KZenTrackView()
+{
+}
 
-        /**
-         *
-         * @param devices
-         * @param parent
-         */
-        KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent = 0 );
+void KZenTrackView::listTracks( const QList<KZenTrack*> &tracks )
+{
+    KZenTrackViewModel *oldmodel = static_cast<KZenTrackViewModel*>( model() );
+    setModel( new KZenTrackViewModel( this, tracks ) );
+    delete oldmodel;
+}
 
-        /**
-         *
-         */
-        ~KZenWidget();
-
-        enum{
-            MusicTab = 0,
-            VideoTab,
-            PhotoTab
-        };
-
-    private:
-        QList<KZenDevice*> mtp_devices;
-        KMultiTabBar *navpanel;
-        KMultiTabBarTab *musicTab, *videoTab, *photoTab;
-        KZenMusicWidget *musicWidget;
-        QTreeView *mainView;
-        KComboBox *m_devices;
-
-    private slots:
-        void musicTabToggled( bool on );
-        void videoTabToggled( bool on );
-        void photoTabToggled( bool on );
-
-};
-
-#endif
+#include "kzentrackview.moc"

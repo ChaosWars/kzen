@@ -22,6 +22,8 @@
 
 #include <QTreeView>
 
+class KZenAlbum;
+
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
@@ -41,6 +43,17 @@ class KZenAlbumView : public QTreeView
          *
          */
         ~KZenAlbumView();
+
+    public Q_SLOTS:
+
+        /**
+         *
+         * @param albums
+         */
+        void listAlbums( const QList<KZenAlbum*> &albums );
+
+    private:
+        bool albumsDirty;
 };
 
 #endif

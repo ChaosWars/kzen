@@ -17,23 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENWIDGET_H
-#define KZENWIDGET_H
+#ifndef KZENTRACKVIEWMODEL_H
+#define KZENTRACKVIEWMODEL_H
 
-#include <QWidget>
+#include <QAbstractItemModel>
+#include <QStringList>
 
-class KComboBox;
-class KMultiTabBar;
-class KMultiTabBarTab;
-class KZenMusicWidget;
-class QTreeView;
-class KZenAlbum;
-class KZenDevice;
+class KZenTrack;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenWidget : public QWidget
+class KZenTrackViewModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -41,35 +36,48 @@ class KZenWidget : public QWidget
 
         /**
          *
-         * @param devices
          * @param parent
          */
-        KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent = 0 );
+        KZenTrackViewModel( QObject *parent = 0, const QList<KZenTrack*> &tracks = QList<KZenTrack*>() );
 
         /**
          *
          */
-        ~KZenWidget();
+        ~KZenTrackViewModel();
 
-        enum{
-            MusicTab = 0,
-            VideoTab,
-            PhotoTab
-        };
+        /**
+         *
+         * @param
+         * @return
+         */
+        int columnCount( const QModelIndex& parent ) const;
+
+        /**
+         *
+         * @param index
+         * @return
+         */
+        QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
+
+        /**
+         *
+         * @param section
+         * @param orientation
+         * @param role
+         * @return
+         */
+        QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
+
+        /**
+         *
+         * @param parent
+         * @return
+         */
+        int rowCount( const QModelIndex &parent = QModelIndex() ) const;
 
     private:
-        QList<KZenDevice*> mtp_devices;
-        KMultiTabBar *navpanel;
-        KMultiTabBarTab *musicTab, *videoTab, *photoTab;
-        KZenMusicWidget *musicWidget;
-        QTreeView *mainView;
-        KComboBox *m_devices;
-
-    private slots:
-        void musicTabToggled( bool on );
-        void videoTabToggled( bool on );
-        void photoTabToggled( bool on );
-
+        QStringList rootItem;
+        QList<KZenTrack*> m_tracks;
 };
 
 #endif

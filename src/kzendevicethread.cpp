@@ -52,6 +52,9 @@ void KZenDeviceThread::run()
         case KZenDeviceThread::GET_PLAYLIST_LIST:
             getPlaylistList();
             break;
+        case KZenDeviceThread::GET_TRACK_LIST:
+            getTrackList();
+            break;
         default:
             break;
     }
@@ -107,14 +110,32 @@ void KZenDeviceThread::getAlbumList( const QList<KZenTrack*> &tracks )
 void KZenDeviceThread::getFileList()
 {
     if( m_device ){
-        emit message( QString( "Getting file list from %1" ).arg( m_parent->name() ) );
+        QList<KZenFile*> files;
+        emit message( QString( "Getting files from %1" ).arg( m_parent->name() ) );
     }
 }
 
 void KZenDeviceThread::getPlaylistList()
 {
     if( m_device ){
-        emit message( QString( "Getting playlist list from %1" ).arg( m_parent->name() ) );
+        QList<KZenPlaylist*> playlists;
+        emit message( QString( "Getting playlists from %1" ).arg( m_parent->name() ) );
+    }
+}
+
+void KZenDeviceThread::getTrackList()
+{
+    if( m_device ){
+        QList<KZenTrack*> tracks;
+        emit message( QString( "Getting tracks from %1" ).arg( m_parent->name() ) );
+        LIBMTP_track_t *tracklisting = LIBMTP_Get_Tracklisting_With_Callback( m_device, NULL, NULL );
+
+        for( LIBMTP_track_t *track = tracklisting; track != NULL; track = track->next ){
+            tracks.append( new KZenTrack( track ) );
+        }
+
+        emit trackList( tracks );
+
     }
 }
 

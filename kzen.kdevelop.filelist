@@ -7,6 +7,7 @@ doc
 doc/CMakeLists.txt
 src
 src/CMakeLists.txt
+src/devices.h
 src/icons
 src/icons/CMakeLists.txt
 src/kzen.cpp
@@ -29,6 +30,10 @@ src/kzensplash.cpp
 src/kzensplash.h
 src/kzentrack.cpp
 src/kzentrack.h
+src/kzentrackview.cpp
+src/kzentrackview.h
+src/kzentrackviewmodel.cpp
+src/kzentrackviewmodel.h
 src/kzenwidget.cpp
 src/kzenwidget.h
 src/main.cpp

@@ -17,59 +17,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENWIDGET_H
-#define KZENWIDGET_H
+#ifndef KZENTRACKVIEW_H
+#define KZENTRACKVIEW_H
 
-#include <QWidget>
+#include <QListView>
 
-class KComboBox;
-class KMultiTabBar;
-class KMultiTabBarTab;
-class KZenMusicWidget;
-class QTreeView;
-class KZenAlbum;
-class KZenDevice;
+class KZenTrack;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenWidget : public QWidget
+class KZenTrackView : public QListView
 {
     Q_OBJECT
 
     public:
+        KZenTrackView( QWidget *parent = 0 );
+        ~KZenTrackView();
+
+    public Q_SLOTS:
 
         /**
          *
-         * @param devices
-         * @param parent
+         * @param tracks
          */
-        KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent = 0 );
-
-        /**
-         *
-         */
-        ~KZenWidget();
-
-        enum{
-            MusicTab = 0,
-            VideoTab,
-            PhotoTab
-        };
+        void listTracks( const QList<KZenTrack*> &tracks );
 
     private:
-        QList<KZenDevice*> mtp_devices;
-        KMultiTabBar *navpanel;
-        KMultiTabBarTab *musicTab, *videoTab, *photoTab;
-        KZenMusicWidget *musicWidget;
-        QTreeView *mainView;
-        KComboBox *m_devices;
-
-    private slots:
-        void musicTabToggled( bool on );
-        void videoTabToggled( bool on );
-        void photoTabToggled( bool on );
-
+        bool tracksDirty;
 };
 
 #endif

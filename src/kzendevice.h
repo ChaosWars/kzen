@@ -27,6 +27,7 @@ class KZenDeviceThread;
 class KZenAlbum;
 class KZenFile;
 class KZenPlaylist;
+class KZenTrack;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -68,6 +69,7 @@ class KZenDevice : public QObject{
 
         /**
          *
+         * @return
          */
         const QList<KZenPlaylist*>& playlists(){ return m_playlists; }
 
@@ -86,36 +88,43 @@ class KZenDevice : public QObject{
          */
         void getPlaylists();
 
+        /**
+         *
+         */
+        void getTracks();
+
     private:
         KZenDeviceThread *device_thread;
         LIBMTP_mtpdevice_t *m_device;
         QList<KZenAlbum*> m_albums;
         QList<KZenFile*> m_files;
         QList<KZenPlaylist*> m_playlists;
+        QList<KZenTrack*> m_tracks;
         const char* friendlyName;
 
     private Q_SLOTS:
         void albumListSlot( const QList<KZenAlbum*> &albums );
         void fileListSlot( const QList<KZenFile*> &files );
         void playlistListSlot( const QList<KZenPlaylist*> &playlists );
+        void trackListSlot( const QList<KZenTrack*> &tracks );
 
     Q_SIGNALS:
 
         /**
          *
-         * @param albums
+         * @param message
          */
         void message( const QString &message );
 
         /**
          *
-         * @param files
+         * @param albums
          */
         void albumList( const QList<KZenAlbum*> &albums );
 
         /**
          *
-         * @param playlists
+         * @param files
          */
         void fileList( const QList<KZenFile*> &files );
 
@@ -124,6 +133,12 @@ class KZenDevice : public QObject{
          * @param playlists
          */
         void playlistList( const QList<KZenPlaylist*> &playlists );
+
+        /**
+         *
+         * @param tracks
+         */
+        void trackList( const QList<KZenTrack*> &tracks );
 };
 
 #endif

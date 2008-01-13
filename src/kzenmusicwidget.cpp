@@ -20,12 +20,17 @@
 #include <QLayout>
 #include "kzenmusicwidget.h"
 #include "kzenalbumview.h"
+#include "kzentrackview.h"
 
 KZenMusicWidget::KZenMusicWidget( QWidget *parent )
  : QToolBox( parent )
 {
     m_albumView = new KZenAlbumView( this );
+    m_trackView = new KZenTrackView( this );
     addItem( m_albumView, "Albums" );
+    addItem( new QWidget( this ), "Artists" );
+    addItem( new QWidget( this ), "Genres" );
+    addItem( m_trackView, "All Tracks" );
 }
 
 KZenMusicWidget::~KZenMusicWidget()
