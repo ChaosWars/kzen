@@ -44,7 +44,7 @@ class KZenWidget : public QWidget
          * @param devices
          * @param parent
          */
-        KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent = 0 );
+        KZenWidget( QWidget *parent = 0 );
 
         /**
          *
@@ -58,7 +58,6 @@ class KZenWidget : public QWidget
         };
 
     private:
-        QList<KZenDevice*> mtp_devices;
         KMultiTabBar *navpanel;
         KMultiTabBarTab *musicTab, *videoTab, *photoTab;
         KZenMusicWidget *musicWidget;

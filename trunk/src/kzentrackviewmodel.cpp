@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <KDE/KDebug>
 #include "kzentrackviewmodel.h"
 #include "kzentrack.h"
 
@@ -63,6 +64,7 @@ QVariant KZenTrackViewModel::data( const QModelIndex &index, int role ) const
 
 QVariant KZenTrackViewModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
+    kDebug() << section;
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         return rootItem.value( section );
     }

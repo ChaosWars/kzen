@@ -72,7 +72,6 @@ class KZen : public KMainWindow
         KAction *quit;
         LIBMTP_mtpdevice_t *devices;
         KSystemTrayIcon *trayIcon;
-        QList<KZenDevice*> deviceList;
         void setupActions();
         void setupMenus();
         LIBMTP_error_number_t checkDevices( KZenSplash *splash );
