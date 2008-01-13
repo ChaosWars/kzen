@@ -105,8 +105,10 @@ void KZenWidget::musicTabToggled( bool on )
         if( mtp_devices.size() > 0 ){
             int device = m_devices->currentIndex();
 
-            if( device >= 0 )
-                mtp_devices.value( device )->albums();
+            if( device >= 0 ){
+                KZenAlbumView *albumView = musicWidget->albumView();
+                albumView->setModel( new KZenAlbumViewModel( albumView, mtp_devices.value( device )->albums() ) );
+            }
 
         }
 
@@ -133,12 +135,12 @@ void KZenWidget::photoTabToggled( bool on )
     }
 }
 
-void KZenWidget::listAlbums( const QList<KZenAlbum*> &a )
+void KZenWidget::listAlbums( const QList<KZenAlbum*> &albums )
 {
     KZenAlbumView *albumView = musicWidget->albumView();
     if( !albumView->model() || albumsDirty ){
         KZenAlbumViewModel *model = static_cast<KZenAlbumViewModel*>( albumView->model() );
-        albumView->setModel( new KZenAlbumViewModel( albumView, a ) );
+        albumView->setModel( new KZenAlbumViewModel( albumView, albums ) );
         delete model;
     }
 }
