@@ -46,8 +46,10 @@ QVariant KZenAlbumViewModel::data( const QModelIndex &index, int role ) const
     if( role != Qt::DisplayRole )
         return QVariant();
 
-    if( !index.parent().isValid() ){ //Album
-        KZenAlbum *album = static_cast<KZenAlbum*>( index.internalPointer() );
+    QObject *item = static_cast<QObject*>( index.internalPointer() );
+    KZenAlbum *album = qobject_cast<KZenAlbum*>( item );
+
+    if( /*!index.parent().isValid()*/ album ){ //Album
 
         switch( index.column() ){
             case 0:
@@ -62,7 +64,7 @@ QVariant KZenAlbumViewModel::data( const QModelIndex &index, int role ) const
                 return QVariant();
         }
     }else{ //Track
-        KZenTrack *track = static_cast<KZenTrack*>( index.internalPointer() );
+        KZenTrack *track = qobject_cast<KZenTrack*>( item );
         switch( index.column() ){
             case 0:
                 return track->title();

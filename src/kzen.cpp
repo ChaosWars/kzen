@@ -97,7 +97,7 @@ LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash )
 
     switch( LIBMTP_Get_Connected_Devices( &devices ) ){
         case LIBMTP_ERROR_NO_DEVICE_ATTACHED:
-            kDebug() << i18n( "No Devices have been found." );
+            kDebug() << i18n( "No devices were found." );
             return LIBMTP_ERROR_NO_DEVICE_ATTACHED;
         case LIBMTP_ERROR_CONNECTING:
             kDebug() << i18n( "There has been an error connecting to the device(s)." );
@@ -115,8 +115,8 @@ LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash )
         /* Successfully connected at least one device, so continue */
         case LIBMTP_ERROR_NONE:
             numdevices = LIBMTP_Number_Devices_In_List( devices );
-            splash->showMessage( i18n( "Successfully connected %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) ) );
-            kDebug() << i18n( "Successfully connected %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) );
+            splash->showMessage( i18n( "Successfully connected to %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) ) );
+            kDebug() << i18n( "Successfully connected to %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) );
     }
 
     LIBMTP_mtpdevice_t *device;
