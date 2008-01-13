@@ -57,7 +57,7 @@ KZenWidget::KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent )
 
     //Navigation panel
     navpanel = new KMultiTabBar( KMultiTabBar::Left, this );
-    navpanel->setStyle( KMultiTabBar::VSNET );
+    navpanel->setStyle( KMultiTabBar::KDEV3ICON );
 
     //Music tab
     QPixmap musicPixmap( KIconLoader::global()->loadIcon( "preferences-desktop-sound", KIconLoader::NoGroup ) );

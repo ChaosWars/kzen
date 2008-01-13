@@ -57,7 +57,7 @@ KZen::KZen( KZenSplash *splash )
 
     setCentralWidget( m_widget );
     setAutoSaveSettings();
-    trayIcon = new KSystemTrayIcon( "KZen", this );
+    trayIcon = new KSystemTrayIcon( "kzen", this );
     trayIcon->show();
 }
 
