@@ -31,12 +31,47 @@ class KZenFile : public QObject
     Q_OBJECT
 
     public:
+
+        /**
+         *
+         * @param file
+         * @param parent
+         */
         KZenFile( LIBMTP_file_t *file, QObject *parent = 0 );
+
+        /**
+         *
+         */
         ~KZenFile();
+
+        /**
+         *
+         * @return
+         */
         uint32_t itemId(){ return m_file->item_id; };
+
+        /**
+         *
+         * @return
+         */
         uint32_t parentId(){ return m_file->parent_id; };
+
+        /**
+         *
+         * @return
+         */
         char* filename(){ return m_file->filename; };
+
+        /**
+         *
+         * @return
+         */
         uint64_t filesize(){ return m_file->filesize; };
+
+        /**
+         *
+         * @return
+         */
         LIBMTP_filetype_t filetype(){ return m_file->filetype; };
 
     private:

@@ -39,11 +39,29 @@ class KZen : public KMainWindow
     Q_OBJECT
 
     public:
+
+        /**
+         *
+         */
         KZen( KZenSplash *splash );
+
+        /**
+         *
+         */
         ~KZen();
 
     protected:
+
+        /**
+         *
+         * @return
+         */
         bool queryClose();
+
+        /**
+         *
+         * @return
+         */
         bool queryExit();
 
     private:

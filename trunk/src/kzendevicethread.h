@@ -24,10 +24,11 @@
 #include <QList>
 #include <libmtp.h>
 
-class KZenDevice;
 class KZenAlbum;
+class KZenDevice;
 class KZenFile;
 class KZenPlaylist;
+class KZenTrack;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -38,17 +39,59 @@ class KZenDeviceThread : public QThread
     Q_ENUMS( Status )
 
     public:
-        KZenDeviceThread( QObject *parent = 0, LIBMTP_mtpdevice_t *device = 0 );
+
+        /**
+         *
+         * @param parent
+         * @param device
+         */
+        KZenDeviceThread( QObject *parent, LIBMTP_mtpdevice_t *device );
+
+        /**
+         *
+         */
         ~KZenDeviceThread();
+
         enum Status{ IDLE, GET_ALBUM_LIST, GET_FILE_LIST, GET_PLAYLIST_LIST };
+
+        /**
+         *
+         * @param status
+         */
         void setStatus( Status status ){ m_status = status; };
+
+        /**
+         *
+         * @param status
+         */
         Status status() const{ return m_status; };
+
+        /**
+         *
+         * @param status
+         */
         void action( Status status );
-        void getAlbumList();
+
+        /**
+         *
+         */
+        void getAlbumList( const QList<KZenTrack*> &files = QList<KZenTrack*>() );
+
+        /**
+         *
+         */
         void getPlaylistList();
+
+        /**
+         *
+         */
         void getFileList();
 
     protected:
+
+        /**
+         *
+         */
         void run();
 
     private:
@@ -57,9 +100,29 @@ class KZenDeviceThread : public QThread
         LIBMTP_mtpdevice_t *m_device;
 
     Q_SIGNALS:
+
+        /**
+         *
+         * @param list
+         */
         void message( const QString &message );
+
+        /**
+         *
+         * @param list
+         */
         void albumList( const QList<KZenAlbum*> &list );
+
+        /**
+         *
+         * @param list
+         */
         void fileList( const QList<KZenFile*> &list );
+
+        /**
+         *
+         * @param list
+         */
         void playlistList( const QList<KZenPlaylist*> &list );
 };
 

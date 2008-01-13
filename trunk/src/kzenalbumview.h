@@ -30,7 +30,16 @@ class KZenAlbumView : public QTreeView
     Q_OBJECT
 
     public:
+
+        /**
+         *
+         * @param parent
+         */
         KZenAlbumView( QWidget *parent = 0 );
+
+        /**
+         *
+         */
         ~KZenAlbumView();
 };
 

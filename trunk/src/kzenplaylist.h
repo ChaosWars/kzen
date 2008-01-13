@@ -31,11 +31,41 @@ class KZenPlaylist : public QObject
     Q_OBJECT
 
     public:
+
+        /**
+         *
+         * @param playlist
+         * @param parent
+         */
         KZenPlaylist( LIBMTP_playlist_t *playlist, QObject *parent = 0 );
+
+        /**
+         *
+         */
         ~KZenPlaylist();
+
+        /**
+         *
+         * @return
+         */
         uint32_t playlistId(){ return m_playlist->playlist_id; }
+
+        /**
+         *
+         * @return
+         */
         char* name(){ return m_playlist->name; };
+
+        /**
+         *
+         * @return
+         */
         uint32_t* tracks(){ return m_playlist->tracks; };
+
+        /**
+         *
+         * @return
+         */
         uint32_t nrTracks(){ return m_playlist->no_tracks; };
 
     private:

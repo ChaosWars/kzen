@@ -21,14 +21,10 @@
 #include "kzenalbum.h"
 #include "kzentrack.h"
 
-KZenAlbum::KZenAlbum( LIBMTP_album_t *album, QObject *parent )
- : QObject( parent ), m_album( album )
+KZenAlbum::KZenAlbum( LIBMTP_album_t *album, const QList<KZenTrack*> &tracks, QObject *parent )
+ : QObject( parent ), m_album( album ), m_tracks( tracks )
 {
     setObjectName( "KZenAlbum" );
-
-    for( uint i = 0; i < m_album->no_tracks; i++ ){
-        m_tracks.append( new KZenTrack( this ) );
-    }
 }
 
 KZenAlbum::~KZenAlbum()

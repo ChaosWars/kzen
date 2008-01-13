@@ -52,39 +52,28 @@ QVariant KZenAlbumViewModel::data( const QModelIndex &index, int role ) const
         switch( index.column() ){
             case 0:
                 return album->name();
-                break;
             case 1:
                 return album->artist();
-                break;
             case 2:
                 return album->genre();
-                break;
             case 3:
                 return album->numTracks();
-                break;
             default:
                 return QVariant();
-                break;
         }
     }else{ //Track
-        //FIXME Return proper track data
         KZenTrack *track = static_cast<KZenTrack*>( index.internalPointer() );
         switch( index.column() ){
             case 0:
-                return /*track->title()*/QString( "Tile" );
-                break;
+                return track->title();
             case 1:
-                return /*track->artist()*/QString( "Artist" );
-                break;
+                return track->artist();
             case 2:
-                return /*track->genre()*/QString( "Genre" );
-                break;
+                return track->genre();
             case 3:
-                return /*track->tracknumber()*/index.row();
-                break;
+                return track->tracknumber();
             default:
                 return QVariant();
-                break;
         }
     }
 
