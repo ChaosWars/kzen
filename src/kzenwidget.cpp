@@ -21,6 +21,7 @@
 #include <KDE/KTabWidget>
 #include <KDE/KIconLoader>
 #include <KDE/KComboBox>
+#include <KDE/KDirModel>
 #include <KDE/KDebug>
 #include <QLayout>
 #include <QSplitter>
@@ -79,6 +80,7 @@ KZenWidget::KZenWidget( QWidget *parent )
     musicWidget = new KZenMusicWidget( splitter );
     musicWidget->hide();
     mainView = new QTreeView( splitter );
+    mainView->setModel( new KDirModel( mainView ) );
 
     //Set the layout
     mainHLayout->addWidget( navpanel );

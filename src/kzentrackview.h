@@ -20,14 +20,14 @@
 #ifndef KZENTRACKVIEW_H
 #define KZENTRACKVIEW_H
 
-#include <QListView>
+#include <QTreeView>
 
 class KZenTrack;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenTrackView : public QListView
+class KZenTrackView : public QTreeView
 {
     Q_OBJECT
 

@@ -21,12 +21,18 @@
 #include "kzentrackview.h"
 #include "kzentrackviewmodel.h"
 #include "kzentrack.h"
+#include "devices.h"
 
 KZenTrackView::KZenTrackView( QWidget *parent )
-    : QListView( parent ), tracksDirty( false )
+    : QTreeView( parent ), tracksDirty( false )
 {
     qRegisterMetaType< QList<KZenTrack*> >( "QList<KZenTrack*>" );
-    setModel( new KZenTrackViewModel( this ) );
+    setRootIsDecorated( false );
+
+    if( Devices::devices().size() > 0 )
+        setModel( new KZenTrackViewModel( this , Devices::devices().first()->tracks() ) );
+    else
+        setModel( new KZenTrackViewModel( this ) );
 }
 
 KZenTrackView::~KZenTrackView()

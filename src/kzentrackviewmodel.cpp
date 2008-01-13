@@ -55,7 +55,7 @@ QVariant KZenTrackViewModel::data( const QModelIndex &index, int role ) const
         case 3:
             return m_tracks.at( index.row() )->album();
         case 4:
-            return m_tracks.at( index.row() )->filesize();
+            return QString().setNum( static_cast<double>( m_tracks.at( index.row() )->filesize() ) /1048576.00, 'f', 2 );
         default:
             return QVariant();
     }
@@ -64,7 +64,6 @@ QVariant KZenTrackViewModel::data( const QModelIndex &index, int role ) const
 
 QVariant KZenTrackViewModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
-    kDebug() << section;
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         return rootItem.value( section );
     }

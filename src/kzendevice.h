@@ -75,6 +75,12 @@ class KZenDevice : public QObject{
 
         /**
          *
+         * @return
+         */
+        const QList<KZenTrack*>& tracks(){ return m_tracks; }
+
+        /**
+         *
          */
         void getAlbums();
 
