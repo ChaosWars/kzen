@@ -29,21 +29,17 @@
 #include "kzenwidget.h"
 #include "kzenmusicwidget.h"
 #include "kzenalbumview.h"
+#include "kzentrackview.h"
 #include "kzenalbumviewmodel.h"
+#include "kzentrackviewmodel.h"
 #include "kzendevice.h"
 #include "kzendevicethread.h"
 #include "kzenalbum.h"
-#include "modeltest.h"
+#include "kzentrack.h"
 
 KZenWidget::KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent )
-    : QWidget( parent ), mtp_devices( devices ), albumsDirty( false )
+    : QWidget( parent ), mtp_devices( devices )
 {
-    qRegisterMetaType< QList<KZenAlbum*> >( "QList<KZenAlbum*>" );
-
-    for( int i = 0; i < mtp_devices.size(); i++ ){
-        connect( mtp_devices.at( i ), SIGNAL( albumList( const QList<KZenAlbum*>& ) ), this, SLOT( listAlbums( const QList<KZenAlbum*>& ) ) );
-    }
-
     //Main layout
     QVBoxLayout *mainVLayout = new QVBoxLayout( this );
     QHBoxLayout *mainHLayout = new QHBoxLayout();
@@ -89,6 +85,14 @@ KZenWidget::KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent )
     mainVLayout->addWidget( m_devices );
     mainVLayout->addLayout( mainHLayout );
     setLayout( mainVLayout );
+
+    //Setup the connections
+    for( int i = 0; i < mtp_devices.size(); i++ ){
+        KZenDevice *device = mtp_devices.at( i );
+        connect( device, SIGNAL( albumList( const QList<KZenAlbum*>& ) ), musicWidget->albumView(), SLOT( listAlbums( const QList<KZenAlbum*>& ) ) );
+
+        connect( device, SIGNAL( trackList( const QList<KZenTrack*>& ) ), musicWidget->trackView(), SLOT( listTracks( const QList<KZenTrack*>& ) ) );
+    }
 }
 
 
@@ -107,13 +111,19 @@ void KZenWidget::musicTabToggled( bool on )
             int device = m_devices->currentIndex();
 
             if( device >= 0 ){
-                KZenAlbumView *albumView = musicWidget->albumView();
-
-                if( !albumView->model() ){
-                    KZenAlbumViewModel *model = new KZenAlbumViewModel( albumView, mtp_devices.value( device )->albums() );
-//                     new ModelTest( model, this );
-                    albumView->setModel( model );
-                }
+//                 KZenAlbumView *albumView = musicWidget->albumView();
+//
+//                 if( !albumView->model() ){
+//                     KZenAlbumViewModel *model = new KZenAlbumViewModel( albumView, mtp_devices.value( device )->albums() );
+//                     albumView->setModel( model );
+//                 }
+//
+//                 KZenTrackView *trackView = musicWidget->trackView();
+//
+//                 if( !trackView->model() ){
+//                     KZenTrackViewModel *model = new KZenTrackViewModel( trackView );
+//                     trackView->setModel( model );
+//                 }
             }
 
         }
@@ -138,16 +148,6 @@ void KZenWidget::photoTabToggled( bool on )
         navpanel->tab( KZenWidget::MusicTab )->setState( false );
         navpanel->tab( KZenWidget::VideoTab )->setState( false );
     }else{
-    }
-}
-
-void KZenWidget::listAlbums( const QList<KZenAlbum*> &albums )
-{
-    KZenAlbumView *albumView = musicWidget->albumView();
-    if( !albumView->model() || albumsDirty ){
-        KZenAlbumViewModel *model = static_cast<KZenAlbumViewModel*>( albumView->model() );
-        albumView->setModel( new KZenAlbumViewModel( albumView, albums ) );
-        delete model;
     }
 }
 

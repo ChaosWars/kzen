@@ -26,7 +26,7 @@ KZenPlaylist::KZenPlaylist( LIBMTP_playlist_t *playlist, QObject *parent )
 
 KZenPlaylist::~KZenPlaylist()
 {
-    LIBMTP_destroy_playlist( m_playlist );
+    LIBMTP_destroy_playlist_t( m_playlist );
 }
 
 #include "kzenplaylist.moc"

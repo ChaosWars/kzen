@@ -17,59 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENWIDGET_H
-#define KZENWIDGET_H
+#ifndef DEVICES_H
+#define DEVICES_H
 
-#include <QWidget>
-
-class KComboBox;
-class KMultiTabBar;
-class KMultiTabBarTab;
-class KZenMusicWidget;
-class QTreeView;
-class KZenAlbum;
-class KZenDevice;
+#include "kzendevice.h"
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenWidget : public QWidget
-{
-    Q_OBJECT
-
+class Devices{
     public:
-
-        /**
-         *
-         * @param devices
-         * @param parent
-         */
-        KZenWidget( const QList<KZenDevice*> &devices, QWidget *parent = 0 );
-
-        /**
-         *
-         */
-        ~KZenWidget();
-
-        enum{
-            MusicTab = 0,
-            VideoTab,
-            PhotoTab
-        };
+        Devices();
+        ~Devices();
+        static QList<KZenDevice*> devices(){ return m_devices; }
 
     private:
-        QList<KZenDevice*> mtp_devices;
-        KMultiTabBar *navpanel;
-        KMultiTabBarTab *musicTab, *videoTab, *photoTab;
-        KZenMusicWidget *musicWidget;
-        QTreeView *mainView;
-        KComboBox *m_devices;
-
-    private slots:
-        void musicTabToggled( bool on );
-        void videoTabToggled( bool on );
-        void photoTabToggled( bool on );
-
+        static QList<KZenDevice*> m_devices;
 };
 
 #endif

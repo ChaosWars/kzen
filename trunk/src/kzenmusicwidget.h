@@ -23,6 +23,7 @@
 #include <QToolBox>
 
 class KZenAlbumView;
+class KZenTrackView;
 // class KZenPlaylistView;
 // class KZenGenreView;
 
@@ -50,10 +51,17 @@ class KZenMusicWidget : public QToolBox
          *
          * @return
          */
-        KZenAlbumView* albumView(){ return m_albumView; };
+        KZenAlbumView* albumView(){ return m_albumView; }
+
+        /**
+         *
+         * @return
+         */
+        KZenTrackView* trackView(){ return m_trackView; }
 
     private:
         KZenAlbumView *m_albumView;
+        KZenTrackView *m_trackView;
 //         KZenPlaylistView *m_playlistView;
 //         KZenGenreView *m_genreView;
 

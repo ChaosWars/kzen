@@ -52,7 +52,7 @@ class KZenDeviceThread : public QThread
          */
         ~KZenDeviceThread();
 
-        enum Status{ IDLE, GET_ALBUM_LIST, GET_FILE_LIST, GET_PLAYLIST_LIST };
+        enum Status{ IDLE, GET_ALBUM_LIST, GET_FILE_LIST, GET_PLAYLIST_LIST, GET_TRACK_LIST };
 
         /**
          *
@@ -87,6 +87,11 @@ class KZenDeviceThread : public QThread
          */
         void getFileList();
 
+        /**
+         *
+         */
+        void getTrackList();
+
     protected:
 
         /**
@@ -103,27 +108,33 @@ class KZenDeviceThread : public QThread
 
         /**
          *
-         * @param list
+         * @param message
          */
         void message( const QString &message );
 
         /**
          *
-         * @param list
+         * @param albums
          */
-        void albumList( const QList<KZenAlbum*> &list );
+        void albumList( const QList<KZenAlbum*> &albums );
 
         /**
          *
-         * @param list
+         * @param files
          */
-        void fileList( const QList<KZenFile*> &list );
+        void fileList( const QList<KZenFile*> &files );
 
         /**
          *
-         * @param list
+         * @param playlists
          */
-        void playlistList( const QList<KZenPlaylist*> &list );
+        void playlistList( const QList<KZenPlaylist*> &playlists );
+
+        /**
+         *
+         * @param tracks
+         */
+        void trackList( const QList<KZenTrack*> &tracks );
 };
 
 #endif

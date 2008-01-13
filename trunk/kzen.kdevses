@@ -2,19 +2,19 @@
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="5" >
-  <Doc0 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenalbumviewmodel.cpp" >
-   <View0 Encoding="" line="110" Type="Source" />
+  <Doc0 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenwidget.cpp" >
+   <View0 Encoding="" line="125" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenalbumviewmodel.h" >
-   <View0 Encoding="" line="108" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenalbumview.cpp" >
+   <View0 Encoding="" line="27" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenalbum.cpp" >
-   <View0 Encoding="" line="0" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzentrackview.cpp" >
+   <View0 Encoding="" line="27" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenalbum.h" >
-   <View0 Encoding="" line="0" Type="Source" />
+  <Doc3 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzentrackviewmodel.cpp" >
+   <View0 Encoding="" line="65" Type="Source" />
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzentrack.h" >
+  <Doc4 NumberOfViews="1" URL="file:///home/lawrence/Projects/kzen/trunk/src/kzenmusicwidget.cpp" >
    <View0 Encoding="" line="0" Type="Source" />
   </Doc4>
  </DocsAndViews>
