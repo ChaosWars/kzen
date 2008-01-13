@@ -88,7 +88,6 @@ bool KZen::queryClose()
 
 bool KZen::queryExit()
 {
-    LIBMTP_Release_Device_List( devices );
     return true;
 }
 
@@ -122,7 +121,7 @@ LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash )
 
     LIBMTP_mtpdevice_t *device;
     for( device = devices; device != NULL; device = device->next ){
-        Devices::addDevice( new KZenDevice( device ) );
+        Devices::addDevice( new KZenDevice( device, this ) );
     }
 
     return LIBMTP_ERROR_NONE;

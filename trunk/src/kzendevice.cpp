@@ -41,6 +41,7 @@ KZenDevice::KZenDevice( LIBMTP_mtpdevice_t *device, QObject *parent )
         device_thread->getAlbumList();
         device_thread->getFileList();
         device_thread->getPlaylistList();
+        device_thread->getTrackList();
     }
 }
 
@@ -51,8 +52,8 @@ KZenDevice::~KZenDevice()
     m_files.clear();
     m_playlists.clear();
 
-//     if( m_device )
-//         LIBMTP_Release_Device( m_device );
+    if( m_device )
+        LIBMTP_Release_Device( m_device );
 }
 
 void KZenDevice::getAlbums()
