@@ -21,7 +21,7 @@
 #include "kzentrack.h"
 #include "kzenalbum.h"
 
-KZenTrack::KZenTrack( QObject *parent, LIBMTP_track_t *track )
+KZenTrack::KZenTrack( LIBMTP_track_t *track, QObject *parent )
  : QObject( parent ), m_track( track )
 {
     setObjectName( "KZenTrack" );

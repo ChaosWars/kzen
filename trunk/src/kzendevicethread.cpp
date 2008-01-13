@@ -65,6 +65,7 @@ void KZenDeviceThread::getAlbumList( const QList<KZenTrack*> &tracks )
         QList<KZenAlbum*> albums;
 
         if( tracks.size() == 0 ){
+            QList<KZenTrack*> _tracks;
             /* Here we assume that no tracks were passed as an argument,
              * so we query the device for a track list.
              * Of course, it could be that there are no tracks on the device,
@@ -85,15 +86,15 @@ void KZenDeviceThread::getAlbumList( const QList<KZenTrack*> &tracks )
             emit message( "Constructing album data" );
 
             for( LIBMTP_album_t *album = album_list; album != NULL; album = album->next ){
+                uint32_t * trackid = album->tracks;
 
                 for( uint32_t i = 0; i < album->no_tracks; i++ ){
-                    LIBMTP_track_t *track = tracklisting;
-
+                    LIBMTP_track_t *track = trackHashList.value( *(trackid + i) );
+                    _tracks.append( new KZenTrack( track ) );
                 }
 
-
-//                 KZenAlbum *newAlbum = new KZenAlbum( album )
-//                 albums.append( newAlbum );
+                KZenAlbum *newAlbum = new KZenAlbum( album, _tracks );
+                albums.append( newAlbum );
             }
         }else{
         }

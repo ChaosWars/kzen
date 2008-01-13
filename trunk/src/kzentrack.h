@@ -39,7 +39,7 @@ class KZenTrack : public QObject
          * @param parent
          * @param track
          */
-        KZenTrack( QObject *parent, LIBMTP_track_t *track );
+        KZenTrack( LIBMTP_track_t *track, QObject *parent = 0 );
 
         /**
          *
