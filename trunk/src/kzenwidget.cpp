@@ -21,12 +21,14 @@
 #include <KDE/KTabWidget>
 #include <KDE/KIconLoader>
 #include <KDE/KComboBox>
-#include <KDE/KDirModel>
+#include <KDE/KDirOperator>
 #include <KDE/KDebug>
+#include <QDir>
 #include <QLayout>
 #include <QSplitter>
 #include <QPixmap>
-#include <QTreeWidget>
+#include <QTreeView>
+#include <QListView>
 #include "kzenwidget.h"
 #include "kzenmusicwidget.h"
 #include "kzenalbumview.h"
@@ -79,8 +81,8 @@ KZenWidget::KZenWidget( QWidget *parent )
     QSplitter *splitter = new QSplitter( this );
     musicWidget = new KZenMusicWidget( splitter );
     musicWidget->hide();
-    mainView = new QTreeView( splitter );
-    mainView->setModel( new KDirModel( mainView ) );
+    mainView = new KDirOperator( KUrl(), splitter );
+    mainView->setView( KFile::Default );
 
     //Set the layout
     mainHLayout->addWidget( navpanel );

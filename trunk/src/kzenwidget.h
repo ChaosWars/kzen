@@ -26,7 +26,7 @@ class KComboBox;
 class KMultiTabBar;
 class KMultiTabBarTab;
 class KZenMusicWidget;
-class QTreeView;
+class KDirOperator;
 class KZenAlbum;
 class KZenDevice;
 
@@ -61,7 +61,7 @@ class KZenWidget : public QWidget
         KMultiTabBar *navpanel;
         KMultiTabBarTab *musicTab, *videoTab, *photoTab;
         KZenMusicWidget *musicWidget;
-        QTreeView *mainView;
+        KDirOperator *mainView;
         KComboBox *m_devices;
 
     private slots:
