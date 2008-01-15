@@ -21,6 +21,7 @@
 #define KZENWIDGET_H
 
 #include <QWidget>
+#include <KDE/KFile>
 
 class KComboBox;
 class KMultiTabBar;
@@ -67,11 +68,11 @@ class KZenWidget : public QWidget
         KDirOperator *mainView;
         KComboBox *m_devices;
 
-    private slots:
+    private Q_SLOTS:
         void musicTabToggled( bool on );
         void videoTabToggled( bool on );
         void photoTabToggled( bool on );
-
+        void setMainView( KFile::FileView );
 };
 
 #endif

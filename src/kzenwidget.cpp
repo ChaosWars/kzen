@@ -26,9 +26,6 @@
 #include <QDir>
 #include <QLayout>
 #include <QSplitter>
-#include <QPixmap>
-#include <QTreeView>
-#include <QListView>
 #include "kzenwidget.h"
 #include "kzenmusicwidget.h"
 #include "kzendirnavbar.h"
@@ -84,13 +81,12 @@ KZenWidget::KZenWidget( QWidget *parent )
     splitter->addWidget( musicWidget );
     musicWidget->hide();
 
-    //Navigation widget - contains a navigation toolbar and a view
+    //Navigation widget - contains a navigation toolbar, a view and a spacer
     dirNavWidget = new QWidget( splitter );
     QVBoxLayout *dirNavLayout = new QVBoxLayout( dirNavWidget );
 
     //Directory navigation bar
     dirNavBar = new KZenDirNavBar( dirNavWidget );
-    dirNavLayout->addWidget( dirNavBar );
 
     //Main view
     mainView = new KDirOperator( KUrl(), dirNavWidget );
@@ -101,8 +97,13 @@ KZenWidget::KZenWidget( QWidget *parent )
     sizePolicy.setHeightForWidth( mainView->sizePolicy().hasHeightForWidth() );
     mainView->setSizePolicy(sizePolicy);
 
+    //Spacer
+    QSpacerItem *spacer = new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+
     //Add the widgets to the splitter
+    dirNavLayout->addWidget( dirNavBar );
     dirNavLayout->addWidget( mainView );
+    dirNavLayout->addItem( spacer );
     dirNavWidget->setLayout( dirNavLayout );
     splitter->addWidget( dirNavWidget );
 
@@ -112,6 +113,14 @@ KZenWidget::KZenWidget( QWidget *parent )
     mainVLayout->addWidget( m_devices );
     mainVLayout->addLayout( mainHLayout );
     setLayout( mainVLayout );
+
+    //Connect the signals of the navbar to the view
+    connect( dirNavBar, SIGNAL( home() ), mainView, SLOT( home() ) );
+    connect( dirNavBar, SIGNAL( cdUp() ), mainView, SLOT( cdUp() ) );
+    connect( dirNavBar, SIGNAL( back() ), mainView, SLOT( back() ) );
+    connect( dirNavBar, SIGNAL( forward() ), mainView, SLOT( forward() ) );
+
+    connect( dirNavBar, SIGNAL( setView( KFile::FileView ) ), this, SLOT( setMainView( KFile::FileView ) )  );
 }
 
 
@@ -146,6 +155,12 @@ void KZenWidget::photoTabToggled( bool on )
         navpanel->tab( KZenWidget::VideoTab )->setState( false );
     }else{
     }
+}
+
+void KZenWidget::setMainView( KFile::FileView view )
+{
+    kDebug() << view;
+    mainView->setView( view );
 }
 
 #include "kzenwidget.moc"

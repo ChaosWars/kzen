@@ -53,13 +53,13 @@ class KZenDevice : public QObject{
          *
          * @return
          */
-        const char* name(){ return friendlyName; }
+        const QList<KZenAlbum*>& albums(){ return m_albums; };
 
         /**
          *
          * @return
          */
-        const QList<KZenAlbum*>& albums(){ return m_albums; };
+        int batteryLevel(){ return static_cast<int>( current_battery_level/maximum_battery_level )*100; };
 
         /**
          *
@@ -71,7 +71,19 @@ class KZenDevice : public QObject{
          *
          * @return
          */
+        const char* name(){ return friendlyName; }
+
+        /**
+         *
+         * @return
+         */
         const QList<KZenPlaylist*>& playlists(){ return m_playlists; }
+
+        /**
+         *
+         * @return
+         */
+        LIBMTP_devicestorage_t* deviceStorage(){ return m_device->storage; }
 
         /**
          *
@@ -87,12 +99,22 @@ class KZenDevice : public QObject{
         /**
          *
          */
+        void getBatteryLevel();
+
+        /**
+         *
+         */
         void getFiles();
 
         /**
          *
          */
         void getPlaylists();
+
+        /**
+         *
+         */
+        void getStorage();
 
         /**
          *
@@ -106,7 +128,8 @@ class KZenDevice : public QObject{
         QList<KZenFile*> m_files;
         QList<KZenPlaylist*> m_playlists;
         QList<KZenTrack*> m_tracks;
-        const char* friendlyName;
+        char* friendlyName;
+        uint8_t maximum_battery_level, current_battery_level;
 
     private Q_SLOTS:
         void albumListSlot( const QList<KZenAlbum*> &albums );
