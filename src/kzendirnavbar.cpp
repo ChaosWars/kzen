@@ -17,61 +17,32 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENWIDGET_H
-#define KZENWIDGET_H
+#include <KDE/KPushButton>
+#include <KDE/KLocale>
+#include <QLayout>
+#include <QSpacerItem>
+#include "kzendirnavbar.h"
 
-#include <QWidget>
-
-class KComboBox;
-class KMultiTabBar;
-class KMultiTabBarTab;
-class KZenMusicWidget;
-class KZenDirNavBar;
-class KDirOperator;
-class KZenAlbum;
-class KZenDevice;
-
-/**
-	@author Lawrence Lee <valheru@facticius.net>
-*/
-class KZenWidget : public QWidget
+KZenDirNavBar::KZenDirNavBar(QWidget *parent)
+ : QWidget(parent)
 {
-    Q_OBJECT
+    mainLayout = new QHBoxLayout( this );
+    buttonLayout = new QHBoxLayout();
+    home = new KPushButton( KIcon( "go-home" ), i18n( "Home" ), this );
+    buttonLayout->addWidget( home );
+    up = new KPushButton( KIcon( "go-up" ), i18n( "Up" ), this );
+    buttonLayout->addWidget( up );
+    back = new KPushButton( KIcon( "go-previous" ), i18n( "Back" ), this );
+    buttonLayout->addWidget( back );
+    forward = new KPushButton( KIcon( "go-next" ), i18n( "Forward" ), this );
+    buttonLayout->addWidget( forward );
+    spacer = new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    buttonLayout->addItem( spacer );
+    mainLayout->addLayout( buttonLayout );
+}
 
-    public:
+KZenDirNavBar::~KZenDirNavBar()
+{
+}
 
-        /**
-         *
-         * @param devices
-         * @param parent
-         */
-        KZenWidget( QWidget *parent = 0 );
-
-        /**
-         *
-         */
-        ~KZenWidget();
-
-        enum{
-            MusicTab = 0,
-            VideoTab,
-            PhotoTab
-        };
-
-    private:
-        KMultiTabBar *navpanel;
-        KMultiTabBarTab *musicTab, *videoTab, *photoTab;
-        KZenMusicWidget *musicWidget;
-        QWidget *dirNavWidget;
-        KZenDirNavBar *dirNavBar;
-        KDirOperator *mainView;
-        KComboBox *m_devices;
-
-    private slots:
-        void musicTabToggled( bool on );
-        void videoTabToggled( bool on );
-        void photoTabToggled( bool on );
-
-};
-
-#endif
+#include "kzendirnavbar.moc"

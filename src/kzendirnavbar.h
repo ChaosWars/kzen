@@ -17,61 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENWIDGET_H
-#define KZENWIDGET_H
+#ifndef KZENDIRNAVBAR_H
+#define KZENDIRNAVBAR_H
 
 #include <QWidget>
 
-class KComboBox;
-class KMultiTabBar;
-class KMultiTabBarTab;
-class KZenMusicWidget;
-class KZenDirNavBar;
-class KDirOperator;
-class KZenAlbum;
-class KZenDevice;
+class KPushButton;
+class QHBoxLayout;
+class QSpacerItem;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenWidget : public QWidget
+class KZenDirNavBar : public QWidget
 {
     Q_OBJECT
 
     public:
-
-        /**
-         *
-         * @param devices
-         * @param parent
-         */
-        KZenWidget( QWidget *parent = 0 );
-
-        /**
-         *
-         */
-        ~KZenWidget();
-
-        enum{
-            MusicTab = 0,
-            VideoTab,
-            PhotoTab
-        };
+        KZenDirNavBar( QWidget *parent = 0 );
+        ~KZenDirNavBar();
 
     private:
-        KMultiTabBar *navpanel;
-        KMultiTabBarTab *musicTab, *videoTab, *photoTab;
-        KZenMusicWidget *musicWidget;
-        QWidget *dirNavWidget;
-        KZenDirNavBar *dirNavBar;
-        KDirOperator *mainView;
-        KComboBox *m_devices;
-
-    private slots:
-        void musicTabToggled( bool on );
-        void videoTabToggled( bool on );
-        void photoTabToggled( bool on );
-
+        KPushButton *home, *up, *back, *forward;
+        QHBoxLayout *mainLayout, *buttonLayout;
+        QSpacerItem *spacer;
 };
 
 #endif

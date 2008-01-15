@@ -31,6 +31,7 @@
 #include <QListView>
 #include "kzenwidget.h"
 #include "kzenmusicwidget.h"
+#include "kzendirnavbar.h"
 #include "kzenalbumview.h"
 #include "kzentrackview.h"
 #include "kzenalbumviewmodel.h"
@@ -80,9 +81,30 @@ KZenWidget::KZenWidget( QWidget *parent )
     //Main splitter
     QSplitter *splitter = new QSplitter( this );
     musicWidget = new KZenMusicWidget( splitter );
+    splitter->addWidget( musicWidget );
     musicWidget->hide();
-    mainView = new KDirOperator( KUrl(), splitter );
+
+    //Navigation widget - contains a navigation toolbar and a view
+    dirNavWidget = new QWidget( splitter );
+    QVBoxLayout *dirNavLayout = new QVBoxLayout( dirNavWidget );
+
+    //Directory navigation bar
+    dirNavBar = new KZenDirNavBar( dirNavWidget );
+    dirNavLayout->addWidget( dirNavBar );
+
+    //Main view
+    mainView = new KDirOperator( KUrl(), dirNavWidget );
     mainView->setView( KFile::Default );
+    QSizePolicy sizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    sizePolicy.setHorizontalStretch( 0 );
+    sizePolicy.setVerticalStretch( 0 );
+    sizePolicy.setHeightForWidth( mainView->sizePolicy().hasHeightForWidth() );
+    mainView->setSizePolicy(sizePolicy);
+
+    //Add the widgets to the splitter
+    dirNavLayout->addWidget( mainView );
+    dirNavWidget->setLayout( dirNavLayout );
+    splitter->addWidget( dirNavWidget );
 
     //Set the layout
     mainHLayout->addWidget( navpanel );

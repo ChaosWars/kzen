@@ -11,6 +11,7 @@ SET( SRC main.cpp
         kzensplash.cpp
         kzenwidget.cpp
         kzenmusicwidget.cpp
+        kzendirnavbar.cpp
         kzendevice.cpp
         kzendevicethread.cpp
         kzenobject.cpp
