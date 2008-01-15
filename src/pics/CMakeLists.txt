@@ -1,1 +1,0 @@
-INSTALL( FILES kzen_splash.png DESTINATION ${DATA_INSTALL_DIR}/kzen/pics )
