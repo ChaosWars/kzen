@@ -32,11 +32,12 @@ KZenMusicWidget::KZenMusicWidget( QWidget *parent )
  : QToolBox( parent )
 {
     m_albumView = new KZenAlbumView( this );
+    m_playlistView = new KZenPlaylistView( this );
     m_trackView = new KZenTrackView( this );
     addItem( m_albumView, "Albums" );
-    addItem( m_albumView/*new QWidget( this )*/, "Playlists" );
+    addItem( m_playlistView, "Playlists" );
     addItem( m_trackView, "All Tracks" );
-
+//
     //Setup the connections
     for( int i = 0; i < Devices::devices().size(); i++ ){
         KZenDevice *device = Devices::devices().at( i );
