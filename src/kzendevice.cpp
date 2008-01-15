@@ -40,10 +40,10 @@ KZenDevice::KZenDevice( LIBMTP_mtpdevice_t *device, QObject *parent )
         friendlyName = LIBMTP_Get_Friendlyname( device );
         LIBMTP_Get_Storage( device, LIBMTP_STORAGE_SORTBY_NOTSORTED );
         LIBMTP_Get_Batterylevel( device, &maximum_battery_level, &current_battery_level );
-        device_thread->getAlbumList();
-        device_thread->getFileList();
-        device_thread->getPlaylistList();
         device_thread->getTrackList();
+        device_thread->getAlbumList( m_tracks );
+        device_thread->getFileList();
+        device_thread->getPlaylistList( m_tracks );
     }
 }
 
@@ -53,6 +53,7 @@ KZenDevice::~KZenDevice()
     m_albums.clear();
     m_files.clear();
     m_playlists.clear();
+    m_tracks.clear();
 
     if( m_device )
         LIBMTP_Release_Device( m_device );

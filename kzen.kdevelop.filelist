@@ -31,6 +31,10 @@ src/kzenobject.cpp
 src/kzenobject.h
 src/kzenplaylist.cpp
 src/kzenplaylist.h
+src/kzenplaylistview.cpp
+src/kzenplaylistview.h
+src/kzenplaylistviewmodel.cpp
+src/kzenplaylistviewmodel.h
 src/kzensplash.cpp
 src/kzensplash.h
 src/kzentrack.cpp
@@ -44,4 +48,6 @@ src/kzenwidget.h
 src/main.cpp
 src/pics
 src/pics/CMakeLists.txt
+src/test.cpp
+src/test.h
 templates

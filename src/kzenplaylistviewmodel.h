@@ -17,19 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KZENMUSICWIDGET_H
-#define KZENMUSICWIDGET_H
+#ifndef KZENPLAYLISTVIEWMODEL_H
+#define KZENPLAYLISTVIEWMODEL_H
 
-#include <QToolBox>
+#include <QAbstractItemModel>
+#include <QStringList>
 
-class KZenAlbumView;
-class KZenTrackView;
-class KZenPlaylistView;
+class KZenPlaylist;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenMusicWidget : public QToolBox
+class KZenPlaylistViewModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -38,37 +37,75 @@ class KZenMusicWidget : public QToolBox
         /**
          *
          * @param parent
+         * @param
          */
-        KZenMusicWidget( QWidget *parent = 0 );
+        KZenPlaylistViewModel( QObject *parent = 0, const QList<KZenPlaylist*> &playlists = QList<KZenPlaylist*>() );
 
         /**
          *
          */
-        ~KZenMusicWidget();
+        ~KZenPlaylistViewModel();
+
+/**
+         *
+         * @param index
+         * @param role
+         * @return
+ */
+        int columnCount( const QModelIndex &parent = QModelIndex() ) const;
 
         /**
          *
+         * @param index
          * @return
          */
-        KZenAlbumView* albumView(){ return m_albumView; }
+        QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
 
         /**
          *
+         * @param section
+         * @param orientation
+         * @param role
          * @return
          */
-        KZenPlaylistView* playlistView(){ return m_playlistView; }
+        Qt::ItemFlags flags( const QModelIndex &index ) const;
 
         /**
          *
+         * @param section
+         * @param orientation
+         * @param role
          * @return
          */
-        KZenTrackView* trackView(){ return m_trackView; }
+        QVariant headerData( int section, Qt::Orientation orientation,
+                             int role = Qt::DisplayRole ) const;
+
+        /**
+         *
+         * @param row
+         * @param column
+         * @param parent
+         * @return
+         */
+        QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const;
+
+        /**
+         *
+         * @param index
+         * @return
+         */
+        QModelIndex parent( const QModelIndex &index ) const;
+
+        /**
+         *
+         * @param parent
+         * @return
+         */
+        int rowCount( const QModelIndex &parent = QModelIndex() ) const;
 
     private:
-        KZenAlbumView *m_albumView;
-        KZenPlaylistView *m_playlistView;
-        KZenTrackView *m_trackView;
-
+        QStringList rootItem;
+        QList<KZenPlaylist*> m_playlists;
 };
 
 #endif

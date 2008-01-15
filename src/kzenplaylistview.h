@@ -17,39 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <QLayout>
-#include "kzenmusicwidget.h"
-#include "kzenalbumview.h"
-#include "kzenplaylistview.h"
-#include "kzentrackview.h"
-#include "kzenalbum.h"
-#include "kzenplaylist.h"
-#include "kzentrack.h"
-#include "kzendevice.h"
-#include "devices.h"
+#ifndef KZENPLAYLISTVIEW_H
+#define KZENPLAYLISTVIEW_H
 
-KZenMusicWidget::KZenMusicWidget( QWidget *parent )
- : QToolBox( parent )
+#include <QTreeView>
+
+class KZenPlaylist;
+
+/**
+	@author Lawrence Lee <valheru@facticius.net>
+*/
+class KZenPlaylistView : public QTreeView
 {
-    m_albumView = new KZenAlbumView( this );
-    m_trackView = new KZenTrackView( this );
-    addItem( m_albumView, "Albums" );
-    addItem( m_albumView/*new QWidget( this )*/, "Playlists" );
-    addItem( m_trackView, "All Tracks" );
+    Q_OBJECT
 
-    //Setup the connections
-    for( int i = 0; i < Devices::devices().size(); i++ ){
-        KZenDevice *device = Devices::devices().at( i );
-        connect( device, SIGNAL( albumList( const QList<KZenAlbum*>& ) ), m_albumView, SLOT( listAlbums( const QList<KZenAlbum*>& ) ) );
+    public:
 
-        connect( device, SIGNAL( playlistList( const QList<KZenPlaylist*>& ) ), m_playlistView, SLOT( listPlaylists( const QList<KZenPlaylist*>& ) ) );
+        /**
+         *
+         * @param parent
+         */
+        KZenPlaylistView( QWidget *parent = 0 );
 
-        connect( device, SIGNAL( trackList( const QList<KZenTrack*>& ) ), m_trackView, SLOT( listTracks( const QList<KZenTrack*>& ) ) );
-    }
-}
+        /**
+         *
+         */
+        ~KZenPlaylistView();
 
-KZenMusicWidget::~KZenMusicWidget()
-{
-}
+    public Q_SLOTS:
 
-#include "kzenmusicwidget.moc"
+        /**
+         *
+         * @param albums
+         */
+        void listPlaylists( const QList<KZenPlaylist*> &playlists );
+
+    private:
+        bool playlistsDirty;
+
+};
+
+#endif

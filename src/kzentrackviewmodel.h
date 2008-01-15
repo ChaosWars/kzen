@@ -37,6 +37,7 @@ class KZenTrackViewModel : public QAbstractListModel
         /**
          *
          * @param parent
+         * @param tracks
          */
         KZenTrackViewModel( QObject *parent = 0, const QList<KZenTrack*> &tracks = QList<KZenTrack*>() );
 

@@ -17,28 +17,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <KDE/KDebug>
-#include "kzenalbumviewmodel.h"
-#include "kzenalbum.h"
+#include "kzenplaylistviewmodel.h"
+#include "kzenplaylist.h"
 #include "kzentrack.h"
 
-KZenAlbumViewModel::KZenAlbumViewModel( QObject *parent, const QList<KZenAlbum*> &albums )
- : QAbstractItemModel( parent ), m_albums( albums )
+KZenPlaylistViewModel::KZenPlaylistViewModel( QObject *parent, const QList<KZenPlaylist*> &playlists )
+ : QAbstractItemModel( parent ), m_playlists( playlists )
 {
-    rootItem << "Album" << "Artist" << "Genre" << "Nr. of Tracks";
+    rootItem << "Playlist" << "Nr. of Tracks";
 }
 
-KZenAlbumViewModel::~KZenAlbumViewModel()
+KZenPlaylistViewModel::~KZenPlaylistViewModel()
 {
-    qDeleteAll( m_albums );
+    qDeleteAll( m_playlists );
 }
 
-int KZenAlbumViewModel::columnCount( const QModelIndex& /*parent*/ ) const
+int KZenPlaylistViewModel::columnCount( const QModelIndex& /*parent*/ ) const
 {
-    return 4;
+    return 2;
 }
 
-QVariant KZenAlbumViewModel::data( const QModelIndex &index, int role ) const
+QVariant KZenPlaylistViewModel::data( const QModelIndex &index, int role ) const
 {
     if( !index.isValid() )
         return QVariant();
@@ -51,13 +50,9 @@ QVariant KZenAlbumViewModel::data( const QModelIndex &index, int role ) const
     if( !parentIndex.isValid() ){
         switch( index.column() ){
             case 0:
-                return m_albums.at( index.row() )->name();
+                return m_playlists.at( index.row() )->name();
             case 1:
-                return m_albums.at( index.row() )->artist();
-            case 2:
-                return m_albums.at( index.row() )->genre();
-            case 3:
-                return m_albums.at( index.row() )->numTracks();
+                return m_playlists.at( index.row() )->numTracks();
             default:
                 return QVariant();
         }
@@ -65,20 +60,16 @@ QVariant KZenAlbumViewModel::data( const QModelIndex &index, int role ) const
     else{
         switch( index.column() ){
             case 0:
-                return m_albums.at( parentIndex.row() )->albumTracks().at( index.row() )->title();
+                return m_playlists.at( parentIndex.row() )->playlistTracks().at( index.row() )->title();
             case 1:
-                return m_albums.at( parentIndex.row() )->albumTracks().at( index.row() )->artist();
-            case 2:
-                return m_albums.at( parentIndex.row() )->albumTracks().at( index.row() )->genre();
-            case 3:
-                return m_albums.at( parentIndex.row() )->albumTracks().at( index.row() )->tracknumber();
+                return m_playlists.at( parentIndex.row() )->playlistTracks().at( index.row() )->tracknumber();
             default:
                 return QVariant();
         }
     }
 }
 
-Qt::ItemFlags KZenAlbumViewModel::flags( const QModelIndex &index ) const
+Qt::ItemFlags KZenPlaylistViewModel::flags( const QModelIndex &index ) const
 {
     if( !index.isValid() )
         return 0;
@@ -86,7 +77,7 @@ Qt::ItemFlags KZenAlbumViewModel::flags( const QModelIndex &index ) const
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
-QVariant KZenAlbumViewModel::headerData( int section, Qt::Orientation orientation, int role ) const
+QVariant KZenPlaylistViewModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole){
         return rootItem.value( section );
@@ -95,21 +86,21 @@ QVariant KZenAlbumViewModel::headerData( int section, Qt::Orientation orientatio
     return QVariant();
 }
 
-QModelIndex KZenAlbumViewModel::index( int row, int column, const QModelIndex &parent ) const
+QModelIndex KZenPlaylistViewModel::index( int row, int column, const QModelIndex &parent ) const
 {
     if( !hasIndex( row, column, parent ) )
         return QModelIndex();
 
     if( !parent.isValid() )
-        return createIndex( row, column, m_albums.at( row ) );
+        return createIndex( row, column, m_playlists.at( row ) );
 
     KZenObject *object = static_cast<KZenObject*>( parent.internalPointer() );
-    KZenAlbum *album = dynamic_cast<KZenAlbum*>( object );
+    KZenPlaylist *playlist = dynamic_cast<KZenPlaylist*>( object );
 
-    if( !album )
+    if( !playlist )
         return QModelIndex();
 
-    KZenTrack *track = album->albumTracks().at( row );
+    KZenTrack *track = playlist->playlistTracks().at( row );
 
     if( !track )
         return QModelIndex();
@@ -118,7 +109,7 @@ QModelIndex KZenAlbumViewModel::index( int row, int column, const QModelIndex &p
 
 }
 
-QModelIndex KZenAlbumViewModel::parent( const QModelIndex &index ) const
+QModelIndex KZenPlaylistViewModel::parent( const QModelIndex &index ) const
 {
     if( !index.isValid() )
         return QModelIndex();
@@ -129,27 +120,27 @@ QModelIndex KZenAlbumViewModel::parent( const QModelIndex &index ) const
     if( !track )
         return QModelIndex();
 
-    KZenAlbum *album = dynamic_cast<KZenAlbum*>( track->album() );
+    KZenPlaylist *playlist = dynamic_cast<KZenPlaylist*>( track->playlist() );
 
-    if( !album )
+    if( !playlist )
         return QModelIndex();
 
-    return createIndex( m_albums.indexOf( album ), 0, album );
+    return createIndex( m_playlists.indexOf( playlist ), 0, playlist );
 }
 
-int KZenAlbumViewModel::rowCount( const QModelIndex &parent ) const
+int KZenPlaylistViewModel::rowCount( const QModelIndex &parent ) const
 {
-    if( parent.column() > 3 )
-        //Out of KZenAlbumViewModel bounds
+    if( parent.column() > 1 )
+        //Out of KZenPlaylistViewModel bounds
         return 0;
 
     if( !parent.isValid() )
-        return m_albums.size();
+        return m_playlists.size();
 
     if( !parent.parent().isValid() )
-        return m_albums.at( parent.row() )->numTracks();
+        return m_playlists.at( parent.row() )->numTracks();
 
     return 0;
 }
 
-#include "kzenalbumviewmodel.moc"
+#include "kzenplaylistviewmodel.moc"
