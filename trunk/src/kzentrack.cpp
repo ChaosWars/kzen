@@ -21,9 +21,10 @@
 #include "kzentrack.h"
 #include "kzenalbum.h"
 
-KZenTrack::KZenTrack( LIBMTP_track_t *track, QObject *parent )
- : QObject( parent ), m_track( track )
+KZenTrack::KZenTrack( LIBMTP_track_t *track, KZenAlbum *parent )
+ : m_track( track )
 {
+    m_parent = parent;
 }
 
 KZenTrack::~KZenTrack()
@@ -31,4 +32,4 @@ KZenTrack::~KZenTrack()
     LIBMTP_destroy_track_t( m_track );
 }
 
-#include "kzentrack.moc"
+

@@ -19,8 +19,8 @@
  ***************************************************************************/
 #include "kzenplaylist.h"
 
-KZenPlaylist::KZenPlaylist( LIBMTP_playlist_t *playlist, QObject *parent )
- : QObject( parent ), m_playlist( playlist )
+KZenPlaylist::KZenPlaylist( LIBMTP_playlist_t *playlist )
+ : m_playlist( playlist )
 {
 }
 
@@ -29,4 +29,4 @@ KZenPlaylist::~KZenPlaylist()
     LIBMTP_destroy_playlist_t( m_playlist );
 }
 
-#include "kzenplaylist.moc"
+

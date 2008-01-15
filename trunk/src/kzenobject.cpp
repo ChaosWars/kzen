@@ -17,21 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <KDE/KDebug>
-#include "kzenalbum.h"
-#include "kzentrack.h"
+#include "kzenobject.h"
 
-KZenAlbum::KZenAlbum( LIBMTP_album_t *album, const QList<KZenTrack*> &tracks )
- : m_album( album ), m_tracks( tracks )
+KZenObject::KZenObject()
 {
-    for( int i = 0; i < m_tracks.size(); i++ ){
-        m_tracks.at( i )->setParent( this );
-    }
 }
 
-KZenAlbum::~KZenAlbum()
+
+KZenObject::~KZenObject()
 {
-    LIBMTP_destroy_album_t( m_album );
 }
 
 

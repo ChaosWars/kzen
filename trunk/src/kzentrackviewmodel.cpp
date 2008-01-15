@@ -49,11 +49,11 @@ QVariant KZenTrackViewModel::data( const QModelIndex &index, int role ) const
         case 0:
             return m_tracks.at( index.row() )->title();
         case 1:
-            return m_tracks.at( index.row() )->artist();
-        case 2:
-            return m_tracks.at( index.row() )->genre();
-        case 3:
             return m_tracks.at( index.row() )->album();
+        case 2:
+            return m_tracks.at( index.row() )->artist();
+        case 3:
+            return m_tracks.at( index.row() )->genre();
         case 4:
             return QString().setNum( static_cast<double>( m_tracks.at( index.row() )->filesize() ) /1048576.00, 'f', 2 );
         default:
