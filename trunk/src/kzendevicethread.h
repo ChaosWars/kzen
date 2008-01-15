@@ -80,7 +80,7 @@ class KZenDeviceThread : public QThread
         /**
          *
          */
-        void getPlaylistList();
+        void getPlaylistList( const QList<KZenTrack*> &tracks = QList<KZenTrack*>() );
 
         /**
          *

@@ -24,6 +24,7 @@
 #include "kzenobject.h"
 
 class KZenAlbum;
+class KZenPlaylist;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -37,7 +38,7 @@ class KZenTrack : public KZenObject
          * @param parent
          * @param track
          */
-        KZenTrack( LIBMTP_track_t *track, KZenAlbum *parent = 0 );
+        KZenTrack( LIBMTP_track_t *track );
 
         /**
          *
@@ -78,7 +79,7 @@ class KZenTrack : public KZenObject
          *
          * @return
          */
-        const char* album(){ return m_track->album; }
+        const char* albumname(){ return m_track->album; }
 
         /**
          *
@@ -162,16 +163,29 @@ class KZenTrack : public KZenObject
          *
          * @return
          */
-        KZenAlbum* parent(){ return m_parent; }
+        KZenAlbum* album(){ return m_album; }
 
         /**
          *
-         * @param parent
+         * @param album
          */
-        void setParent( KZenAlbum *parent ){ m_parent = parent; }
+        void setAlbum( KZenAlbum *album ){ m_album = album; }
+
+        /**
+         *
+         * @return
+         */
+        KZenPlaylist* playlist(){ return m_playlist; }
+
+        /**
+         *
+         * @param playlist
+         */
+        void setPlaylist( KZenPlaylist *playlist ){ m_playlist = playlist; }
 
     private:
-        KZenAlbum *m_parent;
+        KZenAlbum *m_album;
+        KZenPlaylist *m_playlist;
         LIBMTP_track_t *m_track;
 
 };

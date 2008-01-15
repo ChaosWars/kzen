@@ -6,6 +6,7 @@ INCLUDE_DIRECTORIES(${KDE4_INCLUDES}
                     ${CMAKE_CURRENT_SOURCE_DIR} )
 
 SET( SRC main.cpp
+        devices.cpp
         kzen.cpp
         kzensplash.cpp
         kzenwidget.cpp
@@ -15,14 +16,15 @@ SET( SRC main.cpp
         kzendevicethread.cpp
         kzenobject.cpp
         kzenalbum.cpp
-        kzentrack.cpp
         kzenfile.cpp
         kzenplaylist.cpp
+        kzentrack.cpp
         kzenalbumview.cpp
+        kzenplaylistview.cpp
         kzentrackview.cpp
         kzenalbumviewmodel.cpp
-        kzentrackviewmodel.cpp
-        devices.cpp )
+        kzenplaylistviewmodel.cpp
+        kzentrackviewmodel.cpp )
 
 QT4_ADD_RESOURCES( SRC kzen.qrc )
 LINK_DIRECTORIES( ${KDE4_LIB_DIR} )

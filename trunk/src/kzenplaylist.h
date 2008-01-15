@@ -20,8 +20,11 @@
 #ifndef KZENPLAYLIST_H
 #define KZENPLAYLIST_H
 
+#include <QList>
 #include "libmtp.h"
 #include "kzenobject.h"
+
+class KZenTrack;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -35,7 +38,7 @@ class KZenPlaylist : public KZenObject
          * @param playlist
          * @param parent
          */
-        KZenPlaylist( LIBMTP_playlist_t *playlist );
+        KZenPlaylist( LIBMTP_playlist_t *playlist, const QList<KZenTrack*> &tracks );
 
         /**
          *
@@ -64,10 +67,17 @@ class KZenPlaylist : public KZenObject
          *
          * @return
          */
-        uint32_t nrTracks(){ return m_playlist->no_tracks; };
+        uint32_t numTracks(){ return m_playlist->no_tracks; };
+
+        /**
+         *
+         * @return
+         */
+        QList<KZenTrack*> playlistTracks(){ return m_tracks; }
 
     private:
         LIBMTP_playlist_t *m_playlist;
+        QList<KZenTrack*> m_tracks;
 };
 
 #endif

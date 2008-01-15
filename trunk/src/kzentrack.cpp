@@ -21,10 +21,9 @@
 #include "kzentrack.h"
 #include "kzenalbum.h"
 
-KZenTrack::KZenTrack( LIBMTP_track_t *track, KZenAlbum *parent )
+KZenTrack::KZenTrack( LIBMTP_track_t *track )
  : m_track( track )
 {
-    m_parent = parent;
 }
 
 KZenTrack::~KZenTrack()

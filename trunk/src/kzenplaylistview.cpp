@@ -17,39 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <QLayout>
-#include "kzenmusicwidget.h"
-#include "kzenalbumview.h"
 #include "kzenplaylistview.h"
-#include "kzentrackview.h"
-#include "kzenalbum.h"
+#include "kzenplaylistviewmodel.h"
 #include "kzenplaylist.h"
-#include "kzentrack.h"
-#include "kzendevice.h"
 #include "devices.h"
 
-KZenMusicWidget::KZenMusicWidget( QWidget *parent )
- : QToolBox( parent )
+KZenPlaylistView::KZenPlaylistView( QWidget *parent)
+    : QTreeView( parent ), playlistsDirty( false )
 {
-    m_albumView = new KZenAlbumView( this );
-    m_trackView = new KZenTrackView( this );
-    addItem( m_albumView, "Albums" );
-    addItem( m_albumView/*new QWidget( this )*/, "Playlists" );
-    addItem( m_trackView, "All Tracks" );
+    qRegisterMetaType< QList<KZenPlaylist*> >( "QList<KZenPlaylist*>" );
 
-    //Setup the connections
-    for( int i = 0; i < Devices::devices().size(); i++ ){
-        KZenDevice *device = Devices::devices().at( i );
-        connect( device, SIGNAL( albumList( const QList<KZenAlbum*>& ) ), m_albumView, SLOT( listAlbums( const QList<KZenAlbum*>& ) ) );
-
-        connect( device, SIGNAL( playlistList( const QList<KZenPlaylist*>& ) ), m_playlistView, SLOT( listPlaylists( const QList<KZenPlaylist*>& ) ) );
-
-        connect( device, SIGNAL( trackList( const QList<KZenTrack*>& ) ), m_trackView, SLOT( listTracks( const QList<KZenTrack*>& ) ) );
-    }
+    if( Devices::devices().size() > 0 )
+        setModel( new KZenPlaylistViewModel( this, Devices::devices().first()->playlists() ) );
+    else
+        setModel( new KZenPlaylistViewModel( this ) );
 }
 
-KZenMusicWidget::~KZenMusicWidget()
+KZenPlaylistView::~KZenPlaylistView()
 {
 }
 
-#include "kzenmusicwidget.moc"
+void KZenPlaylistView::listPlaylists( const QList<KZenPlaylist*> &playlists )
+{
+    KZenPlaylistViewModel *oldmodel = static_cast<KZenPlaylistViewModel*>( model() );
+    setModel( new KZenPlaylistViewModel( this, playlists ) );
+    delete oldmodel;
+}
+
+#include "kzenplaylistview.moc"

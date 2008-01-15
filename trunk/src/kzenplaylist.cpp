@@ -18,10 +18,14 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "kzenplaylist.h"
+#include "kzentrack.h"
 
-KZenPlaylist::KZenPlaylist( LIBMTP_playlist_t *playlist )
- : m_playlist( playlist )
+KZenPlaylist::KZenPlaylist( LIBMTP_playlist_t *playlist, const QList<KZenTrack*> &tracks )
+ : m_playlist( playlist ), m_tracks( tracks )
 {
+    for( int i = 0; i < m_tracks.size(); i++ ){
+        m_tracks.at( i )->setPlaylist( this );
+    }
 }
 
 KZenPlaylist::~KZenPlaylist()
