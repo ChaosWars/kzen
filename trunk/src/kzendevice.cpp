@@ -38,6 +38,8 @@ KZenDevice::KZenDevice( LIBMTP_mtpdevice_t *device, QObject *parent )
 
     if( device ){
         friendlyName = LIBMTP_Get_Friendlyname( device );
+        LIBMTP_Get_Storage( device, LIBMTP_STORAGE_SORTBY_NOTSORTED );
+        LIBMTP_Get_Batterylevel( device, &maximum_battery_level, &current_battery_level );
         device_thread->getAlbumList();
         device_thread->getFileList();
         device_thread->getPlaylistList();

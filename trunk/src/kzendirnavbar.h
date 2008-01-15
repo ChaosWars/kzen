@@ -21,8 +21,11 @@
 #define KZENDIRNAVBAR_H
 
 #include <QWidget>
+#include <KFile>
 
 class KPushButton;
+class KMenu;
+class KAction;
 class QHBoxLayout;
 class QSpacerItem;
 
@@ -38,9 +41,27 @@ class KZenDirNavBar : public QWidget
         ~KZenDirNavBar();
 
     private:
-        KPushButton *home, *up, *back, *forward;
+        KPushButton *m_home, *m_up, *m_back, *m_forward, *m_options;
+        KAction *defaultView, *simpleView, *detailView, *separateDirs, *previewContents, *previewInfo, *fileViewMax;
+        KMenu *optionsMenu;
         QHBoxLayout *mainLayout, *buttonLayout;
         QSpacerItem *spacer;
+
+    private Q_SLOTS:
+        void defaultViewSlot(){ emit setView( KFile::Default ); }
+        void simpleViewSlot(){ emit setView( KFile::Simple ); }
+        void detailViewSlot(){ emit setView( KFile::Detail ); }
+        void separateDirsSlot(){ emit setView( KFile::SeparateDirs ); }
+        void previewContentsSlot(){ emit setView( KFile::PreviewContents ); }
+        void previewInfoSlot(){ emit setView( KFile::PreviewInfo ); }
+        void fileViewMaxSlot(){ emit setView( KFile::FileViewMax ); }
+
+    Q_SIGNALS:
+        void setView( KFile::FileView );
+        void home();
+        void cdUp();
+        void back();
+        void forward();
 };
 
 #endif
