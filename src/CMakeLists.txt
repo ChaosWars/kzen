@@ -13,6 +13,7 @@ SET( SRC main.cpp
         kzenmusicwidget.cpp
         kzendevice.cpp
         kzendevicethread.cpp
+        kzenobject.cpp
         kzenalbum.cpp
         kzentrack.cpp
         kzenfile.cpp

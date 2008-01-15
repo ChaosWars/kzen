@@ -103,12 +103,8 @@ QModelIndex KZenAlbumViewModel::index( int row, int column, const QModelIndex &p
     if( !parent.isValid() )
         return createIndex( row, column, m_albums.at( row ) );
 
-    QObject *item = static_cast<QObject*>( parent.internalPointer() );
-
-    if( !item )
-        return QModelIndex();
-
-    KZenAlbum *album = qobject_cast<KZenAlbum*>( item );
+    KZenObject *object = static_cast<KZenObject*>( parent.internalPointer() );
+    KZenAlbum *album = dynamic_cast<KZenAlbum*>( object );
 
     if( !album )
         return QModelIndex();
@@ -127,17 +123,13 @@ QModelIndex KZenAlbumViewModel::parent( const QModelIndex &index ) const
     if( !index.isValid() )
         return QModelIndex();
 
-    QObject *item = static_cast<QObject*>( index.internalPointer() );
-
-    if( !item )
-        return QModelIndex();
-
-    KZenTrack *track = qobject_cast<KZenTrack*>( item );
+    KZenObject *object = static_cast<KZenObject*>( index.internalPointer() );
+    KZenTrack *track = dynamic_cast<KZenTrack*>( object );
 
     if( !track )
         return QModelIndex();
 
-    KZenAlbum *album = qobject_cast<KZenAlbum*>( track->parent() );
+    KZenAlbum *album = track->parent();
 
     if( !album )
         return QModelIndex();

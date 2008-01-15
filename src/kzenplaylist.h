@@ -20,16 +20,14 @@
 #ifndef KZENPLAYLIST_H
 #define KZENPLAYLIST_H
 
-#include <QObject>
 #include "libmtp.h"
+#include "kzenobject.h"
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenPlaylist : public QObject
+class KZenPlaylist : public KZenObject
 {
-    Q_OBJECT
-
     public:
 
         /**
@@ -37,7 +35,7 @@ class KZenPlaylist : public QObject
          * @param playlist
          * @param parent
          */
-        KZenPlaylist( LIBMTP_playlist_t *playlist, QObject *parent = 0 );
+        KZenPlaylist( LIBMTP_playlist_t *playlist );
 
         /**
          *

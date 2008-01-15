@@ -20,16 +20,14 @@
 #ifndef KZENFILE_H
 #define KZENFILE_H
 
-#include <QObject>
 #include "libmtp.h"
+#include "kzenobject.h"
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenFile : public QObject
+class KZenFile : public KZenObject
 {
-    Q_OBJECT
-
     public:
 
         /**
@@ -37,7 +35,7 @@ class KZenFile : public QObject
          * @param file
          * @param parent
          */
-        KZenFile( LIBMTP_file_t *file, QObject *parent = 0 );
+        KZenFile( LIBMTP_file_t *file );
 
         /**
          *

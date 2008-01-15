@@ -25,6 +25,8 @@ src/kzenfile.cpp
 src/kzenfile.h
 src/kzenmusicwidget.cpp
 src/kzenmusicwidget.h
+src/kzenobject.cpp
+src/kzenobject.h
 src/kzenplaylist.cpp
 src/kzenplaylist.h
 src/kzensplash.cpp

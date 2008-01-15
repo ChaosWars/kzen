@@ -19,8 +19,8 @@
  ***************************************************************************/
 #include "kzenfile.h"
 
-KZenFile::KZenFile( LIBMTP_file_t *file, QObject *parent )
- : QObject( parent ), m_file( file )
+KZenFile::KZenFile( LIBMTP_file_t *file )
+ : m_file( file )
 {
 }
 
@@ -29,4 +29,4 @@ KZenFile::~KZenFile()
     LIBMTP_destroy_file_t( m_file );
 }
 
-#include "kzenfile.moc"
+

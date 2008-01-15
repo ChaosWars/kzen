@@ -20,24 +20,22 @@
 #ifndef KZENALBUM_H
 #define KZENALBUM_H
 
-#include <QObject>
 #include <libmtp.h>
+#include "kzenobject.h"
 
 class KZenTrack;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZenAlbum : public QObject
+class KZenAlbum : public KZenObject
 {
-    Q_OBJECT
-
     public:
 
         /**
          *
          */
-        KZenAlbum( LIBMTP_album_t *album, const QList<KZenTrack*> &tracks, QObject *parent = 0 );
+        KZenAlbum( LIBMTP_album_t *album, const QList<KZenTrack*> &tracks );
 
         /**
          *
