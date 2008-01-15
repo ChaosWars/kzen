@@ -21,6 +21,8 @@ src/kzendevice.cpp
 src/kzendevice.h
 src/kzendevicethread.cpp
 src/kzendevicethread.h
+src/kzendirnavbar.cpp
+src/kzendirnavbar.h
 src/kzenfile.cpp
 src/kzenfile.h
 src/kzenmusicwidget.cpp
