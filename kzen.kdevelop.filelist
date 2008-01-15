@@ -25,6 +25,8 @@ src/kzendirnavbar.cpp
 src/kzendirnavbar.h
 src/kzenfile.cpp
 src/kzenfile.h
+src/kzenfiletransferview.cpp
+src/kzenfiletransferview.h
 src/kzenmusicwidget.cpp
 src/kzenmusicwidget.h
 src/kzenobject.cpp
@@ -47,7 +49,4 @@ src/kzenwidget.cpp
 src/kzenwidget.h
 src/main.cpp
 src/pics
-src/pics/CMakeLists.txt
-src/test.cpp
-src/test.h
 templates

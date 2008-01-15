@@ -17,21 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <KDE/KDebug>
-#include "kzenalbum.h"
-#include "kzentrack.h"
+#ifndef KZENFILETRANSFERVIEW_H
+#define KZENFILETRANSFERVIEW_H
 
-KZenAlbum::KZenAlbum( LIBMTP_album_t *album, const QList<KZenTrack*> &tracks )
- : m_album( album ), m_tracks( tracks )
+#include <QTreeView>
+
+/**
+	@author Lawrence Lee <valheru@facticius.net>
+*/
+class KZenFileTransferView : public QTreeView
 {
-    for( int i = 0; i < m_tracks.size(); i++ ){
-        m_tracks.at( i )->setParent( this );
-    }
-}
+    Q_OBJECT
 
-KZenAlbum::~KZenAlbum()
-{
-    LIBMTP_destroy_album_t( m_album );
-}
+    public:
+        KZenFileTransferView(QWidget *parent = 0);
+        ~KZenFileTransferView();
 
+};
 
+#endif

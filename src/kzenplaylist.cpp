@@ -24,7 +24,7 @@ KZenPlaylist::KZenPlaylist( LIBMTP_playlist_t *playlist, const QList<KZenTrack*>
  : m_playlist( playlist ), m_tracks( tracks )
 {
     for( int i = 0; i < m_tracks.size(); i++ ){
-        m_tracks.at( i )->setPlaylist( this );
+        m_tracks.at( i )->setParent( this );
     }
 }
 

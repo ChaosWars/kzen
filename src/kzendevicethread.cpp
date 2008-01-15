@@ -138,71 +138,39 @@ void KZenDeviceThread::getFileList()
     }
 }
 
-void KZenDeviceThread::getPlaylistList( const QList<KZenTrack*> &tracks )
+void KZenDeviceThread::getPlaylistList()
 {
     if( m_device ){
         QList<KZenPlaylist*> playlists;
 
-        if( tracks.size() == 0 ){
-            /* Here we assume that no tracks were passed as an argument,
-            * so we query the device for a track list.
-            * Of course, it could be that there are no tracks on the device,
-            * but in that case this will be a relatively inexpensive operation anyway
-            */
+        //Process tracks
+        emit message( QString( "Getting track list from %1" ).arg( m_parent->name() ) );
+        LIBMTP_track_t *tracklisting = LIBMTP_Get_Tracklisting_With_Callback( m_device, NULL, NULL );
+        QHash<uint32_t, LIBMTP_track_t*> trackHashList;
 
-            //Process tracks
-            emit message( QString( "Getting track list from %1" ).arg( m_parent->name() ) );
-            LIBMTP_track_t *tracklisting = LIBMTP_Get_Tracklisting_With_Callback( m_device, NULL, NULL );
-            QHash<uint32_t, LIBMTP_track_t*> trackHashList;
-
-            for( LIBMTP_track_t *track = tracklisting; track != NULL; track = track->next ){
-                trackHashList.insert( track->item_id, track );
-            }
-
-            //Process albums
-            emit message( QString( "Getting playlists from %1" ).arg( m_parent->name() ) );
-            LIBMTP_playlist_t *playlist_list = LIBMTP_Get_Playlist_List( m_device );
-            emit message( "Constructing playlist data" );
-
-            for( LIBMTP_playlist_t *playlist = playlist_list; playlist != NULL; playlist = playlist->next ){
-                QList<KZenTrack*> _tracks;
-                uint32_t *trackid = playlist->tracks;
-
-                for( uint32_t i = 0; i < playlist->no_tracks; i++ ){
-                    LIBMTP_track_t *track = trackHashList.value( *(trackid + i) );
-                    _tracks.append( new KZenTrack( track ) );
-                }
-
-                KZenPlaylist *newPlaylist = new KZenPlaylist( playlist, _tracks );
-                playlists.append( newPlaylist );
-            }
-        }else{
-            emit message( QString( "Getting playlists from %1" ).arg( m_parent->name() ) );
-            LIBMTP_playlist_t *playlist_list = LIBMTP_Get_Playlist_List( m_device );
-            int numtracks = tracks.size();
-            emit message( "Constructing playlist data" );
-
-            for( LIBMTP_playlist_t *playlist = playlist_list; playlist != NULL; playlist = playlist->next ){
-                QList<KZenTrack*> playlistTracks;
-                uint32_t *trackid = playlist->tracks;
-
-                for( uint32_t i = 0; i < playlist->no_tracks; i++ ){
-
-
-                    for( int t = 0; t < numtracks; t++ ){
-
-                        if( tracks.at( t )->trackId() ==  *(trackid + i) )
-                            playlistTracks.append( tracks.at( t ) );
-                    }
-
-                }
-
-                KZenPlaylist *newPlaylist = new KZenPlaylist( playlist, playlistTracks );
-                playlists.append( newPlaylist );
-            }
+        for( LIBMTP_track_t *track = tracklisting; track != NULL; track = track->next ){
+            trackHashList.insert( track->item_id, track );
         }
 
-        emit playlistList( playlists );
+        //Process albums
+        emit message( QString( "Getting playlists from %1" ).arg( m_parent->name() ) );
+        LIBMTP_playlist_t *playlist_list = LIBMTP_Get_Playlist_List( m_device );
+        emit message( "Constructing playlist data" );
+
+        for( LIBMTP_playlist_t *playlist = playlist_list; playlist != NULL; playlist = playlist->next ){
+            QList<KZenTrack*> _tracks;
+            uint32_t *trackid = playlist->tracks;
+
+            for( uint32_t i = 0; i < playlist->no_tracks; i++ ){
+                LIBMTP_track_t *track = trackHashList.value( *(trackid + i) );
+                _tracks.append( new KZenTrack( track ) );
+            }
+
+            KZenPlaylist *newPlaylist = new KZenPlaylist( playlist, _tracks );
+            playlists.append( newPlaylist );
+        }
+
+    emit playlistList( playlists );
     }
 }
 

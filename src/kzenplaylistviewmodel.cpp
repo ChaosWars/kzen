@@ -120,7 +120,7 @@ QModelIndex KZenPlaylistViewModel::parent( const QModelIndex &index ) const
     if( !track )
         return QModelIndex();
 
-    KZenPlaylist *playlist = dynamic_cast<KZenPlaylist*>( track->playlist() );
+    KZenPlaylist *playlist = dynamic_cast<KZenPlaylist*>( track->parent() );
 
     if( !playlist )
         return QModelIndex();
