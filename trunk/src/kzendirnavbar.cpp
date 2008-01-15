@@ -19,8 +19,7 @@
  ***************************************************************************/
 #include <KDE/KPushButton>
 #include <KDE/KLocale>
-#include <KDE/KMenu>
-#include <KDE/KAction>
+#include <KDE/KDebug>
 #include <QLayout>
 #include <QSpacerItem>
 #include "kzendirnavbar.h"
@@ -28,41 +27,24 @@
 KZenDirNavBar::KZenDirNavBar( QWidget *parent )
  : QWidget(parent)
 {
-    //Options menu
-    optionsMenu = new KMenu( this );
-    defaultView = new KAction( "Default", this );
-    optionsMenu->addAction( defaultView );
-    simpleView = new KAction( "Simple", this );
-    optionsMenu->addAction( simpleView );
-    detailView = new KAction( "Detailed", this );
-    optionsMenu->addAction( detailView );
-    separateDirs = new KAction( "Seperate directories", this );
-    optionsMenu->addAction( separateDirs );
-    previewContents = new KAction( "Preview contents", this );
-    optionsMenu->addAction( previewContents );
-    previewInfo = new KAction( "Preview info", this );
-    optionsMenu->addAction( previewInfo );
-    fileViewMax = new KAction( "File view max", this );
-    optionsMenu->addAction( fileViewMax );
-
     mainLayout = new QHBoxLayout( this );
     buttonLayout = new QHBoxLayout();
     m_home = new KPushButton( KIcon( "go-home" ), QString(), this );
-    m_home->setToolTip( "Home" );
+    m_home->setToolTip( i18n( "Home" ) );
     buttonLayout->addWidget( m_home );
     m_up = new KPushButton( KIcon( "go-up" ), QString(), this );
-    m_up->setToolTip( "Up" );
+    m_up->setToolTip( i18n( "Up" ) );
     buttonLayout->addWidget( m_up );
     m_back = new KPushButton( KIcon( "go-previous" ), QString(), this );
-    m_back->setToolTip( "Back" );
+    m_back->setToolTip( i18n( "Back" ) );
     buttonLayout->addWidget( m_back );
     m_forward = new KPushButton( KIcon( "go-next" ), QString(), this );
-    m_forward->setToolTip( "Forward" );
+    m_forward->setToolTip( i18n( "Forward" ) );
     buttonLayout->addWidget( m_forward );
-    m_options = new KPushButton( KIcon( "view-choose" ), QString(), this );
-    m_options->setMenu( optionsMenu );
-    m_forward->setToolTip( "View options" );
-    buttonLayout->addWidget( m_options );
+    m_preview = new KPushButton( KIcon( "view-choose" ), QString(), this );
+    m_preview->setCheckable( true );
+    m_preview->setToolTip( i18n( "Toggle preview pane" ) );
+    buttonLayout->addWidget( m_preview );
     spacer = new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     buttonLayout->addItem( spacer );
     mainLayout->addLayout( buttonLayout );
@@ -72,17 +54,20 @@ KZenDirNavBar::KZenDirNavBar( QWidget *parent )
     connect( m_up, SIGNAL( clicked() ), this, SIGNAL( cdUp() ) );
     connect( m_back, SIGNAL( clicked() ), this, SIGNAL( back() ) );
     connect( m_forward, SIGNAL( clicked() ), this, SIGNAL( forward() ) );
-    connect( defaultView, SIGNAL( triggered() ), this, SLOT( defaultViewSlot() ) );
-    connect( simpleView, SIGNAL( triggered() ), this, SLOT( simpleViewSlot() ) );
-    connect( detailView, SIGNAL( triggered() ), this, SLOT( detailViewSlot() ) );
-    connect( separateDirs, SIGNAL( triggered() ), this, SLOT( separateDirsSlot() ) );
-    connect( previewContents, SIGNAL( triggered() ), this, SLOT( previewContentsSlot()) );
-    connect( previewInfo, SIGNAL( triggered() ), this, SLOT( previewInfoSlot() ) );
-    connect( fileViewMax, SIGNAL( triggered() ), this, SLOT( fileViewMaxSlot() ) );
+    connect( m_preview, SIGNAL( toggled( bool ) ), this, SLOT( previewToggleSlot( bool ) ) );
 }
 
 KZenDirNavBar::~KZenDirNavBar()
 {
+}
+
+void KZenDirNavBar::previewToggleSlot( bool checked )
+{
+    kDebug() << checked;
+    if( checked )
+        emit setView( KFile::PreviewContents );
+    else
+        emit setView( KFile::FileViewMax );
 }
 
 #include "kzendirnavbar.moc"

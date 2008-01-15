@@ -26,6 +26,7 @@
 #include <QDir>
 #include <QLayout>
 #include <QSplitter>
+#include <QProgressBar>
 #include "kzenwidget.h"
 #include "kzenmusicwidget.h"
 #include "kzendirnavbar.h"
@@ -54,42 +55,48 @@ KZenWidget::KZenWidget( QWidget *parent )
     }
 
     //Navigation panel
-    navpanel = new KMultiTabBar( KMultiTabBar::Left, this );
-    navpanel->setStyle( KMultiTabBar::KDEV3ICON );
+    navPanel = new KMultiTabBar( KMultiTabBar::Left, this );
+    navPanel->setStyle( KMultiTabBar::KDEV3ICON );
 
     //Music tab
     QPixmap musicPixmap( KIconLoader::global()->loadIcon( "preferences-desktop-sound", KIconLoader::NoGroup ) );
-    navpanel->appendTab( musicPixmap, KZenWidget::MusicTab, "Music" );
-    musicTab = navpanel->tab( KZenWidget::MusicTab );
+    navPanel->appendTab( musicPixmap, KZenWidget::MusicTab, "Music" );
+    musicTab = navPanel->tab( KZenWidget::MusicTab );
+    musicTab->setChecked( true );
     connect( musicTab, SIGNAL( toggled( bool ) ), this, SLOT( musicTabToggled( bool ) ) );
 
     //Video tab
     QPixmap videoPixmap( KIconLoader::global()->loadIcon( "preferences-desktop-display", KIconLoader::NoGroup ) );
-    navpanel->appendTab( videoPixmap, KZenWidget::VideoTab, "Videos" );
-    videoTab = navpanel->tab( KZenWidget::VideoTab );
+    navPanel->appendTab( videoPixmap, KZenWidget::VideoTab, "Videos" );
+    videoTab = navPanel->tab( KZenWidget::VideoTab );
     connect( videoTab, SIGNAL( toggled( bool ) ), this, SLOT( videoTabToggled( bool ) ) );
 
     //Photo tab
     QPixmap photoPixmap( KIconLoader::global()->loadIcon( "preferences-desktop-wallpaper", KIconLoader::NoGroup ) );
-    navpanel->appendTab( photoPixmap, KZenWidget::PhotoTab, "Photos" );
-    photoTab = navpanel->tab( KZenWidget::PhotoTab );
+    navPanel->appendTab( photoPixmap, KZenWidget::PhotoTab, "Photos" );
+    photoTab = navPanel->tab( KZenWidget::PhotoTab );
     connect( photoTab, SIGNAL( toggled( bool ) ), this, SLOT( photoTabToggled( bool ) ) );
 
     //Main splitter
     QSplitter *splitter = new QSplitter( this );
-    musicWidget = new KZenMusicWidget( splitter );
-    splitter->addWidget( musicWidget );
-    musicWidget->hide();
+    mediaWidget = new QWidget( splitter );
+    QVBoxLayout *mediaWidgetLayout = new QVBoxLayout( mediaWidget );
+    QHBoxLayout *mediaWidgetInnerLayout = new QHBoxLayout();
+    musicWidget = new KZenMusicWidget( mediaWidget );
+    mediaWidgetInnerLayout->addWidget( musicWidget );
+    mediaWidgetLayout->addLayout( mediaWidgetInnerLayout );
+    storageSpace = new QProgressBar( mediaWidget );
+    mediaWidgetLayout->addWidget( storageSpace );
+    splitter->addWidget( mediaWidget );
 
     //Navigation widget - contains a navigation toolbar, a view and a spacer
     dirNavWidget = new QWidget( splitter );
     QVBoxLayout *dirNavLayout = new QVBoxLayout( dirNavWidget );
-
-    //Directory navigation bar
     dirNavBar = new KZenDirNavBar( dirNavWidget );
+    QSpacerItem *dirNavSpacer = new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 
     //Main view
-    mainView = new KDirOperator( KUrl(), dirNavWidget );
+    mainView = new KDirOperator( QDir::homePath(), dirNavWidget );
     mainView->setView( KFile::Default );
     QSizePolicy sizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     sizePolicy.setHorizontalStretch( 0 );
@@ -97,18 +104,15 @@ KZenWidget::KZenWidget( QWidget *parent )
     sizePolicy.setHeightForWidth( mainView->sizePolicy().hasHeightForWidth() );
     mainView->setSizePolicy(sizePolicy);
 
-    //Spacer
-    QSpacerItem *spacer = new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-
     //Add the widgets to the splitter
     dirNavLayout->addWidget( dirNavBar );
     dirNavLayout->addWidget( mainView );
-    dirNavLayout->addItem( spacer );
+    dirNavLayout->addItem( dirNavSpacer );
     dirNavWidget->setLayout( dirNavLayout );
     splitter->addWidget( dirNavWidget );
 
     //Set the layout
-    mainHLayout->addWidget( navpanel );
+    mainHLayout->addWidget( navPanel );
     mainHLayout->addWidget( splitter );
     mainVLayout->addWidget( m_devices );
     mainVLayout->addLayout( mainHLayout );
@@ -131,10 +135,16 @@ KZenWidget::~KZenWidget()
 void KZenWidget::musicTabToggled( bool on )
 {
     if( on ){
-        navpanel->tab( KZenWidget::PhotoTab )->setState( false );
-        navpanel->tab( KZenWidget::VideoTab )->setState( false );
+        if( mediaWidget->isHidden() )
+            mediaWidget->show();
+
+        navPanel->tab( KZenWidget::PhotoTab )->setState( false );
+        navPanel->tab( KZenWidget::VideoTab )->setState( false );
         musicWidget->show();
     }else{
+        if( !navPanel->tab( KZenWidget::PhotoTab )->isChecked() && !navPanel->tab( KZenWidget::VideoTab )->isChecked() )
+            mediaWidget->hide();
+
         musicWidget->hide();
     }
 }
@@ -142,24 +152,33 @@ void KZenWidget::musicTabToggled( bool on )
 void KZenWidget::videoTabToggled( bool on )
 {
     if( on ){
-        navpanel->tab( KZenWidget::MusicTab )->setState( false );
-        navpanel->tab( KZenWidget::PhotoTab )->setState( false );
+        if( mediaWidget->isHidden() )
+            mediaWidget->show();
+
+        navPanel->tab( KZenWidget::MusicTab )->setState( false );
+        navPanel->tab( KZenWidget::PhotoTab )->setState( false );
     }else{
+        if( !navPanel->tab( KZenWidget::MusicTab )->isChecked() && !navPanel->tab( KZenWidget::PhotoTab )->isChecked() )
+            mediaWidget->hide();
     }
 }
 
 void KZenWidget::photoTabToggled( bool on )
 {
     if( on ){
-        navpanel->tab( KZenWidget::MusicTab )->setState( false );
-        navpanel->tab( KZenWidget::VideoTab )->setState( false );
+        if( mediaWidget->isHidden() )
+            mediaWidget->show();
+
+        navPanel->tab( KZenWidget::MusicTab )->setState( false );
+        navPanel->tab( KZenWidget::VideoTab )->setState( false );
     }else{
+        if( !navPanel->tab( KZenWidget::MusicTab )->isChecked() && !navPanel->tab( KZenWidget::VideoTab )->isChecked() )
+            mediaWidget->hide();
     }
 }
 
 void KZenWidget::setMainView( KFile::FileView view )
 {
-    kDebug() << view;
     mainView->setView( view );
 }
 

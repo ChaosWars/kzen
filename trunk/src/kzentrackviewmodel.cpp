@@ -49,7 +49,7 @@ QVariant KZenTrackViewModel::data( const QModelIndex &index, int role ) const
         case 0:
             return m_tracks.at( index.row() )->title();
         case 1:
-            return m_tracks.at( index.row() )->album();
+            return m_tracks.at( index.row() )->albumname();
         case 2:
             return m_tracks.at( index.row() )->artist();
         case 3:

@@ -26,6 +26,7 @@
 class KComboBox;
 class KMultiTabBar;
 class KMultiTabBarTab;
+class QProgressBar;
 class KZenMusicWidget;
 class KZenDirNavBar;
 class KDirOperator;
@@ -60,13 +61,14 @@ class KZenWidget : public QWidget
         };
 
     private:
-        KMultiTabBar *navpanel;
+        KMultiTabBar *navPanel;
         KMultiTabBarTab *musicTab, *videoTab, *photoTab;
         KZenMusicWidget *musicWidget;
-        QWidget *dirNavWidget;
+        QWidget *dirNavWidget, *mediaWidget;
         KZenDirNavBar *dirNavBar;
         KDirOperator *mainView;
         KComboBox *m_devices;
+        QProgressBar *storageSpace;
 
     private Q_SLOTS:
         void musicTabToggled( bool on );

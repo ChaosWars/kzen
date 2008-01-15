@@ -20,6 +20,7 @@ SET( SRC main.cpp
         kzenplaylist.cpp
         kzentrack.cpp
         kzenalbumview.cpp
+        kzenfiletransferview.cpp
         kzenplaylistview.cpp
         kzentrackview.cpp
         kzenalbumviewmodel.cpp

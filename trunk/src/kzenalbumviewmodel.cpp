@@ -129,7 +129,7 @@ QModelIndex KZenAlbumViewModel::parent( const QModelIndex &index ) const
     if( !track )
         return QModelIndex();
 
-    KZenAlbum *album = dynamic_cast<KZenAlbum*>( track->album() );
+    KZenAlbum *album = dynamic_cast<KZenAlbum*>( track->parent() );
 
     if( !album )
         return QModelIndex();

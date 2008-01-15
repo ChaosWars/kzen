@@ -23,9 +23,6 @@
 #include <libmtp.h>
 #include "kzenobject.h"
 
-class KZenAlbum;
-class KZenPlaylist;
-
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
@@ -163,29 +160,16 @@ class KZenTrack : public KZenObject
          *
          * @return
          */
-        KZenAlbum* album(){ return m_album; }
+        KZenObject* parent(){ return m_parent; }
 
         /**
          *
          * @param album
          */
-        void setAlbum( KZenAlbum *album ){ m_album = album; }
-
-        /**
-         *
-         * @return
-         */
-        KZenPlaylist* playlist(){ return m_playlist; }
-
-        /**
-         *
-         * @param playlist
-         */
-        void setPlaylist( KZenPlaylist *playlist ){ m_playlist = playlist; }
+        void setParent( KZenObject *parent ){ m_parent = parent; }
 
     private:
-        KZenAlbum *m_album;
-        KZenPlaylist *m_playlist;
+        KZenObject *m_parent;
         LIBMTP_track_t *m_track;
 
 };

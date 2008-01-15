@@ -43,7 +43,7 @@ KZenDevice::KZenDevice( LIBMTP_mtpdevice_t *device, QObject *parent )
         device_thread->getTrackList();
         device_thread->getAlbumList( m_tracks );
         device_thread->getFileList();
-        device_thread->getPlaylistList( m_tracks );
+        device_thread->getPlaylistList();
     }
 }
 
