@@ -11,16 +11,22 @@ SET( SRC main.cpp
         kzensplash.cpp
         kzenwidget.cpp
         kzenmusicwidget.cpp
+        kzenvideowidget.cpp
+        kzenphotowidget.cpp
+        kzendevicewidget.cpp
+        kzenfiletransferwidget.cpp
         kzendirnavbar.cpp
         kzendevice.cpp
         kzendevicethread.cpp
         kzenobject.cpp
         kzenalbum.cpp
         kzenfile.cpp
+        kzenfolder.cpp
         kzenplaylist.cpp
         kzentrack.cpp
         kzenalbumview.cpp
         kzenfiletransferview.cpp
+        kzenfiletransferviewmodel.cpp
         kzenplaylistview.cpp
         kzentrackview.cpp
         kzenalbumviewmodel.cpp

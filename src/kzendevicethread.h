@@ -27,6 +27,7 @@
 class KZenAlbum;
 class KZenDevice;
 class KZenFile;
+class KZenFolder;
 class KZenPlaylist;
 class KZenTrack;
 
@@ -52,7 +53,7 @@ class KZenDeviceThread : public QThread
          */
         ~KZenDeviceThread();
 
-        enum Status{ IDLE, GET_ALBUM_LIST, GET_FILE_LIST, GET_PLAYLIST_LIST, GET_TRACK_LIST };
+        enum Status{ IDLE, GET_ALBUM_LIST, GET_FILE_LIST, GET_FOLDER_LIST, GET_PLAYLIST_LIST, GET_TRACK_LIST };
 
         /**
          *
@@ -80,12 +81,17 @@ class KZenDeviceThread : public QThread
         /**
          *
          */
-        void getPlaylistList();
+        void getFileList();
 
         /**
          *
          */
-        void getFileList();
+        void getFolderList( const QList<KZenFile*> &files = QList<KZenFile*>() );
+
+        /**
+         *
+         */
+        void getPlaylistList();
 
         /**
          *
@@ -103,6 +109,7 @@ class KZenDeviceThread : public QThread
         KZenDevice *m_parent;
         Status m_status;
         LIBMTP_mtpdevice_t *m_device;
+        void get_folders( LIBMTP_folder_t *folderlist, QList<KZenFolder*> folders );
 
     Q_SIGNALS:
 
@@ -123,6 +130,12 @@ class KZenDeviceThread : public QThread
          * @param files
          */
         void fileList( const QList<KZenFile*> &files );
+
+        /**
+         *
+         * @param folders
+         */
+        void folderList( const QList<KZenFolder*> &folders );
 
         /**
          *

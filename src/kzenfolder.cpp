@@ -17,15 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "kzenfiletransferview.h"
+#include "kzenfolder.h"
 
-KZenFileTransferView::KZenFileTransferView(QWidget *parent)
- : QTreeView(parent)
+KZenFolder::KZenFolder( LIBMTP_folder_t *folder )
+    : m_folder( folder )
 {
 }
 
-KZenFileTransferView::~KZenFileTransferView()
+KZenFolder::~KZenFolder()
 {
+    LIBMTP_destroy_folder_t( m_folder );
 }
 
-#include "kzenfiletransferview.moc"
+

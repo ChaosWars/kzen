@@ -27,7 +27,12 @@ class KComboBox;
 class KMultiTabBar;
 class KMultiTabBarTab;
 class QProgressBar;
+class QSplitter;
 class KZenMusicWidget;
+class KZenVideoWidget;
+class KZenPhotoWidget;
+class KZenDeviceWidget;
+class KZenFileTransferWidget;
 class KZenDirNavBar;
 class KDirOperator;
 class KZenAlbum;
@@ -57,20 +62,27 @@ class KZenWidget : public QWidget
         enum{
             MusicTab = 0,
             VideoTab,
-            PhotoTab
+            PhotoTab,
+            DeviceFileTab
         };
 
     private:
         KMultiTabBar *navPanel;
-        KMultiTabBarTab *musicTab, *videoTab, *photoTab;
+        KMultiTabBarTab *musicTab, *videoTab, *photoTab, *deviceTab;
         KZenMusicWidget *musicWidget;
-        QWidget *dirNavWidget, *mediaWidget;
+        KZenVideoWidget *videoWidget;
+        KZenPhotoWidget *photoWidget;
+        KZenDeviceWidget *deviceWidget;
+        KZenFileTransferWidget *fileTransferWidget;
+        QSplitter *mediaContainerWidget;
+        QWidget *dirNavWidget, /* *mediaContainerWidget,*/ *mediaWidget;
         KZenDirNavBar *dirNavBar;
         KDirOperator *mainView;
         KComboBox *m_devices;
         QProgressBar *storageSpace;
 
     private Q_SLOTS:
+        void deviceTabToggled( bool on );
         void musicTabToggled( bool on );
         void videoTabToggled( bool on );
         void photoTabToggled( bool on );
