@@ -53,7 +53,7 @@ KZen::KZen( KZenSplash *splash )
     m_widget = new KZenWidget( this );
 
     if( error != LIBMTP_ERROR_NONE ){
-        m_widget->setEnabled( false );
+//         m_widget->setEnabled( false );
     }
 
     setCentralWidget( m_widget );

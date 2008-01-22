@@ -28,6 +28,7 @@ KZenDevice::KZenDevice( LIBMTP_mtpdevice_t *device, QObject *parent )
     connect( device_thread, SIGNAL( message( const QString& ) ), this, SIGNAL( message( const QString& ) ) );
     connect( device_thread, SIGNAL( albumList( const QList<KZenAlbum*>& ) ), this, SLOT( albumListSlot( const QList<KZenAlbum*>& ) ) );
     connect( device_thread, SIGNAL( fileList( const QList<KZenFile*>& ) ), this, SLOT( fileListSlot( const QList<KZenFile*>& ) ) );
+    connect( device_thread, SIGNAL( folderList( const QList<KZenFolder*>& ) ), this, SLOT( folderListSlot( const QList<KZenFolder*>& ) ) );
     connect( device_thread, SIGNAL( playlistList( const QList<KZenPlaylist*>& ) ), this, SLOT( playlistListSlot( const QList<KZenPlaylist*>& ) ) );
     connect( device_thread, SIGNAL( trackList(const QList< KZenTrack * >&) ), this, SLOT( trackListSlot( const QList<KZenTrack*>& ) ) );
     KZen *m_parent = qobject_cast<KZen*>( parent );
@@ -43,6 +44,7 @@ KZenDevice::KZenDevice( LIBMTP_mtpdevice_t *device, QObject *parent )
         device_thread->getTrackList();
         device_thread->getAlbumList( m_tracks );
         device_thread->getFileList();
+        device_thread->getFolderList();
         device_thread->getPlaylistList();
     }
 }
@@ -95,6 +97,13 @@ void KZenDevice::fileListSlot( const QList<KZenFile*> &files )
     m_files.clear();
     m_files = files;
     emit fileList( m_files );
+}
+
+void KZenDevice::folderListSlot( const QList<KZenFolder*> &folders )
+{
+    m_folders.clear();
+    m_folders = folders;
+    emit folderList( m_folders );
 }
 
 void KZenDevice::playlistListSlot( const QList<KZenPlaylist*> &playlists )

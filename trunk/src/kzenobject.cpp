@@ -23,9 +23,6 @@ KZenObject::KZenObject()
 {
 }
 
-
 KZenObject::~KZenObject()
 {
 }
-
-

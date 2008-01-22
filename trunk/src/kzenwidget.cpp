@@ -29,6 +29,10 @@
 #include <QProgressBar>
 #include "kzenwidget.h"
 #include "kzenmusicwidget.h"
+#include "kzenvideowidget.h"
+#include "kzenphotowidget.h"
+#include "kzendevicewidget.h"
+#include "kzenfiletransferwidget.h"
 #include "kzendirnavbar.h"
 #include "kzenalbumview.h"
 #include "kzentrackview.h"
@@ -77,17 +81,59 @@ KZenWidget::KZenWidget( QWidget *parent )
     photoTab = navPanel->tab( KZenWidget::PhotoTab );
     connect( photoTab, SIGNAL( toggled( bool ) ), this, SLOT( photoTabToggled( bool ) ) );
 
+    //File tab
+    QPixmap deviceFilePixmap( KIconLoader::global()->loadIcon( "folder-remote", KIconLoader::NoGroup ) );
+    navPanel->appendTab( deviceFilePixmap, KZenWidget::DeviceFileTab, "Files on Device" );
+    deviceTab = navPanel->tab( KZenWidget::DeviceFileTab );
+    connect( deviceTab, SIGNAL( toggled( bool ) ), this, SLOT( deviceTabToggled( bool ) ) );
+
     //Main splitter
     QSplitter *splitter = new QSplitter( this );
-    mediaWidget = new QWidget( splitter );
-    QVBoxLayout *mediaWidgetLayout = new QVBoxLayout( mediaWidget );
-    QHBoxLayout *mediaWidgetInnerLayout = new QHBoxLayout();
+
+    //Media container widget
+    mediaContainerWidget = new QSplitter( Qt::Vertical, splitter );
+
+    //Media widget
+    mediaWidget = new QWidget( mediaContainerWidget );
+    QHBoxLayout *mediaWidgetLayout = new QHBoxLayout( mediaWidget );
+    mediaWidget->setLayout( mediaWidgetLayout );
+
+    //Music widget
     musicWidget = new KZenMusicWidget( mediaWidget );
-    mediaWidgetInnerLayout->addWidget( musicWidget );
-    mediaWidgetLayout->addLayout( mediaWidgetInnerLayout );
-    storageSpace = new QProgressBar( mediaWidget );
-    mediaWidgetLayout->addWidget( storageSpace );
-    splitter->addWidget( mediaWidget );
+    mediaWidgetLayout->addWidget( musicWidget );
+
+    //Video Widget
+    videoWidget = new KZenVideoWidget( mediaWidget );
+    videoWidget->hide();
+    mediaWidgetLayout->addWidget( videoWidget );
+
+    //Photo Widget
+    photoWidget = new KZenPhotoWidget( mediaWidget );
+    photoWidget->hide();
+    mediaWidgetLayout->addWidget( photoWidget );
+
+    //Device widget
+    deviceWidget = new KZenDeviceWidget( mediaWidget );
+    deviceWidget->hide();
+    mediaWidgetLayout->addWidget( deviceWidget );
+
+    //File transfer widget
+    fileTransferWidget = new KZenFileTransferWidget( mediaWidget );
+
+    //Add the widget to the media container splitter
+    mediaContainerWidget->addWidget( mediaWidget );
+    mediaContainerWidget->addWidget( fileTransferWidget );
+
+
+    //Storage space progress bar
+//     storageSpace = new QProgressBar( deviceWidget );
+//     storageSpace->setMinimum( 0 );
+//     quint64 deviceCapacity = Devices::devices().at( 0 )->deviceStorage()->MaxCapacity;;
+//     storageSpace->setMaximum( deviceCapacity );
+//     quint64 deviceFreeSpace = Devices::devices().at( m_devices->currentIndex() )->deviceStorage()->FreeSpaceInBytes;
+//     storageSpace->setValue( (int)( deviceCapacity - deviceFreeSpace ) );
+
+    //Add storage space progress bar to the device widget
 
     //Navigation widget - contains a navigation toolbar, a view and a spacer
     dirNavWidget = new QWidget( splitter );
@@ -104,11 +150,14 @@ KZenWidget::KZenWidget( QWidget *parent )
     sizePolicy.setHeightForWidth( mainView->sizePolicy().hasHeightForWidth() );
     mainView->setSizePolicy(sizePolicy);
 
-    //Add the widgets to the splitter
+    //Construct the main views layout
     dirNavLayout->addWidget( dirNavBar );
     dirNavLayout->addWidget( mainView );
     dirNavLayout->addItem( dirNavSpacer );
     dirNavWidget->setLayout( dirNavLayout );
+
+    //Add the widgets to the splitter
+    splitter->addWidget( mediaContainerWidget );
     splitter->addWidget( dirNavWidget );
 
     //Set the layout
@@ -132,18 +181,45 @@ KZenWidget::~KZenWidget()
 {
 }
 
+void KZenWidget::deviceTabToggled( bool on )
+{
+    if( on ){
+        if( mediaContainerWidget->isHidden() )
+            mediaContainerWidget->show();
+
+        navPanel->tab( KZenWidget::MusicTab )->setState( false );
+        navPanel->tab( KZenWidget::PhotoTab )->setState( false );
+        navPanel->tab( KZenWidget::VideoTab )->setState( false );
+        deviceWidget->show();
+    }else{
+        if( !navPanel->tab( KZenWidget::DeviceFileTab )->isChecked() &&
+             !navPanel->tab( KZenWidget::PhotoTab )->isChecked() &&
+             !navPanel->tab( KZenWidget::VideoTab )->isChecked() ){
+
+            mediaContainerWidget->hide();
+        }
+
+        deviceWidget->hide();
+    }
+}
+
 void KZenWidget::musicTabToggled( bool on )
 {
     if( on ){
-        if( mediaWidget->isHidden() )
-            mediaWidget->show();
+        if( mediaContainerWidget->isHidden() )
+            mediaContainerWidget->show();
 
+        navPanel->tab( KZenWidget::DeviceFileTab )->setState( false );
         navPanel->tab( KZenWidget::PhotoTab )->setState( false );
         navPanel->tab( KZenWidget::VideoTab )->setState( false );
         musicWidget->show();
     }else{
-        if( !navPanel->tab( KZenWidget::PhotoTab )->isChecked() && !navPanel->tab( KZenWidget::VideoTab )->isChecked() )
-            mediaWidget->hide();
+        if( !navPanel->tab( KZenWidget::DeviceFileTab )->isChecked() &&
+            !navPanel->tab( KZenWidget::PhotoTab )->isChecked() &&
+            !navPanel->tab( KZenWidget::VideoTab )->isChecked() ){
+
+                mediaContainerWidget->hide();
+            }
 
         musicWidget->hide();
     }
@@ -152,29 +228,41 @@ void KZenWidget::musicTabToggled( bool on )
 void KZenWidget::videoTabToggled( bool on )
 {
     if( on ){
-        if( mediaWidget->isHidden() )
-            mediaWidget->show();
+        if( mediaContainerWidget->isHidden() )
+            mediaContainerWidget->show();
 
+        navPanel->tab( KZenWidget::DeviceFileTab )->setState( false );
         navPanel->tab( KZenWidget::MusicTab )->setState( false );
         navPanel->tab( KZenWidget::PhotoTab )->setState( false );
+        videoWidget->show();
     }else{
-        if( !navPanel->tab( KZenWidget::MusicTab )->isChecked() && !navPanel->tab( KZenWidget::PhotoTab )->isChecked() )
-            mediaWidget->hide();
+        if( !navPanel->tab( KZenWidget::DeviceFileTab )->isChecked() &&
+            !navPanel->tab( KZenWidget::MusicTab )->isChecked() &&
+            !navPanel->tab( KZenWidget::PhotoTab )->isChecked() )
+            mediaContainerWidget->hide();
     }
+
+    videoWidget->hide();
 }
 
 void KZenWidget::photoTabToggled( bool on )
 {
     if( on ){
-        if( mediaWidget->isHidden() )
-            mediaWidget->show();
+        if( mediaContainerWidget->isHidden() )
+            mediaContainerWidget->show();
 
+        navPanel->tab( KZenWidget::DeviceFileTab )->setState( false );
         navPanel->tab( KZenWidget::MusicTab )->setState( false );
         navPanel->tab( KZenWidget::VideoTab )->setState( false );
+        photoWidget->show();
     }else{
-        if( !navPanel->tab( KZenWidget::MusicTab )->isChecked() && !navPanel->tab( KZenWidget::VideoTab )->isChecked() )
-            mediaWidget->hide();
+        if( !navPanel->tab( KZenWidget::DeviceFileTab )->isChecked() &&
+            !navPanel->tab( KZenWidget::MusicTab )->isChecked() &&
+            !navPanel->tab( KZenWidget::VideoTab )->isChecked() )
+            mediaContainerWidget->hide();
     }
+
+    photoWidget->hide();
 }
 
 void KZenWidget::setMainView( KFile::FileView view )

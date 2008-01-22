@@ -17,15 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "kzenfiletransferview.h"
+#include "kzenfiletransferwidget.h"
 
-KZenFileTransferView::KZenFileTransferView(QWidget *parent)
- : QTreeView(parent)
+KZenFileTransferWidget::KZenFileTransferWidget( QWidget *parent )
+    : QListView( parent )
+{
+    setViewMode( QListView::IconMode );
+    setMovement( QListView::Static );
+}
+
+KZenFileTransferWidget::~KZenFileTransferWidget()
 {
 }
 
-KZenFileTransferView::~KZenFileTransferView()
-{
-}
-
-#include "kzenfiletransferview.moc"
+#include "kzenfiletransferwidget.moc"

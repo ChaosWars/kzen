@@ -26,6 +26,7 @@
 class KZenDeviceThread;
 class KZenAlbum;
 class KZenFile;
+class KZenFolder;
 class KZenPlaylist;
 class KZenTrack;
 
@@ -65,6 +66,12 @@ class KZenDevice : public QObject{
          *
          * @return
          */
+        LIBMTP_devicestorage_t* deviceStorage(){ return m_device->storage; }
+
+        /**
+         *
+         * @return
+         */
         const QList<KZenFile*>& files(){ return m_files; };
 
         /**
@@ -78,12 +85,6 @@ class KZenDevice : public QObject{
          * @return
          */
         const QList<KZenPlaylist*>& playlists(){ return m_playlists; }
-
-        /**
-         *
-         * @return
-         */
-        LIBMTP_devicestorage_t* deviceStorage(){ return m_device->storage; }
 
         /**
          *
@@ -109,6 +110,11 @@ class KZenDevice : public QObject{
         /**
          *
          */
+        void getFolders();
+
+        /**
+         *
+         */
         void getPlaylists();
 
         /**
@@ -126,6 +132,7 @@ class KZenDevice : public QObject{
         LIBMTP_mtpdevice_t *m_device;
         QList<KZenAlbum*> m_albums;
         QList<KZenFile*> m_files;
+        QList<KZenFolder*> m_folders;
         QList<KZenPlaylist*> m_playlists;
         QList<KZenTrack*> m_tracks;
         char* friendlyName;
@@ -134,6 +141,7 @@ class KZenDevice : public QObject{
     private Q_SLOTS:
         void albumListSlot( const QList<KZenAlbum*> &albums );
         void fileListSlot( const QList<KZenFile*> &files );
+        void folderListSlot( const QList<KZenFolder*> &folders );
         void playlistListSlot( const QList<KZenPlaylist*> &playlists );
         void trackListSlot( const QList<KZenTrack*> &tracks );
 
@@ -156,6 +164,12 @@ class KZenDevice : public QObject{
          * @param files
          */
         void fileList( const QList<KZenFile*> &files );
+
+        /**
+         *
+         * @param folders
+         */
+        void folderList( const QList<KZenFolder*> &folders );
 
         /**
          *
