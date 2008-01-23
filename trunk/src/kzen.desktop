@@ -11,4 +11,4 @@ Terminal=false
 Type=Application
 X-KDE-StartupNotify=true
 X-DBUS-StartupType=Unique
-X-DBUS-ServiceName=com.googlecode.kzen
+X-DBUS-ServiceName=com.googlecode.KZen
