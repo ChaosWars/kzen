@@ -29,7 +29,7 @@ KZenDirNavBar::KZenDirNavBar( QWidget *parent )
 {
     mainLayout = new QHBoxLayout( this );
     buttonLayout = new QHBoxLayout();
-    m_home = new KPushButton( KIcon( "go-home" ), QString(), this );
+    m_home = new KPushButton( KIcon( "user-home" ), QString(), this );
     m_home->setToolTip( i18n( "Home" ) );
     buttonLayout->addWidget( m_home );
     m_up = new KPushButton( KIcon( "go-up" ), QString(), this );
