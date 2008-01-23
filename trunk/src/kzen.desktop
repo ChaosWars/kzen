@@ -1,17 +1,14 @@
 [Desktop Entry]
 Categories=Qt;KDE;Application;AudioVideo;Player
 Comment=A program for managing portable media players that use the MTP protocol
-DocPath=kzen/index.html
+X-DocPath=kzen/index.html
 Encoding=UTF-8
 Exec=kzen %i %m -caption "%c"
 GenericName=Manage your Creative Zen
 Icon=kzen
-MimeType=
-MultipleArgs=false
 Name=KZen
 Terminal=false
 Type=Application
 X-KDE-StartupNotify=true
 X-DBUS-StartupType=Unique
-X-DBUS-ServiceName=org.kde.kzen
-X-KDE-ServiceTypes=
+X-DBUS-ServiceName=com.googlecode.kzen
