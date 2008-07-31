@@ -46,12 +46,12 @@ class KZenPlaylistViewModel : public QAbstractItemModel
          */
         ~KZenPlaylistViewModel();
 
-/**
+		/**
          *
          * @param index
          * @param role
          * @return
- */
+ 		 */
         int columnCount( const QModelIndex &parent = QModelIndex() ) const;
 
         /**
