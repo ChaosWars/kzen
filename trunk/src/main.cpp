@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 	Q_INIT_RESOURCE( kzen );
     KCmdLineOptions options;
     options.add( "+someoption", ki18n( "Some option" ) );
-    KAboutData about( "KZen", QByteArray(), ki18n( "KZen" ), version, ki18n( description ),
+    KAboutData about( "kzen", QByteArray(), ki18n( "KZen" ), version, ki18n( description ),
                         KAboutData::License_GPL, ki18n( "(C) 2007 Lawrence Lee" ), ki18n(""),
                         "http://kzen.googlecode.com", "valheru@facticius.net" );
     about.addAuthor( ki18n( "Lawrence Lee" ), ki18n( "Lead programmer" ), "valheru@facticius.net", "www.facticius.net" );
