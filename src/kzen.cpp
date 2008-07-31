@@ -143,6 +143,7 @@ void KZen::message( const QString& m )
 void KZen::exit()
 {
     ok_to_close = true;
+    kapp->setQuitOnLastWindowClosed( true );
     close();
 }
 
