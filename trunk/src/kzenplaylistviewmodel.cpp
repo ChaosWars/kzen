@@ -130,7 +130,7 @@ QModelIndex KZenPlaylistViewModel::parent( const QModelIndex &index ) const
 
 int KZenPlaylistViewModel::rowCount( const QModelIndex &parent ) const
 {
-    if( parent.column() > 1 )
+    if( parent.column() > 0 )
         //Out of KZenPlaylistViewModel bounds
         return 0;
 
