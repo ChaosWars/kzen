@@ -181,28 +181,6 @@ KZenWidget::~KZenWidget()
 {
 }
 
-void KZenWidget::deviceTabToggled( bool on )
-{
-    if( on ){
-        if( mediaContainerWidget->isHidden() )
-            mediaContainerWidget->show();
-
-        navPanel->tab( KZenWidget::MusicTab )->setState( false );
-        navPanel->tab( KZenWidget::PhotoTab )->setState( false );
-        navPanel->tab( KZenWidget::VideoTab )->setState( false );
-        deviceWidget->show();
-    }else{
-        if( !navPanel->tab( KZenWidget::DeviceFileTab )->isChecked() &&
-             !navPanel->tab( KZenWidget::PhotoTab )->isChecked() &&
-             !navPanel->tab( KZenWidget::VideoTab )->isChecked() ){
-
-            mediaContainerWidget->hide();
-        }
-
-        deviceWidget->hide();
-    }
-}
-
 void KZenWidget::musicTabToggled( bool on )
 {
     if( on ){
@@ -238,8 +216,11 @@ void KZenWidget::videoTabToggled( bool on )
     }else{
         if( !navPanel->tab( KZenWidget::DeviceFileTab )->isChecked() &&
             !navPanel->tab( KZenWidget::MusicTab )->isChecked() &&
-            !navPanel->tab( KZenWidget::PhotoTab )->isChecked() )
-            mediaContainerWidget->hide();
+            !navPanel->tab( KZenWidget::PhotoTab )->isChecked() ){
+
+                mediaContainerWidget->hide();
+
+        }
     }
 
     videoWidget->hide();
@@ -258,11 +239,35 @@ void KZenWidget::photoTabToggled( bool on )
     }else{
         if( !navPanel->tab( KZenWidget::DeviceFileTab )->isChecked() &&
             !navPanel->tab( KZenWidget::MusicTab )->isChecked() &&
-            !navPanel->tab( KZenWidget::VideoTab )->isChecked() )
-            mediaContainerWidget->hide();
+            !navPanel->tab( KZenWidget::VideoTab )->isChecked() ){
+
+                mediaContainerWidget->hide();
+        }
     }
 
     photoWidget->hide();
+}
+
+void KZenWidget::deviceTabToggled( bool on )
+{
+    if( on ){
+        if( mediaContainerWidget->isHidden() )
+            mediaContainerWidget->show();
+
+        navPanel->tab( KZenWidget::MusicTab )->setState( false );
+        navPanel->tab( KZenWidget::PhotoTab )->setState( false );
+        navPanel->tab( KZenWidget::VideoTab )->setState( false );
+        deviceWidget->show();
+    }else{
+        if( !navPanel->tab( KZenWidget::MusicTab )->isChecked() &&
+            !navPanel->tab( KZenWidget::PhotoTab )->isChecked() &&
+            !navPanel->tab( KZenWidget::VideoTab )->isChecked() ){
+
+            mediaContainerWidget->hide();
+        }
+
+        deviceWidget->hide();
+    }
 }
 
 void KZenWidget::setMainView( KFile::FileView view )

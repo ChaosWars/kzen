@@ -139,7 +139,7 @@ QModelIndex KZenAlbumViewModel::parent( const QModelIndex &index ) const
 
 int KZenAlbumViewModel::rowCount( const QModelIndex &parent ) const
 {
-    if( parent.column() > 3 )
+    if( parent.column() > 0 )
         //Out of KZenAlbumViewModel bounds
         return 0;
 

@@ -73,7 +73,7 @@ QVariant KZenTrackViewModel::headerData( int section, Qt::Orientation orientatio
 
 int KZenTrackViewModel::rowCount( const QModelIndex &parent ) const
 {
-    if( parent.column() > 4 )
+    if( parent.column() > 0 )
         //Out of KZenTrackViewModel bounds
         return 0;
 
