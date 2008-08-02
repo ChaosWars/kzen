@@ -26,19 +26,20 @@
 #include "kzen.h"
 #include "kzensplash.h"
 
-static const char description[] = "A program for managing portable media players that use the MTP protocol";
+static const char description[] = "Manage your Creative Zen";
 
 static const char version[] = "0.1";
 
 int main(int argc, char **argv)
 {
-	Q_INIT_RESOURCE( kzen );
+    Q_INIT_RESOURCE( kzen );
     KCmdLineOptions options;
-    options.add( "+someoption", ki18n( "Some option" ) );
+//     options.add( "+someoption", ki18n( "Some option" ) );
     KAboutData about( "kzen", QByteArray(), ki18n( "KZen" ), version, ki18n( description ),
-                        KAboutData::License_GPL, ki18n( "(C) 2007 Lawrence Lee" ), ki18n(""),
-                        "http://kzen.googlecode.com", "valheru@facticius.net" );
-    about.addAuthor( ki18n( "Lawrence Lee" ), ki18n( "Lead programmer" ), "valheru@facticius.net", "www.facticius.net" );
+                      KAboutData::License_GPL, ki18n( "Copyright (c) 2007-2008 Lawrence Lee" ),
+                      ki18n("A program for managing portable media players that use the MTP protocol"),
+                      "http://kzen.googlecode.com", "http://code.google.com/p/knewz/issues/list" );
+    about.addAuthor( ki18n( "Lawrence Lee" ), ki18n( "Lead programmer" ), "valheru.ashen.shugar@gmail.com", "http://kzen.googlecode.com" );
     KCmdLineArgs::init( argc, argv, &about );
     KCmdLineArgs::addCmdLineOptions( options );
     KUniqueApplication::addCmdLineOptions();
@@ -51,12 +52,14 @@ int main(int argc, char **argv)
     KUniqueApplication app;
     app.setQuitOnLastWindowClosed( false );
     KZenSplash *splash = new KZenSplash( QPixmap( ":/pics/kzen_splash.png" ) );
-    splash->show();
-    splash->showMessage( i18n( "Searching for MTP devices" ) );
     KZen *kzenmw = new KZen( splash );
-    kzenmw->setObjectName( "KZenMainWindow" );
-    kzenmw->show();
-    splash->finish( kzenmw );
-    delete splash;
+    if( app.isSessionRestored() )
+    {
+        RESTORE(KZen(splash));
+    }else{
+        kzenmw->show();
+        splash->finish( kzenmw );
+        delete splash;
+    }
     return app.exec();
 }

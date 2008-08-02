@@ -20,12 +20,10 @@
 #ifndef KZEN_H
 #define KZEN_H
 
-#include <KDE/KMainWindow>
+#include <KDE/KXmlGuiWindow>
 #include <libmtp.h>
 #include "kzendevice.h"
 
-class KMenu;
-class KAction;
 class KSystemTrayIcon;
 class KZenDevice;
 class KZenWidget;
@@ -34,7 +32,7 @@ class KZenSplash;
 /**
 	@author Lawrence Lee <valheru@facticius.net>
 */
-class KZen : public KMainWindow
+class KZen : public KXmlGuiWindow
 {
     Q_OBJECT
 
@@ -43,7 +41,7 @@ class KZen : public KMainWindow
         /**
          *
          */
-        KZen( KZenSplash *splash );
+        KZen( KZenSplash *splash, QWidget *parent = NULL );
 
         /**
          *
@@ -68,13 +66,11 @@ class KZen : public KMainWindow
         bool ok_to_close;
         KZenSplash *m_splash;
         KZenWidget *m_widget;
-        KMenu *actionMenu;
-        KAction *quit;
         LIBMTP_mtpdevice_t *devices;
         KSystemTrayIcon *trayIcon;
         void setupActions();
         void setupMenus();
-        LIBMTP_error_number_t checkDevices( KZenSplash *splash );
+        LIBMTP_error_number_t checkDevices();
 
     private Q_SLOTS:
         void message( const QString& );
