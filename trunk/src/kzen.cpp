@@ -17,39 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <KDE/KUniqueApplication>
-#include <KDE/KMenuBar>
-#include <KDE/KStatusBar>
-#include <KDE/KMenu>
-#include <KDE/KAction>
-#include <KDE/KLocale>
+
+#include <KDE/KActionCollection>
+#include <KDE/KApplication>
 #include <KDE/KDebug>
+#include <KDE/KLocale>
+#include <KDE/KStatusBar>
 #include <KDE/KSystemTrayIcon>
+#include <KDE/KUniqueApplication>
 #include <libmtp.h>
 #include "kzen.h"
 #include "kzenwidget.h"
 #include "kzensplash.h"
 #include "devices.h"
 
-KZen::KZen( KZenSplash *splash )
-    : ok_to_close( false )
+KZen::KZen( KZenSplash *splash, QWidget *parent )
+    : KXmlGuiWindow( parent ), ok_to_close( false )
 {
     m_splash = splash;
+
+    if( m_splash ){
+        m_splash->show();
+        m_splash->showMessage( i18n( "Searching for MTP devices" ) );
+    }
+
     LIBMTP_Init();
     kDebug() << i18n( "libmtp version: " LIBMTP_VERSION_STRING );
-    LIBMTP_error_number_t error = checkDevices( splash ) ;
+    LIBMTP_error_number_t error = checkDevices() ;
 
     if( error  != LIBMTP_ERROR_NONE ){
 
         while( error == LIBMTP_ERROR_CONNECTING ){
-            splash->showMessage( i18n( "Error connecting to device, retrying" ) );
+            message( i18n( "Error connecting to device, retrying" ) );
             sleep( 1 );
-            error = checkDevices( splash );
+            error = checkDevices();
         }
 
     }
 
-    setupActions();
     m_widget = new KZenWidget( this );
 
     if( error != LIBMTP_ERROR_NONE ){
@@ -57,8 +62,11 @@ KZen::KZen( KZenSplash *splash )
     }
 
     setCentralWidget( m_widget );
+    setupActions();
+    setupGUI();
     setAutoSaveSettings();
     trayIcon = new KSystemTrayIcon( "kzen", this );
+    connect( trayIcon, SIGNAL( quitSelected() ), SLOT( exit() ) );
     trayIcon->show();
 }
 
@@ -68,13 +76,9 @@ KZen::~KZen()
 
 void KZen::setupActions()
 {
-    actionMenu = new KMenu( i18n( "&Action" ) );
-    quit = new KAction( KIcon( "application-exit" ), i18n( "&Quit" ), actionMenu );
-    connect(  quit, SIGNAL( triggered() ), this, SLOT( exit() ) );
-    actionMenu->addAction( quit );
-    menuBar()->addMenu( actionMenu );
-    menuBar()->addMenu( helpMenu() );
-    statusBar();
+//     setStandardToolBarMenuEnabled( true );
+    createStandardStatusBarAction();
+    KStandardAction::quit( this, SLOT( exit() ), actionCollection() );
 }
 
 bool KZen::queryClose()
@@ -91,7 +95,7 @@ bool KZen::queryExit()
     return true;
 }
 
-LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash )
+LIBMTP_error_number_t KZen::checkDevices()
 {
     uint32_t numdevices;
 
@@ -115,7 +119,7 @@ LIBMTP_error_number_t KZen::checkDevices( KZenSplash *splash )
         /* Successfully connected at least one device, so continue */
         case LIBMTP_ERROR_NONE:
             numdevices = LIBMTP_Number_Devices_In_List( devices );
-            splash->showMessage( i18n( "Successfully connected to %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) ) );
+            message( i18n( "Successfully connected to %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) ) );
             kDebug() << i18n( "Successfully connected to %1 %2", numdevices, numdevices > 1 ? i18n( "devices" ) : i18n( "device" ) );
     }
 
