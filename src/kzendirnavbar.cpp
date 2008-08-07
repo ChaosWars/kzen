@@ -63,7 +63,6 @@ KZenDirNavBar::~KZenDirNavBar()
 
 void KZenDirNavBar::previewToggleSlot( bool checked )
 {
-    kDebug() << checked;
     if( checked )
         emit setView( KFile::PreviewContents );
     else

@@ -5,33 +5,33 @@ INCLUDE_DIRECTORIES(${KDE4_INCLUDES}
                     ${CMAKE_CURRENT_BINARY_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR} )
 
-SET( SRC main.cpp
-        devices.cpp
-        kzen.cpp
-        kzensplash.cpp
-        kzenwidget.cpp
-        kzenmusicwidget.cpp
-        kzenvideowidget.cpp
-        kzenphotowidget.cpp
-        kzendevicewidget.cpp
-        kzenfiletransferwidget.cpp
-        kzendirnavbar.cpp
-        kzendevice.cpp
-        kzendevicethread.cpp
-        kzenobject.cpp
-        kzenalbum.cpp
-        kzenfile.cpp
-        kzenfolder.cpp
-        kzenplaylist.cpp
-        kzentrack.cpp
-        kzenalbumview.cpp
-        kzenfiletransferview.cpp
-        kzenfiletransferviewmodel.cpp
-        kzenplaylistview.cpp
-        kzentrackview.cpp
-        kzenalbumviewmodel.cpp
-        kzenplaylistviewmodel.cpp
-        kzentrackviewmodel.cpp )
+SET( SRC devices.cpp
+         kzen.cpp
+         kzenalbum.cpp
+         kzenalbumview.cpp
+         kzenalbumviewmodel.cpp
+         kzendevice.cpp
+         kzendevicethread.cpp
+         kzendevicewidget.cpp
+         kzendirnavbar.cpp
+         kzenfile.cpp
+         kzenfiletransferview.cpp
+         kzenfiletransferviewmodel.cpp
+         kzenfiletransferwidget.cpp
+         kzenfolder.cpp
+         kzenmusicwidget.cpp
+         kzenobject.cpp
+         kzenphotowidget.cpp
+         kzenplaylist.cpp
+         kzenplaylistview.cpp
+         kzenplaylistviewmodel.cpp
+         kzensplash.cpp
+         kzentrack.cpp
+         kzentrackview.cpp
+         kzentrackviewmodel.cpp
+         kzenvideowidget.cpp
+         kzenwidget.cpp
+         main.cpp )
 
 QT4_ADD_RESOURCES( SRC kzen.qrc )
 LINK_DIRECTORIES( ${KDE4_LIB_DIR} )
@@ -44,9 +44,6 @@ TARGET_LINK_LIBRARIES( kzen ${KDE4_KDECORE_LIBS}
                             ${KDE4_KFILE_LIBS}
                             ${QT_QTCORE_LIBS}
                             ${LIBMTP_LIBRARY} )
-INSTALL(TARGETS kzen
-        RUNTIME DESTINATION ${KDE4_BIN_INSTALL_DIR}
-        LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR}
-        ARCHIVE DESTINATION ${PLUGIN_INSTALL_DIR} )
+INSTALL(TARGETS kzen DESTINATION ${KDE4_BIN_INSTALL_DIR} )
 INSTALL( FILES kzen.desktop DESTINATION ${KDE4_XDG_APPS_INSTALL_DIR} )
 INSTALL( FILES kzenui.rc DESTINATION ${DATA_INSTALL_DIR}/kzen )

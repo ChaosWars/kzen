@@ -17,12 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
+#include <KDE/KComboBox>
+#include <KDE/KDebug>
+#include <KDE/KDirOperator>
+#include <KDE/KIconLoader>
 #include <KDE/KMultiTabBar>
 #include <KDE/KTabWidget>
-#include <KDE/KIconLoader>
-#include <KDE/KComboBox>
-#include <KDE/KDirOperator>
-#include <KDE/KDebug>
 #include <QDir>
 #include <QLayout>
 #include <QSplitter>
@@ -138,6 +139,7 @@ KZenWidget::KZenWidget( QWidget *parent )
     //Navigation widget - contains a navigation toolbar, a view and a spacer
     dirNavWidget = new QWidget( splitter );
     QVBoxLayout *dirNavLayout = new QVBoxLayout( dirNavWidget );
+    dirNavWidget->setLayout( dirNavLayout );
     dirNavBar = new KZenDirNavBar( dirNavWidget );
     QSpacerItem *dirNavSpacer = new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 
@@ -150,11 +152,10 @@ KZenWidget::KZenWidget( QWidget *parent )
     sizePolicy.setHeightForWidth( mainView->sizePolicy().hasHeightForWidth() );
     mainView->setSizePolicy(sizePolicy);
 
-    //Construct the main views layout
+//     Construct the main views layout
     dirNavLayout->addWidget( dirNavBar );
     dirNavLayout->addWidget( mainView );
     dirNavLayout->addItem( dirNavSpacer );
-    dirNavWidget->setLayout( dirNavLayout );
 
     //Add the widgets to the splitter
     splitter->addWidget( mediaContainerWidget );

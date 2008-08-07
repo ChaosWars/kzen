@@ -137,10 +137,12 @@ LIBMTP_error_number_t KZen::checkDevices()
  */
 void KZen::message( const QString& m )
 {
-    if( m_splash )
+    if( m_splash ){
         m_splash->showMessage( m );
-    else
+        kapp->processEvents();
+    }else{
         statusBar()->showMessage( m );
+    }
 }
 
 

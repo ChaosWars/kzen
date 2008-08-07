@@ -36,11 +36,7 @@ class KZenSplash : public KSplashScreen
          * @param pixmap
          */
         KZenSplash( const QPixmap &pixmap );
-
-        /**
-         *
-         */
-        ~KZenSplash();
+        ~KZenSplash(){};
 
     public slots:
 
