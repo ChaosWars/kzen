@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     Q_INIT_RESOURCE( kzen );
     KCmdLineOptions options;
 //     options.add( "+someoption", ki18n( "Some option" ) );
-    KAboutData about( "kzen", QByteArray(), ki18n( "KZen" ), version, ki18n( description ),
+    KAboutData about( "kzen", "kzen", ki18n( "KZen" ), version, ki18n( description ),
                       KAboutData::License_GPL, ki18n( "Copyright (c) 2007-2008 Lawrence Lee" ),
                       ki18n("A program for managing portable media players that use the MTP protocol"),
                       "http://kzen.googlecode.com", "http://code.google.com/p/knewz/issues/list" );

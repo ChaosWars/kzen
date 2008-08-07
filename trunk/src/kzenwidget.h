@@ -24,19 +24,19 @@
 #include <KDE/KFile>
 
 class KComboBox;
+class KDirOperator;
 class KMultiTabBar;
 class KMultiTabBarTab;
 class QProgressBar;
 class QSplitter;
-class KZenMusicWidget;
-class KZenVideoWidget;
-class KZenPhotoWidget;
-class KZenDeviceWidget;
-class KZenFileTransferWidget;
-class KZenDirNavBar;
-class KDirOperator;
 class KZenAlbum;
 class KZenDevice;
+class KZenDirNavBar;
+class KZenMusicWidget;
+class KZenDeviceWidget;
+class KZenFileTransferWidget;
+class KZenPhotoWidget;
+class KZenVideoWidget;
 
 /**
 	@author Lawrence Lee <valheru@facticius.net>
@@ -75,7 +75,7 @@ class KZenWidget : public QWidget
         KZenDeviceWidget *deviceWidget;
         KZenFileTransferWidget *fileTransferWidget;
         QSplitter *mediaContainerWidget;
-        QWidget *dirNavWidget, /* *mediaContainerWidget,*/ *mediaWidget;
+        QWidget *dirNavWidget, *mediaWidget;
         KZenDirNavBar *dirNavBar;
         KDirOperator *mainView;
         KComboBox *m_devices;

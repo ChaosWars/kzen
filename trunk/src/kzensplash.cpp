@@ -24,11 +24,6 @@ KZenSplash::KZenSplash( const QPixmap &pixmap )
 {
 }
 
-
-KZenSplash::~KZenSplash()
-{
-}
-
 void KZenSplash::showMessage( const QString &showMessage, int alignment )
 {
     KSplashScreen::showMessage( showMessage, alignment );
