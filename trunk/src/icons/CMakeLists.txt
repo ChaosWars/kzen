@@ -1,2 +1,2 @@
-INSTALL( FILES kzen.png DESTINATION ${ICON_INSTALL_DIR}/oxygen/48x48/apps )
-INSTALL( FILES kzen_large.png DESTINATION ${ICON_INSTALL_DIR}/oxygen/128x128/apps RENAME kzen.png )
+INSTALL( FILES kzen.png DESTINATION ${ICON_INSTALL_DIR}/hicolor/48x48/apps )
+INSTALL( FILES kzen_large.png DESTINATION ${ICON_INSTALL_DIR}/hicolor/128x128/apps RENAME kzen.png )
