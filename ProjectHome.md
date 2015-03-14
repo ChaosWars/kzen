@@ -1,0 +1,1 @@
+A program for managing portable media players that use the MTP protocol
